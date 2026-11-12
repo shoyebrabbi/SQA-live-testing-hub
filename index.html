@@ -380,11 +380,12 @@
     body[data-theme="aurora"]:not(.light-mode) {
       color-scheme: dark;
       color: #e2e8f0;
-      --theme-accent: #34d399;
+      --theme-accent: #10b981;
+      --theme-accent-2: #06b6d4;
       --theme-accent-readable: #34d399;
-      --theme-accent-on: #052016;
+      --theme-accent-on: #021811;
       --theme-accent-soft: rgba(16, 185, 129, .18);
-      --theme-glow: rgba(16, 185, 129, .18);
+      --theme-glow: rgba(16, 185, 129, .35);
       --theme-line: rgba(110, 231, 183, .24);
       --theme-canvas: #050d1a;
       --theme-gradient:
@@ -396,11 +397,12 @@
     body.light-mode[data-theme="aurora"] {
       color-scheme: light;
       color: #172033;
-      --theme-accent: #047857;
+      --theme-accent: #059669;
+      --theme-accent-2: #0891b2;
       --theme-accent-readable: #047857;
       --theme-accent-on: #ffffff;
       --theme-accent-soft: rgba(16, 185, 129, .14);
-      --theme-glow: rgba(16, 185, 129, .12);
+      --theme-glow: rgba(5, 150, 105, .3);
       --theme-line: rgba(4, 120, 87, .18);
       --theme-canvas: #f2fbf8;
       --theme-gradient:
@@ -412,11 +414,12 @@
     body[data-theme="midnight-violet"]:not(.light-mode) {
       color-scheme: dark;
       color: #ede9fe;
-      --theme-accent: #c4b5fd;
+      --theme-accent: #a855f7;
+      --theme-accent-2: #ec4899;
       --theme-accent-readable: #c4b5fd;
-      --theme-accent-on: #160e2e;
+      --theme-accent-on: #ffffff;
       --theme-accent-soft: rgba(139, 92, 246, .22);
-      --theme-glow: rgba(139, 92, 246, .2);
+      --theme-glow: rgba(168, 85, 247, .38);
       --theme-line: rgba(196, 181, 253, .25);
       --theme-canvas: #0b0718;
       --theme-gradient:
@@ -428,11 +431,12 @@
     body.light-mode[data-theme="midnight-violet"] {
       color-scheme: light;
       color: #211a35;
-      --theme-accent: #6d28d9;
+      --theme-accent: #7c3aed;
+      --theme-accent-2: #db2777;
       --theme-accent-readable: #6d28d9;
       --theme-accent-on: #ffffff;
       --theme-accent-soft: rgba(109, 40, 217, .14);
-      --theme-glow: rgba(139, 92, 246, .12);
+      --theme-glow: rgba(124, 58, 237, .3);
       --theme-line: rgba(109, 40, 217, .18);
       --theme-canvas: #f7f4ff;
       --theme-gradient:
@@ -444,11 +448,12 @@
     body.light-mode[data-theme="arctic-light"] {
       color-scheme: light;
       color: #172b3b;
-      --theme-accent: #0e7490;
+      --theme-accent: #0284c7;
+      --theme-accent-2: #06b6d4;
       --theme-accent-readable: #0e7490;
       --theme-accent-on: #ffffff;
       --theme-accent-soft: rgba(6, 182, 212, .14);
-      --theme-glow: rgba(6, 182, 212, .12);
+      --theme-glow: rgba(2, 132, 199, .32);
       --theme-line: rgba(14, 116, 144, .2);
       --theme-canvas: #f6fbff;
       --theme-gradient:
@@ -460,11 +465,12 @@
     body[data-theme="arctic-light"]:not(.light-mode) {
       color-scheme: dark;
       color: #dceaf3;
-      --theme-accent: #67e8f9;
+      --theme-accent: #22d3ee;
+      --theme-accent-2: #38bdf8;
       --theme-accent-readable: #67e8f9;
-      --theme-accent-on: #062530;
+      --theme-accent-on: #041e29;
       --theme-accent-soft: rgba(6, 182, 212, .18);
-      --theme-glow: rgba(6, 182, 212, .17);
+      --theme-glow: rgba(34, 211, 238, .36);
       --theme-line: rgba(103, 232, 249, .24);
       --theme-canvas: #06131f;
       --theme-gradient:
@@ -578,6 +584,77 @@
     }
     @keyframes toast-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; scroll-behavior: auto !important; } }
+    body.light-mode #share-preview-card { border-color: rgba(15, 23, 42, .14) !important; }
+    body.light-mode #share-preview-card .text-white { color: #0f172a !important; }
+    body.light-mode #share-preview-card .rounded-full {
+      background: rgba(15, 23, 42, .07) !important;
+      border-color: rgba(15, 23, 42, .18) !important;
+      color: #0f172a !important;
+    }
+    body.light-mode #app-shell > header h1 > span:first-child,
+    body.light-mode #auth-screen .auth-showcase-title { color: #0f172a !important; }
+    body.light-mode #auth-screen .auth-showcase-subtitle { color: #475569 !important; }
+    body[data-theme] #share-toggle,
+    body[data-theme] #copy-share-link,
+    body[data-theme] #auth-submit,
+    body[data-theme] #run-automated-checks,
+    body[data-theme] #site-settings-form button[type="submit"],
+    body[data-theme] #registration-form button[type="submit"],
+    body[data-theme] .edit-dialog button[type="submit"] {
+      border-color: var(--theme-accent) !important;
+      background: linear-gradient(135deg, var(--theme-accent), var(--theme-accent-2)) !important;
+      color: var(--theme-accent-on) !important;
+      box-shadow: 0 8px 22px var(--theme-glow) !important;
+    }
+    #guest-mode-button {
+      border-color: #0d9488 !important;
+      background: linear-gradient(135deg, #10b981, #0d9488) !important;
+      color: #ffffff !important;
+    }
+    #order-form button[type="submit"] {
+      border-color: #0284c7 !important;
+      background: linear-gradient(135deg, #06b6d4, #0284c7) !important;
+      color: #ffffff !important;
+    }
+    #run-api {
+      border-color: #4f46e5 !important;
+      background: linear-gradient(135deg, #3b82f6, #4f46e5) !important;
+      color: #ffffff !important;
+    }
+    #bulk-users {
+      border-color: #ea580c !important;
+      background: linear-gradient(135deg, #f59e0b, #ea580c) !important;
+      color: #ffffff !important;
+    }
+    #inspect-input {
+      border-color: #e11d48 !important;
+      background: linear-gradient(135deg, #f43f5e, #e11d48) !important;
+      color: #ffffff !important;
+    }
+    #run-load-test {
+      border-color: #7c3aed !important;
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;
+      color: #ffffff !important;
+    }
+    #bug-form button[type="submit"] {
+      border-color: #c026d3 !important;
+      background: linear-gradient(135deg, #d946ef, #c026d3) !important;
+      color: #ffffff !important;
+    }
+    body.light-mode #native-share-link,
+    body.light-mode #download-share-card,
+    body.light-mode #refresh-data,
+    body.light-mode #reset-suite,
+    body.light-mode .edit-dialog-cancel {
+      border-color: #64748b !important;
+      background: rgba(255, 255, 255, .92) !important;
+      color: #0f172a !important;
+    }
+    body.light-mode #native-share-link:hover,
+    body.light-mode #download-share-card:hover,
+    body.light-mode #refresh-data:hover,
+    body.light-mode #reset-suite:hover,
+    body.light-mode .edit-dialog-cancel:hover { background: #e2e8f0 !important; }
   </style>
 </head>
 <body class="min-h-screen text-slate-100">
@@ -1565,6 +1642,7 @@
       }
       function downloadShareCard() {
         const theme = themes[activeTheme];
+        const isLight = document.body.classList.contains('light-mode');
         const title = activeLanguage === 'bn' ? 'SQA এ টু জেড' : 'SQA A to Z';
         const subtitle = activeLanguage === 'bn'
           ? 'পরীক্ষা করুন। শিখুন। উন্নত করুন।'
@@ -1572,9 +1650,14 @@
         const themeName = activeLanguage === 'bn' ? theme.bn : theme.en;
         const link = updateShareLink();
         const accent = getComputedStyle(document.body).getPropertyValue('--theme-accent').trim() || '#45e0b0';
-        const ink = activeTheme === 'arctic-light' ? '#172033' : '#f8fafc';
-        const mutedInk = activeTheme === 'arctic-light' ? '#475569' : '#cbd5e1';
-        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><rect width="1200" height="630" rx="36" fill="${theme.background}"/><circle cx="1010" cy="80" r="290" fill="${accent}" opacity=".13"/><path d="M80 80h1040v2H80z" fill="${accent}" opacity=".65"/><text x="90" y="160" fill="${accent}" font-family="Arial,sans-serif" font-size="24" font-weight="700" letter-spacing="5">SQA · LIVE TESTING HUB</text><text x="90" y="310" fill="${ink}" font-family="Arial,sans-serif" font-size="82" font-weight="800">${escapeHTML(title)}</text><text x="94" y="375" fill="${mutedInk}" font-family="Arial,sans-serif" font-size="32">${escapeHTML(subtitle)}</text><text x="94" y="470" fill="${accent}" font-family="Arial,sans-serif" font-size="24">${escapeHTML(themeName)}</text><text x="94" y="555" fill="${mutedInk}" font-family="Arial,sans-serif" font-size="20">${escapeHTML(link.slice(0, 90))}</text></svg>`;
+        const canvasColor = {
+          aurora: { light: '#f2fbf8', dark: '#050d1a' },
+          'midnight-violet': { light: '#f7f4ff', dark: '#0b0718' },
+          'arctic-light': { light: '#f6fbff', dark: '#06131f' }
+        }[activeTheme][isLight ? 'light' : 'dark'];
+        const ink = isLight ? '#0f172a' : '#f8fafc';
+        const mutedInk = isLight ? '#475569' : '#cbd5e1';
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><rect width="1200" height="630" rx="36" fill="${canvasColor}"/><circle cx="1010" cy="80" r="290" fill="${accent}" opacity=".13"/><path d="M80 80h1040v2H80z" fill="${accent}" opacity=".65"/><text x="90" y="160" fill="${accent}" font-family="Arial,sans-serif" font-size="24" font-weight="700" letter-spacing="5">SQA · LIVE TESTING HUB</text><text x="90" y="310" fill="${ink}" font-family="Arial,sans-serif" font-size="82" font-weight="800">${escapeHTML(title)}</text><text x="94" y="375" fill="${mutedInk}" font-family="Arial,sans-serif" font-size="32">${escapeHTML(subtitle)}</text><text x="94" y="470" fill="${accent}" font-family="Arial,sans-serif" font-size="24">${escapeHTML(themeName)}</text><text x="94" y="555" fill="${mutedInk}" font-family="Arial,sans-serif" font-size="20">${escapeHTML(link.slice(0, 90))}</text></svg>`;
         try {
           const downloadUrl = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml;charset=utf-8' }));
           const anchor = document.createElement('a');
