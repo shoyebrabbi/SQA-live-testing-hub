@@ -5,11 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#07111f">
   <title>SQA এ টু জেড লাইভ টেস্টিং হাব (Complete SQA Enterprise Sandbox)</title>
-  <script defer src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
     :root { color-scheme: dark; }
     body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, "Noto Sans Bengali", sans-serif; background: #07111f; }
     .glass { background: rgba(15, 27, 45, .82); border: 1px solid rgba(148, 163, 184, .14); backdrop-filter: blur(14px); }
+    #auth-screen[hidden], #app-shell[hidden] { display: none !important; }
     #auth-screen { display: flex; min-height: 100vh; align-items: center; justify-content: center; padding: 2rem 1rem; box-sizing: border-box; }
     #auth-screen > div { width: 100%; max-width: 28rem; box-sizing: border-box; padding: 2rem; border-radius: 1.5rem; }
     #auth-screen > div > div:first-child { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem; }
@@ -82,8 +83,8 @@
       <div class="mb-6 flex items-start justify-between gap-4">
         <div>
           <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-200">Supabase Auth</div>
-          <h1 id="auth-heading" class="text-2xl font-black">অ্যাকাউন্টে প্রবেশ</h1>
-          <p id="auth-description" class="mt-2 text-sm leading-6 text-slate-400">আপনার অ্যাকাউন্ট দিয়ে SQA পরীক্ষণ হাবে প্রবেশ করুন।</p>
+          <h1 id="auth-heading" class="text-2xl font-black"><span data-bn="অ্যাকাউন্টে প্রবেশ" data-en="Sign in to your account">অ্যাকাউন্টে প্রবেশ</span></h1>
+          <p id="auth-description" class="mt-2 text-sm leading-6 text-slate-400"><span data-bn="আপনার অ্যাকাউন্ট দিয়ে SQA পরীক্ষণ হাবে প্রবেশ করুন।" data-en="Sign in to the SQA Testing Hub with your account.">আপনার অ্যাকাউন্ট দিয়ে SQA পরীক্ষণ হাবে প্রবেশ করুন।</span></p>
         </div>
         <div class="flex shrink-0 flex-col gap-2">
           <button type="button" class="theme-toggle no-translate rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 text-xs text-slate-300 hover:bg-slate-800" aria-pressed="false">☀️ দিন মোড</button>
@@ -91,18 +92,18 @@
         </div>
       </div>
       <form id="auth-form" class="space-y-4">
-        <label id="auth-name-wrap" class="hidden block text-sm text-slate-300">পূর্ণ নাম (Full Name)<input id="auth-name" maxlength="120" autocomplete="name" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="আপনার পূর্ণ নাম"></label>
-        <label class="block text-sm text-slate-300">ইমেইল (Email)<input id="auth-email" type="email" required maxlength="254" autocomplete="email" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="name@example.com"></label>
-        <label class="block text-sm text-slate-300">পাসওয়ার্ড (Password)<input id="auth-password" type="password" required minlength="6" autocomplete="current-password" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="কমপক্ষে ৬ অক্ষর"></label>
-        <button id="auth-submit" type="submit" class="w-full rounded-xl bg-emerald-400 px-5 py-3 font-bold text-slate-950 hover:bg-emerald-300">লগইন করুন</button>
+        <label id="auth-name-wrap" class="hidden block text-sm text-slate-300"><span data-bn="পূর্ণ নাম (Full Name)" data-en="Full Name">পূর্ণ নাম (Full Name)</span><input id="auth-name" maxlength="120" autocomplete="name" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="আপনার পূর্ণ নাম" data-bn-placeholder="আপনার পূর্ণ নাম" data-en-placeholder="Your full name"></label>
+        <label class="block text-sm text-slate-300"><span data-bn="ইমেইল (Email)" data-en="Email">ইমেইল (Email)</span><input id="auth-email" type="email" required maxlength="254" autocomplete="email" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="name@example.com"></label>
+        <label class="block text-sm text-slate-300"><span data-bn="পাসওয়ার্ড (Password)" data-en="Password">পাসওয়ার্ড (Password)</span><input id="auth-password" type="password" required minlength="6" autocomplete="current-password" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="কমপক্ষে ৬ অক্ষর" data-bn-placeholder="কমপক্ষে ৬ অক্ষর" data-en-placeholder="At least 6 characters"></label>
+        <button id="auth-submit" type="submit" class="w-full rounded-xl bg-emerald-400 px-5 py-3 font-bold text-slate-950 hover:bg-emerald-300"><span data-bn="লগইন করুন" data-en="Sign In">লগইন করুন</span></button>
       </form>
       <div class="mt-4 flex flex-wrap justify-between gap-3 text-sm">
-        <button id="auth-mode-toggle" type="button" class="text-emerald-300 hover:underline">নতুন অ্যাকাউন্ট তৈরি করুন</button>
-        <button id="auth-reset" type="button" class="text-slate-400 hover:underline">পাসওয়ার্ড ভুলে গেছেন?</button>
-        <button id="auth-resend-confirmation" type="button" class="text-emerald-300 hover:underline">নিশ্চিতকরণ ইমেইল আবার পাঠান</button>
+        <button id="auth-mode-toggle" type="button" class="text-emerald-300 hover:underline"><span data-bn="নতুন অ্যাকাউন্ট তৈরি করুন" data-en="Create a new account">নতুন অ্যাকাউন্ট তৈরি করুন</span></button>
+        <button id="auth-reset" type="button" class="text-slate-400 hover:underline"><span data-bn="পাসওয়ার্ড ভুলে গেছেন?" data-en="Forgot password?">পাসওয়ার্ড ভুলে গেছেন?</span></button>
+        <button id="auth-resend-confirmation" type="button" class="text-emerald-300 hover:underline"><span data-bn="নিশ্চিতকরণ ইমেইল আবার পাঠান" data-en="Resend confirmation email">নিশ্চিতকরণ ইমেইল আবার পাঠান</span></button>
       </div>
-      <div id="auth-message" class="mt-4 min-h-12 rounded-xl border border-slate-800 bg-slate-950/50 p-3 text-sm text-slate-300" aria-live="polite">নিরাপদ প্রবেশের জন্য Supabase Auth ব্যবহৃত হয়।</div>
-      <p class="mt-4 text-xs leading-5 text-slate-500">নতুন অ্যাকাউন্টের জন্য প্রকল্পে ইমেইল নিশ্চিতকরণ চালু থাকলে, ইমেইল নিশ্চিত করার পর লগইন করুন। ডেটা ব্যবহারে Supabase টেবিলগুলোর Row Level Security (RLS) নীতিও সঠিকভাবে সেট করুন।</p>
+      <div id="auth-message" class="mt-4 min-h-12 rounded-xl border border-slate-800 bg-slate-950/50 p-3 text-sm text-slate-300" aria-live="polite"><span data-bn="নিরাপদ প্রবেশের জন্য Supabase Auth ব্যবহৃত হয়।" data-en="Supabase Auth is used for secure sign-in.">নিরাপদ প্রবেশের জন্য Supabase Auth ব্যবহৃত হয়।</span></div>
+      <p class="mt-4 text-xs leading-5 text-slate-500"><span data-bn="নতুন অ্যাকাউন্টের জন্য প্রকল্পে ইমেইল নিশ্চিতকরণ চালু থাকলে, ইমেইল নিশ্চিত করার পর লগইন করুন।" data-en="If email confirmation is enabled for new accounts, confirm your email before signing in.">নতুন অ্যাকাউন্টের জন্য প্রকল্পে ইমেইল নিশ্চিতকরণ চালু থাকলে, ইমেইল নিশ্চিত করার পর লগইন করুন।</span><span data-bn=" ডেটা ব্যবহারে Supabase টেবিলগুলোর Row Level Security (RLS) নীতিও সঠিকভাবে সেট করুন।" data-en=" Configure Row Level Security (RLS) policies for the Supabase tables before accessing data."> ডেটা ব্যবহারে Supabase টেবিলগুলোর Row Level Security (RLS) নীতিও সঠিকভাবে সেট করুন।</span></p>
     </div>
   </section>
   <main id="app-shell" hidden class="relative mx-auto max-w-[1600px] px-4 py-6 sm:px-7 lg:px-10">
@@ -110,148 +111,148 @@
       <div>
         <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-200">
           <span class="h-2 w-2 rounded-full bg-emerald-400" id="connection-dot"></span>
-          <span id="connection-label">ডেটাবেস সংযোগ পরীক্ষা চলছে</span>
+          <span id="connection-label"><span data-bn="ডেটাবেস সংযোগ পরীক্ষা চলছে" data-en="Checking database connection">ডেটাবেস সংযোগ পরীক্ষা চলছে</span></span>
         </div>
-        <h1 class="text-3xl font-black tracking-tight sm:text-4xl">SQA এ টু জেড <span class="text-emerald-300">লাইভ টেস্টিং হাব</span></h1>
-        <p class="mt-2 max-w-3xl text-sm leading-6 text-slate-400">একটি ব্যবহারিক পরীক্ষণ পরিবেশে সফটওয়্যার গুণমান নিশ্চয়তার (Software Quality Assurance) আটটি গুরুত্বপূর্ণ ক্ষেত্র অনুশীলন করুন।</p>
+        <h1 class="text-3xl font-black tracking-tight sm:text-4xl"><span data-bn="SQA এ টু জেড" data-en="SQA A to Z">SQA এ টু জেড</span> <span class="text-emerald-300"><span data-bn="লাইভ টেস্টিং হাব" data-en="Live Testing Hub">লাইভ টেস্টিং হাব</span></span></h1>
+        <p class="mt-2 max-w-3xl text-sm leading-6 text-slate-400"><span data-bn="একটি ব্যবহারিক পরীক্ষণ পরিবেশে সফটওয়্যার গুণমান নিশ্চয়তার (Software Quality Assurance) আটটি গুরুত্বপূর্ণ ক্ষেত্র অনুশীলন করুন।" data-en="Explore eight essential areas of Software Quality Assurance in a hands-on testing environment.">একটি ব্যবহারিক পরীক্ষণ পরিবেশে সফটওয়্যার গুণমান নিশ্চয়তার (Software Quality Assurance) আটটি গুরুত্বপূর্ণ ক্ষেত্র অনুশীলন করুন।</span></p>
       </div>
-      <div class="flex flex-wrap items-center gap-2 text-xs">
+      <div class="flex flex-wrap items-center justify-start gap-2 text-xs lg:justify-end">
         <button type="button" class="theme-toggle no-translate rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 text-slate-300 hover:bg-slate-800" aria-pressed="false">☀️ দিন মোড</button>
         <button type="button" class="language-toggle no-translate rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 text-slate-300 hover:bg-slate-800" aria-label="Switch language">English</button>
         <span id="signed-in-user" class="max-w-48 truncate rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 text-slate-300"></span>
-        <button id="logout-button" type="button" class="rounded-lg border border-rose-400/30 px-3 py-2 text-rose-200 hover:bg-rose-400/10">লগআউট</button>
-        <span class="rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 text-slate-300">পরিবেশ: <b class="text-slate-100">পরীক্ষণ (Sandbox)</b></span>
-        <span class="rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 text-slate-300">ডেটা: <b class="text-slate-100">Supabase PostgreSQL</b></span>
+        <button id="logout-button" type="button" class="rounded-lg border border-rose-400/30 px-3 py-2 text-rose-200 hover:bg-rose-400/10"><span data-bn="লগআউট" data-en="Sign Out">লগআউট</span></button>
+        <span class="rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 text-slate-300"><span data-bn="পরিবেশ:" data-en="Environment:">পরিবেশ:</span> <b class="text-slate-100"><span data-bn="পরীক্ষণ (Sandbox)" data-en="Testing (Sandbox)">পরীক্ষণ (Sandbox)</span></b></span>
+        <span class="rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 text-slate-300"><span data-bn="ডেটা:" data-en="Data:">ডেটা:</span> <b class="text-slate-100">Supabase PostgreSQL</b></span>
       </div>
     </header>
 
-    <section class="mb-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4" aria-label="সারসংক্ষেপ">
-      <div class="glass rounded-2xl p-4"><p class="text-xs text-slate-400">নিবন্ধিত পরীক্ষণ ব্যবহারকারী</p><p id="stat-users" class="mt-2 text-2xl font-bold">—</p></div>
-      <div class="glass rounded-2xl p-4"><p class="text-xs text-slate-400">সংরক্ষিত অর্ডার</p><p id="stat-orders" class="mt-2 text-2xl font-bold">—</p></div>
-      <div class="glass rounded-2xl p-4"><p class="text-xs text-slate-400">খোলা বাগ প্রতিবেদন</p><p id="stat-bugs" class="mt-2 text-2xl font-bold">—</p></div>
-      <div class="glass rounded-2xl p-4"><p class="text-xs text-slate-400">পরীক্ষণ চেকলিস্ট</p><p id="stat-checks" class="mt-2 text-2xl font-bold">০ / ১০ সম্পন্ন</p></div>
+    <section class="mb-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4" aria-label="সারসংক্ষেপ" data-bn-aria-label="সারসংক্ষেপ" data-en-aria-label="Overview">
+      <div class="glass rounded-2xl p-4"><p class="text-xs text-slate-400"><span data-bn="নিবন্ধিত পরীক্ষণ ব্যবহারকারী" data-en="Registered test users">নিবন্ধিত পরীক্ষণ ব্যবহারকারী</span></p><p id="stat-users" class="mt-2 text-2xl font-bold">—</p></div>
+      <div class="glass rounded-2xl p-4"><p class="text-xs text-slate-400"><span data-bn="সংরক্ষিত অর্ডার" data-en="Saved orders">সংরক্ষিত অর্ডার</span></p><p id="stat-orders" class="mt-2 text-2xl font-bold">—</p></div>
+      <div class="glass rounded-2xl p-4"><p class="text-xs text-slate-400"><span data-bn="খোলা বাগ প্রতিবেদন" data-en="Open bug reports">খোলা বাগ প্রতিবেদন</span></p><p id="stat-bugs" class="mt-2 text-2xl font-bold">—</p></div>
+      <div class="glass rounded-2xl p-4"><p class="text-xs text-slate-400"><span data-bn="পরীক্ষণ চেকলিস্ট" data-en="Test checklist">পরীক্ষণ চেকলিস্ট</span></p><p id="stat-checks" class="mt-2 text-2xl font-bold" data-bn="০ / ১০ সম্পন্ন" data-en="0 / 10 complete">০ / ১০ সম্পন্ন</p></div>
     </section>
 
-    <nav class="mb-5 flex gap-2 overflow-x-auto pb-2" role="tablist" aria-label="পরীক্ষণের বিভাগ">
-      <button class="tab-button whitespace-nowrap rounded-xl border border-slate-700 px-4 py-3 text-sm text-slate-300" role="tab" aria-selected="true" aria-controls="panel-registration" id="tab-registration">১ · নিবন্ধন ও যাচাই</button>
-      <button class="tab-button whitespace-nowrap rounded-xl border border-slate-700 px-4 py-3 text-sm text-slate-300" role="tab" aria-selected="false" aria-controls="panel-orders" id="tab-orders" tabindex="-1">২ · অর্ডার ও ব্যবসায়িক নিয়ম</button>
-      <button class="tab-button whitespace-nowrap rounded-xl border border-slate-700 px-4 py-3 text-sm text-slate-300" role="tab" aria-selected="false" aria-controls="panel-ui" id="tab-ui" tabindex="-1">৩ · UI/UX ও সামঞ্জস্য</button>
-      <button class="tab-button whitespace-nowrap rounded-xl border border-slate-700 px-4 py-3 text-sm text-slate-300" role="tab" aria-selected="false" aria-controls="panel-suite" id="tab-suite" tabindex="-1">৪ · টেস্ট স্যুট</button>
-      <button class="tab-button whitespace-nowrap rounded-xl border border-slate-700 px-4 py-3 text-sm text-slate-300" role="tab" aria-selected="false" aria-controls="panel-api" id="tab-api" tabindex="-1">৫ · REST API</button>
-      <button class="tab-button whitespace-nowrap rounded-xl border border-slate-700 px-4 py-3 text-sm text-slate-300" role="tab" aria-selected="false" aria-controls="panel-database" id="tab-database" tabindex="-1">৬ · ডেটাবেস যাচাই</button>
-      <button class="tab-button whitespace-nowrap rounded-xl border border-slate-700 px-4 py-3 text-sm text-slate-300" role="tab" aria-selected="false" aria-controls="panel-security" id="tab-security" tabindex="-1">৭ · নিরাপত্তা ও কর্মদক্ষতা</button>
-      <button class="tab-button whitespace-nowrap rounded-xl border border-slate-700 px-4 py-3 text-sm text-slate-300" role="tab" aria-selected="false" aria-controls="panel-bugs" id="tab-bugs" tabindex="-1">৮ · বাগ ও টেস্ট কেস</button>
+    <nav class="mb-5 flex gap-2 overflow-x-auto pb-2" role="tablist" aria-label="পরীক্ষণের বিভাগ" data-bn-aria-label="পরীক্ষণের বিভাগ" data-en-aria-label="Testing sections">
+      <button class="tab-button whitespace-nowrap rounded-xl border border-slate-700 px-4 py-3 text-sm text-slate-300" role="tab" aria-selected="true" aria-controls="panel-registration" id="tab-registration"><span data-bn="১ · নিবন্ধন ও যাচাই" data-en="1 · Registration &amp; Validation">১ · নিবন্ধন ও যাচাই</span></button>
+      <button class="tab-button whitespace-nowrap rounded-xl border border-slate-700 px-4 py-3 text-sm text-slate-300" role="tab" aria-selected="false" aria-controls="panel-orders" id="tab-orders" tabindex="-1"><span data-bn="২ · অর্ডার ও ব্যবসায়িক নিয়ম" data-en="2 · Orders &amp; Business Rules">২ · অর্ডার ও ব্যবসায়িক নিয়ম</span></button>
+      <button class="tab-button whitespace-nowrap rounded-xl border border-slate-700 px-4 py-3 text-sm text-slate-300" role="tab" aria-selected="false" aria-controls="panel-ui" id="tab-ui" tabindex="-1"><span data-bn="৩ · UI/UX ও সামঞ্জস্য" data-en="3 · UI/UX &amp; Compatibility">৩ · UI/UX ও সামঞ্জস্য</span></button>
+      <button class="tab-button whitespace-nowrap rounded-xl border border-slate-700 px-4 py-3 text-sm text-slate-300" role="tab" aria-selected="false" aria-controls="panel-suite" id="tab-suite" tabindex="-1"><span data-bn="৪ · টেস্ট স্যুট" data-en="4 · Test Suite">৪ · টেস্ট স্যুট</span></button>
+      <button class="tab-button whitespace-nowrap rounded-xl border border-slate-700 px-4 py-3 text-sm text-slate-300" role="tab" aria-selected="false" aria-controls="panel-api" id="tab-api" tabindex="-1"><span data-bn="৫ · REST API" data-en="5 · REST API">৫ · REST API</span></button>
+      <button class="tab-button whitespace-nowrap rounded-xl border border-slate-700 px-4 py-3 text-sm text-slate-300" role="tab" aria-selected="false" aria-controls="panel-database" id="tab-database" tabindex="-1"><span data-bn="৬ · ডেটাবেস যাচাই" data-en="6 · Database Verification">৬ · ডেটাবেস যাচাই</span></button>
+      <button class="tab-button whitespace-nowrap rounded-xl border border-slate-700 px-4 py-3 text-sm text-slate-300" role="tab" aria-selected="false" aria-controls="panel-security" id="tab-security" tabindex="-1"><span data-bn="৭ · নিরাপত্তা ও কর্মদক্ষতা" data-en="7 · Security &amp; Performance">৭ · নিরাপত্তা ও কর্মদক্ষতা</span></button>
+      <button class="tab-button whitespace-nowrap rounded-xl border border-slate-700 px-4 py-3 text-sm text-slate-300" role="tab" aria-selected="false" aria-controls="panel-bugs" id="tab-bugs" tabindex="-1"><span data-bn="৮ · বাগ ও টেস্ট কেস" data-en="8 · Bugs &amp; Test Cases">৮ · বাগ ও টেস্ট কেস</span></button>
     </nav>
 
     <section id="panel-registration" class="tab-panel glass rounded-2xl p-5 sm:p-7" role="tabpanel" aria-labelledby="tab-registration">
-      <div class="mb-6"><p class="text-xs font-bold uppercase tracking-[.18em] text-emerald-300">কার্যকরী · নেগেটিভ · সীমামান · ভূমিকা</p><h2 class="mt-2 text-2xl font-bold">ব্যবহারকারী নিবন্ধন পরীক্ষা</h2><p class="mt-2 text-sm text-slate-400">ইনপুট যাচাই, সীমামান বিশ্লেষণ (Boundary Value Analysis) এবং ভূমিকা-ভিত্তিক প্রবেশাধিকার (RBAC) অনুশীলন করুন।</p></div>
+      <div class="mb-6"><p class="text-xs font-bold uppercase tracking-[.18em] text-emerald-300"><span data-bn="কার্যকরী · নেগেটিভ · সীমামান · ভূমিকা" data-en="Functional · Negative · Boundary · Roles">কার্যকরী · নেগেটিভ · সীমামান · ভূমিকা</span></p><h2 class="mt-2 text-2xl font-bold"><span data-bn="ব্যবহারকারী নিবন্ধন পরীক্ষা" data-en="User Registration Testing">ব্যবহারকারী নিবন্ধন পরীক্ষা</span></h2><p class="mt-2 text-sm text-slate-400"><span data-bn="ইনপুট যাচাই, সীমামান বিশ্লেষণ (Boundary Value Analysis) এবং ভূমিকা-ভিত্তিক প্রবেশাধিকার (RBAC) অনুশীলন করুন।" data-en="Practice input validation, Boundary Value Analysis, and role-based access control (RBAC).">ইনপুট যাচাই, সীমামান বিশ্লেষণ (Boundary Value Analysis) এবং ভূমিকা-ভিত্তিক প্রবেশাধিকার (RBAC) অনুশীলন করুন।</span></p></div>
       <div class="grid gap-6 lg:grid-cols-[1fr_.8fr]">
         <form id="registration-form" class="grid gap-4 sm:grid-cols-2">
-          <label class="text-sm text-slate-300">পূর্ণ নাম (Full Name)<input id="reg-name" required maxlength="120" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="যেমন: নুসরাত জাহান"></label>
-          <label class="text-sm text-slate-300">ইমেইল (Email)<input id="reg-email" type="email" required maxlength="254" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="name@example.com"></label>
-          <label class="text-sm text-slate-300">পাসওয়ার্ড (Password · ৬–১২ অক্ষর)<input id="reg-password" type="password" minlength="6" maxlength="12" required autocomplete="new-password" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="৬ থেকে ১২ অক্ষর"></label>
-          <label class="text-sm text-slate-300">বয়স (Age · ১৮–৬০)<input id="reg-age" type="number" max="60" required class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="১৮–৬০"></label>
-          <label class="text-sm text-slate-300">ব্যবহারকারীর ভূমিকা (Role)<select id="reg-role" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3"><option value="User">ব্যবহারকারী (User)</option><option value="QA">পরীক্ষক (QA)</option><option value="Admin">প্রশাসক (Admin)</option></select></label>
+          <label class="text-sm text-slate-300"><span data-bn="পূর্ণ নাম (Full Name)" data-en="Full Name">পূর্ণ নাম (Full Name)</span><input id="reg-name" required maxlength="120" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="যেমন: নুসরাত জাহান" data-bn-placeholder="যেমন: নুসরাত জাহান" data-en-placeholder="For example: Nusrat Jahan"></label>
+          <label class="text-sm text-slate-300"><span data-bn="ইমেইল (Email)" data-en="Email">ইমেইল (Email)</span><input id="reg-email" type="email" required maxlength="254" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="name@example.com"></label>
+          <label class="text-sm text-slate-300"><span data-bn="পাসওয়ার্ড (Password · ৬–১২ অক্ষর)" data-en="Password · 6–12 characters">পাসওয়ার্ড (Password · ৬–১২ অক্ষর)</span><input id="reg-password" type="password" minlength="6" maxlength="12" required autocomplete="new-password" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="৬ থেকে ১২ অক্ষর" data-bn-placeholder="৬ থেকে ১২ অক্ষর" data-en-placeholder="6 to 12 characters"></label>
+          <label class="text-sm text-slate-300"><span data-bn="বয়স (Age · ১৮–৬০)" data-en="Age · 18–60">বয়স (Age · ১৮–৬০)</span><input id="reg-age" type="number" max="60" required class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="১৮–৬০" data-bn-placeholder="১৮–৬০" data-en-placeholder="18–60"></label>
+          <label class="text-sm text-slate-300"><span data-bn="ব্যবহারকারীর ভূমিকা (Role)" data-en="User Role">ব্যবহারকারীর ভূমিকা (Role)</span><select id="reg-role" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3"><option value="User"><span data-bn="ব্যবহারকারী (User)" data-en="User">ব্যবহারকারী (User)</span></option><option value="QA"><span data-bn="পরীক্ষক (QA)" data-en="QA">পরীক্ষক (QA)</span></option><option value="Admin"><span data-bn="প্রশাসক (Admin)" data-en="Admin">প্রশাসক (Admin)</span></option></select></label>
           <div class="flex flex-wrap items-end gap-3 sm:col-span-2">
-            <button type="submit" class="rounded-xl bg-emerald-400 px-5 py-3 font-bold text-slate-950 hover:bg-emerald-300">ব্যবহারকারী সংরক্ষণ করুন</button>
-            <button type="button" id="reset-registration" class="rounded-xl border border-amber-400/40 px-5 py-3 font-semibold text-amber-200 hover:bg-amber-400/10">ফর্ম রিসেট করুন</button>
+            <button type="submit" class="rounded-xl bg-emerald-400 px-5 py-3 font-bold text-slate-950 hover:bg-emerald-300"><span data-bn="ব্যবহারকারী সংরক্ষণ করুন" data-en="Save User">ব্যবহারকারী সংরক্ষণ করুন</span></button>
+            <button type="button" id="reset-registration" class="rounded-xl border border-amber-400/40 px-5 py-3 font-semibold text-amber-200 hover:bg-amber-400/10"><span data-bn="ফর্ম রিসেট করুন" data-en="Reset Form">ফর্ম রিসেট করুন</span></button>
           </div>
         </form>
         <aside class="space-y-4">
-          <div class="rounded-xl border border-amber-400/30 bg-amber-400/5 p-4 text-sm leading-6 text-amber-100"><b>ইচ্ছাকৃত বাগ:</b> ১৭ বছর বয়সের সীমার নিচের মানটি জাভাস্ক্রিপ্ট যাচাই এড়িয়ে সংরক্ষণের চেষ্টা করে; ডেটাবেসের নিজস্ব নিয়ম থাকলে সংরক্ষণ প্রত্যাখ্যাত হবে। রিসেট বোতামটি ইনপুট পরিষ্কার করে না।</div>
-          <div class="rounded-xl border border-rose-400/20 bg-rose-400/5 p-4 text-sm leading-6 text-slate-300"><b class="text-rose-200">নিরাপত্তা সতর্কতা:</b> এই ফর্মের আসল পাসওয়ার্ড ডেটাবেসে রাখা হয় না; নির্ধারিত কলামে কেবল অ-গোপন পরীক্ষণ চিহ্ন রাখা হয়। নিরাপদ প্রমাণীকরণ ও হ্যাশিং Supabase Auth পরিচালনা করে। ভূমিকা নির্বাচকটি শুধু UI-তে থাকে, কারণ নির্ধারিত টেবিলে Role কলাম নেই।</div>
-          <div id="registration-result" class="min-h-12 rounded-xl border border-slate-800 bg-slate-950/50 p-4 text-sm text-slate-300" aria-live="polite">সংরক্ষণের ফল এখানে দেখা যাবে।</div>
+          <div class="rounded-xl border border-amber-400/30 bg-amber-400/5 p-4 text-sm leading-6 text-amber-100"><b><span data-bn="ইচ্ছাকৃত বাগ:" data-en="Intentional bug:">ইচ্ছাকৃত বাগ:</span></b><span data-bn=" ১৭ বছর বয়সের সীমার নিচের মানটি জাভাস্ক্রিপ্ট যাচাই এড়িয়ে সংরক্ষণের চেষ্টা করে; ডেটাবেসের নিজস্ব নিয়ম থাকলে সংরক্ষণ প্রত্যাখ্যাত হবে। রিসেট বোতামটি ইনপুট পরিষ্কার করে না।" data-en=" An age below the 18-year limit bypasses JavaScript validation and attempts to save; the database may reject it if it enforces its own rule. The reset button does not clear the inputs."> ১৭ বছর বয়সের সীমার নিচের মানটি জাভাস্ক্রিপ্ট যাচাই এড়িয়ে সংরক্ষণের চেষ্টা করে; ডেটাবেসের নিজস্ব নিয়ম থাকলে সংরক্ষণ প্রত্যাখ্যাত হবে। রিসেট বোতামটি ইনপুট পরিষ্কার করে না।</span></div>
+          <div class="rounded-xl border border-rose-400/20 bg-rose-400/5 p-4 text-sm leading-6 text-slate-300"><b class="text-rose-200"><span data-bn="নিরাপত্তা সতর্কতা:" data-en="Security notice:">নিরাপত্তা সতর্কতা:</span></b> <span data-bn="এই ফর্মের আসল পাসওয়ার্ড ডেটাবেসে রাখা হয় না; নির্ধারিত কলামে কেবল অ-গোপন পরীক্ষণ চিহ্ন রাখা হয়। নিরাপদ প্রমাণীকরণ ও হ্যাশিং Supabase Auth পরিচালনা করে। ভূমিকা নির্বাচকটি শুধু UI-তে থাকে, কারণ নির্ধারিত টেবিলে Role কলাম নেই।" data-en="The real password from this form is never stored in the database; the specified column receives only a non-secret test marker. Supabase Auth handles secure authentication and password hashing. The role selector is UI-only because the specified table has no Role column.">এই ফর্মের আসল পাসওয়ার্ড ডেটাবেসে রাখা হয় না; নির্ধারিত কলামে কেবল অ-গোপন পরীক্ষণ চিহ্ন রাখা হয়। নিরাপদ প্রমাণীকরণ ও হ্যাশিং Supabase Auth পরিচালনা করে। ভূমিকা নির্বাচকটি শুধু UI-তে থাকে, কারণ নির্ধারিত টেবিলে Role কলাম নেই।</span></div>
+          <div id="registration-result" class="min-h-12 rounded-xl border border-slate-800 bg-slate-950/50 p-4 text-sm text-slate-300" aria-live="polite"><span data-bn="সংরক্ষণের ফল এখানে দেখা যাবে।" data-en="The save result will appear here.">সংরক্ষণের ফল এখানে দেখা যাবে।</span></div>
         </aside>
       </div>
     </section>
 
     <section id="panel-orders" class="tab-panel glass rounded-2xl p-5 sm:p-7" role="tabpanel" aria-labelledby="tab-orders" hidden>
-      <div class="mb-6"><p class="text-xs font-bold uppercase tracking-[.18em] text-cyan-300">ই-কমার্স · হিসাব · ব্যবসায়িক নিয়ম</p><h2 class="mt-2 text-2xl font-bold">পণ্য অর্ডার পরীক্ষা</h2><p class="mt-2 text-sm text-slate-400">ব্যবহারকারীর আইডি, পরিমাণ, কুপন এবং করসহ প্রকৃত অর্ডার সংরক্ষণ করুন।</p></div>
+      <div class="mb-6"><p class="text-xs font-bold uppercase tracking-[.18em] text-cyan-300"><span data-bn="ই-কমার্স · হিসাব · ব্যবসায়িক নিয়ম" data-en="E-commerce · Calculations · Business Rules">ই-কমার্স · হিসাব · ব্যবসায়িক নিয়ম</span></p><h2 class="mt-2 text-2xl font-bold"><span data-bn="পণ্য অর্ডার পরীক্ষা" data-en="Product Order Testing">পণ্য অর্ডার পরীক্ষা</span></h2><p class="mt-2 text-sm text-slate-400"><span data-bn="ব্যবহারকারীর আইডি, পরিমাণ, কুপন এবং করসহ প্রকৃত অর্ডার সংরক্ষণ করুন।" data-en="Save real orders with a user ID, quantity, coupon, and tax.">ব্যবহারকারীর আইডি, পরিমাণ, কুপন এবং করসহ প্রকৃত অর্ডার সংরক্ষণ করুন।</span></p></div>
       <form id="order-form" class="grid gap-5 lg:grid-cols-2">
         <div class="grid gap-4 sm:grid-cols-2">
-          <label class="text-sm text-slate-300 sm:col-span-2">ব্যবহারকারীর আইডি (User ID)<input id="order-user-id" required class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="sqa_users থেকে আইডি দিন"></label>
-          <label class="text-sm text-slate-300">পণ্য (Product)<select id="order-product" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3"><option value="পরীক্ষণ কিবোর্ড" data-price="1200">পরীক্ষণ কিবোর্ড · ৳১,২০০</option><option value="QA নোটবুক" data-price="350">QA নোটবুক · ৳৩৫০</option><option value="অটোমেশন কিট" data-price="2800">অটোমেশন কিট · ৳২,৮০০</option></select></label>
-          <div class="text-sm text-slate-300">পরিমাণ (Quantity)<div class="mt-2 flex items-center gap-2"><button type="button" id="qty-minus" class="rounded-lg border border-slate-700 px-4 py-3" aria-label="পরিমাণ কমান">−</button><input id="order-quantity" type="number" value="1" class="w-24 rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-3 text-center" aria-label="পরিমাণ"><button type="button" id="qty-plus" class="rounded-lg border border-slate-700 px-4 py-3" aria-label="পরিমাণ বাড়ান">+</button></div></div>
-          <label class="text-sm text-slate-300 sm:col-span-2">কুপন কোড (Coupon Code)<input id="order-coupon" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="ছাড় পেতে SAVE20 লিখুন"></label>
+          <label class="text-sm text-slate-300 sm:col-span-2"><span data-bn="ব্যবহারকারীর আইডি (User ID)" data-en="User ID">ব্যবহারকারীর আইডি (User ID)</span><input id="order-user-id" required class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="sqa_users থেকে আইডি দিন" data-bn-placeholder="sqa_users থেকে আইডি দিন" data-en-placeholder="Enter an ID from sqa_users"></label>
+          <label class="text-sm text-slate-300"><span data-bn="পণ্য (Product)" data-en="Product">পণ্য (Product)</span><select id="order-product" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3"><option value="পরীক্ষণ কিবোর্ড" data-price="1200"><span data-bn="পরীক্ষণ কিবোর্ড · ৳১,২০০" data-en="Test Keyboard · ৳1,200">পরীক্ষণ কিবোর্ড · ৳১,২০০</span></option><option value="QA নোটবুক" data-price="350"><span data-bn="QA নোটবুক · ৳৩৫০" data-en="QA Notebook · ৳350">QA নোটবুক · ৳৩৫০</span></option><option value="অটোমেশন কিট" data-price="2800"><span data-bn="অটোমেশন কিট · ৳২,৮০০" data-en="Automation Kit · ৳2,800">অটোমেশন কিট · ৳২,৮০০</span></option></select></label>
+          <div class="text-sm text-slate-300"><span data-bn="পরিমাণ (Quantity)" data-en="Quantity">পরিমাণ (Quantity)</span><div class="mt-2 flex items-center gap-2"><button type="button" id="qty-minus" class="rounded-lg border border-slate-700 px-4 py-3" aria-label="পরিমাণ কমান" data-bn-aria-label="পরিমাণ কমান" data-en-aria-label="Decrease quantity">−</button><input id="order-quantity" type="number" value="1" class="w-24 rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-3 text-center" aria-label="পরিমাণ" data-bn-aria-label="পরিমাণ" data-en-aria-label="Quantity"><button type="button" id="qty-plus" class="rounded-lg border border-slate-700 px-4 py-3" aria-label="পরিমাণ বাড়ান" data-bn-aria-label="পরিমাণ বাড়ান" data-en-aria-label="Increase quantity">+</button></div></div>
+          <label class="text-sm text-slate-300 sm:col-span-2"><span data-bn="কুপন কোড (Coupon Code)" data-en="Coupon Code">কুপন কোড (Coupon Code)</span><input id="order-coupon" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="ছাড় পেতে SAVE20 লিখুন" data-bn-placeholder="ছাড় পেতে SAVE20 লিখুন" data-en-placeholder="Enter SAVE20 for a discount"></label>
         </div>
         <div class="rounded-2xl border border-slate-800 bg-slate-950/50 p-5">
-          <h3 class="font-semibold">অর্ডারের হিসাব (Order Summary)</h3><div class="mt-4 space-y-3 text-sm text-slate-400"><p class="flex justify-between"><span>পণ্যের মূল্য</span><b id="subtotal" class="text-slate-100">৳১,২০০</b></p><p class="flex justify-between"><span>ছাড় (SAVE20)</span><b id="discount" class="text-slate-100">৳০</b></p><p class="flex justify-between"><span>কর (১০%)</span><b id="tax" class="text-slate-100">৳১২০</b></p><p class="flex justify-between border-t border-slate-800 pt-3 text-base"><span>সর্বমোট</span><b id="total" class="text-emerald-300">৳১,৩২০</b></p></div>
-          <button type="submit" class="mt-5 w-full rounded-xl bg-cyan-300 px-5 py-3 font-bold text-slate-950 hover:bg-cyan-200">অর্ডার সংরক্ষণ করুন</button>
+          <h3 class="font-semibold"><span data-bn="অর্ডারের হিসাব (Order Summary)" data-en="Order Summary">অর্ডারের হিসাব (Order Summary)</span></h3><div class="mt-4 space-y-3 text-sm text-slate-400"><p class="flex justify-between"><span><span data-bn="পণ্যের মূল্য" data-en="Subtotal">পণ্যের মূল্য</span></span><b id="subtotal" class="text-slate-100">৳১,২০০</b></p><p class="flex justify-between"><span><span data-bn="ছাড় (SAVE20)" data-en="Discount (SAVE20)">ছাড় (SAVE20)</span></span><b id="discount" class="text-slate-100">৳০</b></p><p class="flex justify-between"><span><span data-bn="কর (১০%)" data-en="Tax (10%)">কর (১০%)</span></span><b id="tax" class="text-slate-100">৳১২০</b></p><p class="flex justify-between border-t border-slate-800 pt-3 text-base"><span><span data-bn="সর্বমোট" data-en="Total">সর্বমোট</span></span><b id="total" class="text-emerald-300">৳১,৩২০</b></p></div>
+          <button type="submit" class="mt-5 w-full rounded-xl bg-cyan-300 px-5 py-3 font-bold text-slate-950 hover:bg-cyan-200"><span data-bn="অর্ডার সংরক্ষণ করুন" data-en="Save Order">অর্ডার সংরক্ষণ করুন</span></button>
         </div>
       </form>
-      <p class="mt-4 rounded-xl border border-amber-400/30 bg-amber-400/5 p-4 text-sm leading-6 text-amber-100"><b>ইচ্ছাকৃত বাগ:</b> পরিমাণ ঋণাত্মক হতে পারে; ফলে মোট মূল্য কমে বা ঋণাত্মক হয়।</p>
+      <p class="mt-4 rounded-xl border border-amber-400/30 bg-amber-400/5 p-4 text-sm leading-6 text-amber-100"><b><span data-bn="ইচ্ছাকৃত বাগ:" data-en="Intentional bug:">ইচ্ছাকৃত বাগ:</span></b> <span data-bn="পরিমাণ ঋণাত্মক হতে পারে; ফলে মোট মূল্য কমে বা ঋণাত্মক হয়।" data-en="Quantity can be negative, reducing the total or making it negative.">পরিমাণ ঋণাত্মক হতে পারে; ফলে মোট মূল্য কমে বা ঋণাত্মক হয়।</span></p>
       <div id="order-result" class="mt-4 text-sm text-slate-300" aria-live="polite"></div>
     </section>
 
     <section id="panel-ui" class="tab-panel glass rounded-2xl p-5 sm:p-7" role="tabpanel" aria-labelledby="tab-ui" hidden>
-      <div class="mb-6"><p class="text-xs font-bold uppercase tracking-[.18em] text-violet-300">ব্যবহারযোগ্যতা · প্রবেশগম্যতা · সামঞ্জস্য</p><h2 class="mt-2 text-2xl font-bold">দৃশ্যমান UI নিরীক্ষা</h2><p class="mt-2 text-sm text-slate-400">নমুনা ত্রুটিগুলো শনাক্ত করুন, ভিউপোর্ট পরিবর্তন করুন এবং প্রবেশগম্যতার (Accessibility) মৌলিক বিষয় যাচাই করুন।</p></div>
-      <div class="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-800 bg-slate-950/50 p-4"><span class="text-sm text-slate-300">বর্তমান ভিউপোর্ট (Viewport): <b id="viewport-label" class="text-emerald-300">ডেস্কটপ</b></span><div class="flex gap-2"><button type="button" class="viewport-toggle rounded-lg border border-slate-700 px-4 py-2 text-sm" data-viewport="desktop">ডেস্কটপ</button><button type="button" class="viewport-toggle rounded-lg border border-slate-700 px-4 py-2 text-sm" data-viewport="mobile">মোবাইল</button></div></div>
+      <div class="mb-6"><p class="text-xs font-bold uppercase tracking-[.18em] text-violet-300"><span data-bn="ব্যবহারযোগ্যতা · প্রবেশগম্যতা · সামঞ্জস্য" data-en="Usability · Accessibility · Compatibility">ব্যবহারযোগ্যতা · প্রবেশগম্যতা · সামঞ্জস্য</span></p><h2 class="mt-2 text-2xl font-bold"><span data-bn="দৃশ্যমান UI নিরীক্ষা" data-en="Visual UI Audit">দৃশ্যমান UI নিরীক্ষা</span></h2><p class="mt-2 text-sm text-slate-400"><span data-bn="নমুনা ত্রুটিগুলো শনাক্ত করুন, ভিউপোর্ট পরিবর্তন করুন এবং প্রবেশগম্যতার (Accessibility) মৌলিক বিষয় যাচাই করুন।" data-en="Identify sample defects, change the viewport, and review accessibility basics.">নমুনা ত্রুটিগুলো শনাক্ত করুন, ভিউপোর্ট পরিবর্তন করুন এবং প্রবেশগম্যতার (Accessibility) মৌলিক বিষয় যাচাই করুন।</span></p></div>
+      <div class="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-800 bg-slate-950/50 p-4"><span class="text-sm text-slate-300"><span data-bn="বর্তমান ভিউপোর্ট (Viewport):" data-en="Current viewport:">বর্তমান ভিউপোর্ট (Viewport):</span> <b id="viewport-label" class="text-emerald-300"><span data-bn="ডেস্কটপ" data-en="Desktop">ডেস্কটপ</span></b></span><div class="flex gap-2"><button type="button" class="viewport-toggle rounded-lg border border-slate-700 px-4 py-2 text-sm" data-viewport="desktop"><span data-bn="ডেস্কটপ" data-en="Desktop">ডেস্কটপ</span></button><button type="button" class="viewport-toggle rounded-lg border border-slate-700 px-4 py-2 text-sm" data-viewport="mobile"><span data-bn="মোবাইল" data-en="Mobile">মোবাইল</span></button></div></div>
       <div id="audit-frame" class="mx-auto mt-5 w-full max-w-full rounded-2xl border border-slate-700 bg-slate-900 p-5 transition-all">
-        <div class="audit-overlap flex min-h-20 items-center gap-4 rounded-xl border border-slate-700 bg-slate-950/60 p-4"><span class="text-sm text-slate-300">এই নমুনা কার্ডে দুটি বোতামের অবস্থান পরীক্ষা করুন।</span><button class="overlap-demo rounded-lg bg-rose-400 px-3 py-2 text-xs font-bold text-slate-950">ওভারল্যাপ</button><button class="rounded-lg border border-slate-600 px-3 py-2 text-xs">বিস্তারিত</button></div>
-        <div class="mt-5 grid gap-4 md:grid-cols-2"><div class="broken-image flex h-44 flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-slate-500 text-center text-sm text-slate-400"><span aria-hidden="true" class="text-4xl">▧</span><span>ভাঙা ছবি স্থানধারক (Broken image)<br>পণ্যের পূর্বরূপ অনুপস্থিত</span></div><div class="rounded-xl border border-slate-700 p-4"><h3 class="font-semibold">প্রবেশগম্যতা যাচাই</h3><ul class="mt-3 list-disc space-y-2 pl-5 text-sm text-slate-400"><li>ফর্ম লেবেল ইনপুটের সঙ্গে যুক্ত আছে কি?</li><li>কিবোর্ড দিয়ে সব নিয়ন্ত্রণে যাওয়া যায় কি?</li><li>ত্রুটির বিবরণ সহায়ক প্রযুক্তিতে ঘোষণা হয় কি?</li><li>রঙ ছাড়াও অবস্থা বোঝার উপায় আছে কি?</li></ul></div></div>
+        <div class="audit-overlap flex min-h-20 items-center gap-4 rounded-xl border border-slate-700 bg-slate-950/60 p-4"><span class="text-sm text-slate-300"><span data-bn="এই নমুনা কার্ডে দুটি বোতামের অবস্থান পরীক্ষা করুন।" data-en="Inspect the placement of the two buttons in this sample card.">এই নমুনা কার্ডে দুটি বোতামের অবস্থান পরীক্ষা করুন।</span></span><button class="overlap-demo rounded-lg bg-rose-400 px-3 py-2 text-xs font-bold text-slate-950"><span data-bn="ওভারল্যাপ" data-en="Overlap">ওভারল্যাপ</span></button><button class="rounded-lg border border-slate-600 px-3 py-2 text-xs"><span data-bn="বিস্তারিত" data-en="Details">বিস্তারিত</span></button></div>
+        <div class="mt-5 grid gap-4 md:grid-cols-2"><div class="broken-image flex h-44 flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-slate-500 text-center text-sm text-slate-400"><span aria-hidden="true" class="text-4xl">▧</span><span><span data-bn="ভাঙা ছবি স্থানধারক (Broken image)" data-en="Broken image placeholder">ভাঙা ছবি স্থানধারক (Broken image)</span><br><span data-bn="পণ্যের পূর্বরূপ অনুপস্থিত" data-en="Product preview is unavailable">পণ্যের পূর্বরূপ অনুপস্থিত</span></span></div><div class="rounded-xl border border-slate-700 p-4"><h3 class="font-semibold"><span data-bn="প্রবেশগম্যতা যাচাই" data-en="Accessibility Checklist">প্রবেশগম্যতা যাচাই</span></h3><ul class="mt-3 list-disc space-y-2 pl-5 text-sm text-slate-400"><li><span data-bn="ফর্ম লেবেল ইনপুটের সঙ্গে যুক্ত আছে কি?" data-en="Are form labels associated with their inputs?">ফর্ম লেবেল ইনপুটের সঙ্গে যুক্ত আছে কি?</span></li><li><span data-bn="কিবোর্ড দিয়ে সব নিয়ন্ত্রণে যাওয়া যায় কি?" data-en="Can all controls be reached with a keyboard?">কিবোর্ড দিয়ে সব নিয়ন্ত্রণে যাওয়া যায় কি?</span></li><li><span data-bn="ত্রুটির বিবরণ সহায়ক প্রযুক্তিতে ঘোষণা হয় কি?" data-en="Are errors announced to assistive technologies?">ত্রুটির বিবরণ সহায়ক প্রযুক্তিতে ঘোষণা হয় কি?</span></li><li><span data-bn="রঙ ছাড়াও অবস্থা বোঝার উপায় আছে কি?" data-en="Can status be understood without relying on color?">রঙ ছাড়াও অবস্থা বোঝার উপায় আছে কি?</span></li></ul></div></div>
       </div>
-      <p class="mt-4 rounded-xl border border-violet-400/20 bg-violet-400/5 p-4 text-sm text-violet-100"><b>ইচ্ছাকৃত UI ত্রুটি:</b> নমুনা বোতামটি অন্য উপাদানের ওপর পড়ে এবং ছবির উৎস অনুপস্থিত।</p>
+      <p class="mt-4 rounded-xl border border-violet-400/20 bg-violet-400/5 p-4 text-sm text-violet-100"><b><span data-bn="ইচ্ছাকৃত UI ত্রুটি:" data-en="Intentional UI defects:">ইচ্ছাকৃত UI ত্রুটি:</span></b><span data-bn=" নমুনা বোতামটি অন্য উপাদানের ওপর পড়ে এবং ছবির উৎস অনুপস্থিত।" data-en=" The sample button overlaps another element, and the image source is missing."> নমুনা বোতামটি অন্য উপাদানের ওপর পড়ে এবং ছবির উৎস অনুপস্থিত।</span></p>
     </section>
 
     <section id="panel-suite" class="tab-panel glass rounded-2xl p-5 sm:p-7" role="tabpanel" aria-labelledby="tab-suite" hidden>
-      <div class="mb-6"><p class="text-xs font-bold uppercase tracking-[.18em] text-emerald-300">স্মোক · স্যানিটি · রিগ্রেশন</p><h2 class="mt-2 text-2xl font-bold">পরীক্ষণ সম্পাদন চেকলিস্ট</h2><p class="mt-2 text-sm text-slate-400">প্রতিটি পরীক্ষার ফল নির্বাচন করলে পাশ/ব্যর্থতার হার ও সারাংশ তাৎক্ষণিকভাবে হালনাগাদ হবে।</p></div>
-      <div class="grid gap-5 lg:grid-cols-[1.2fr_.8fr]"><div id="checklist" class="space-y-3"></div><aside class="rounded-2xl border border-slate-800 bg-slate-950/50 p-5"><h3 class="font-semibold">লাইভ পরীক্ষণ সারাংশ</h3><div class="mt-4 grid grid-cols-2 gap-3"><div class="rounded-xl bg-emerald-400/10 p-4"><p class="text-xs text-emerald-200">পাশের হার</p><p id="pass-rate" class="mt-1 text-2xl font-bold">০%</p></div><div class="rounded-xl bg-rose-400/10 p-4"><p class="text-xs text-rose-200">ব্যর্থতার হার</p><p id="fail-rate" class="mt-1 text-2xl font-bold">০%</p></div></div><p id="suite-summary" class="mt-4 text-sm leading-6 text-slate-400" aria-live="polite">এখনো কোনো পরীক্ষা সম্পন্ন হয়নি।</p><button id="reset-suite" class="mt-4 rounded-lg border border-slate-700 px-4 py-2 text-sm hover:bg-slate-800">সব ফল মুছুন</button></aside></div>
+      <div class="mb-6"><p class="text-xs font-bold uppercase tracking-[.18em] text-emerald-300"><span data-bn="স্মোক · স্যানিটি · রিগ্রেশন" data-en="Smoke · Sanity · Regression">স্মোক · স্যানিটি · রিগ্রেশন</span></p><h2 class="mt-2 text-2xl font-bold"><span data-bn="পরীক্ষণ সম্পাদন চেকলিস্ট" data-en="Test Execution Checklist">পরীক্ষণ সম্পাদন চেকলিস্ট</span></h2><p class="mt-2 text-sm text-slate-400"><span data-bn="প্রতিটি পরীক্ষার ফল নির্বাচন করলে পাশ/ব্যর্থতার হার ও সারাংশ তাৎক্ষণিকভাবে হালনাগাদ হবে।" data-en="Choose a result for each test to update the pass/fail rates and summary instantly.">প্রতিটি পরীক্ষার ফল নির্বাচন করলে পাশ/ব্যর্থতার হার ও সারাংশ তাৎক্ষণিকভাবে হালনাগাদ হবে।</span></p></div>
+      <div class="grid gap-5 lg:grid-cols-[1.2fr_.8fr]"><div id="checklist" class="space-y-3"></div><aside class="rounded-2xl border border-slate-800 bg-slate-950/50 p-5"><h3 class="font-semibold"><span data-bn="লাইভ পরীক্ষণ সারাংশ" data-en="Live Test Execution Summary">লাইভ পরীক্ষণ সারাংশ</span></h3><div class="mt-4 grid grid-cols-2 gap-3"><div class="rounded-xl bg-emerald-400/10 p-4"><p class="text-xs text-emerald-200"><span data-bn="পাশের হার" data-en="Pass Rate">পাশের হার</span></p><p id="pass-rate" class="mt-1 text-2xl font-bold">০%</p></div><div class="rounded-xl bg-rose-400/10 p-4"><p class="text-xs text-rose-200"><span data-bn="ব্যর্থতার হার" data-en="Fail Rate">ব্যর্থতার হার</span></p><p id="fail-rate" class="mt-1 text-2xl font-bold">০%</p></div></div><p id="suite-summary" class="mt-4 text-sm leading-6 text-slate-400" aria-live="polite"><span data-bn="এখনো কোনো পরীক্ষা সম্পন্ন হয়নি।" data-en="No tests have been completed yet.">এখনো কোনো পরীক্ষা সম্পন্ন হয়নি।</span></p><button id="reset-suite" class="mt-4 rounded-lg border border-slate-700 px-4 py-2 text-sm hover:bg-slate-800"><span data-bn="সব ফল মুছুন" data-en="Clear Results">সব ফল মুছুন</span></button></aside></div>
     </section>
 
     <section id="panel-api" class="tab-panel glass rounded-2xl p-5 sm:p-7" role="tabpanel" aria-labelledby="tab-api" hidden>
-      <div class="mb-6"><p class="text-xs font-bold uppercase tracking-[.18em] text-blue-300">HTTP · REST · প্রতিক্রিয়া পর্যবেক্ষণ</p><h2 class="mt-2 text-2xl font-bold">লাইভ REST API পরীক্ষণ স্যান্ডবক্স</h2><p class="mt-2 text-sm text-slate-400">Supabase REST API-তে GET, POST ও DELETE অনুরোধ পাঠান; ত্রুটি-অবস্থাগুলো নিরাপদে অনুকরণ করা হয়।</p></div>
+      <div class="mb-6"><p class="text-xs font-bold uppercase tracking-[.18em] text-blue-300"><span data-bn="HTTP · REST · প্রতিক্রিয়া পর্যবেক্ষণ" data-en="HTTP · REST · Response Monitoring">HTTP · REST · প্রতিক্রিয়া পর্যবেক্ষণ</span></p><h2 class="mt-2 text-2xl font-bold"><span data-bn="লাইভ REST API পরীক্ষণ স্যান্ডবক্স" data-en="Live REST API Testing Sandbox">লাইভ REST API পরীক্ষণ স্যান্ডবক্স</span></h2><p class="mt-2 text-sm text-slate-400"><span data-bn="Supabase REST API-তে GET, POST ও DELETE অনুরোধ পাঠান; ত্রুটি-অবস্থাগুলো নিরাপদে অনুকরণ করা হয়।" data-en="Send GET, POST, and DELETE requests to the Supabase REST API; error scenarios are safely simulated.">Supabase REST API-তে GET, POST ও DELETE অনুরোধ পাঠান; ত্রুটি-অবস্থাগুলো নিরাপদে অনুকরণ করা হয়।</span></p></div>
       <div class="grid gap-5 lg:grid-cols-[.8fr_1.2fr]">
         <div class="space-y-4 rounded-2xl border border-slate-800 bg-slate-950/50 p-5">
-          <label class="block text-sm text-slate-300">HTTP পদ্ধতি<select id="api-method" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3"><option value="GET">তথ্য পড়ুন (GET · ২০০)</option><option value="POST">তথ্য তৈরি করুন (POST · ২০১)</option><option value="DELETE">তথ্য মুছুন (DELETE · ২০৪)</option><option value="BAD_REQUEST">ভুল অনুরোধ অনুকরণ (৪০০)</option><option value="UNAUTHORIZED">অননুমোদিত অনুরোধ অনুকরণ (৪০১)</option></select></label>
-          <label class="block text-sm text-slate-300">সম্পদ (Resource)<select id="api-resource" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3"><option value="sqa_users">ব্যবহারকারী (sqa_users)</option><option value="sqa_orders">অর্ডার (sqa_orders)</option></select></label>
-          <label class="block text-sm text-slate-300">রেকর্ড আইডি (DELETE-এর জন্য)<input id="api-record-id" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3" placeholder="সঠিক রেকর্ড আইডি দিন"></label>
-          <button id="run-api" class="w-full rounded-xl bg-blue-300 px-5 py-3 font-bold text-slate-950">API অনুরোধ চালান</button>
-          <div class="rounded-xl border border-amber-400/20 bg-amber-400/5 p-3 text-xs leading-5 text-amber-100">মোছার অনুরোধে বাস্তব ডেটা পরিবর্তিত হবে এবং নিশ্চিতকরণ চাওয়া হবে। ৪০০ ও ৪০১ প্রতিক্রিয়া কেবল স্থানীয়ভাবে অনুকৃত, সার্ভারে পাঠানো হয় না।</div>
+          <label class="block text-sm text-slate-300"><span data-bn="HTTP পদ্ধতি" data-en="HTTP Method">HTTP পদ্ধতি</span><select id="api-method" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3"><option value="GET"><span data-bn="তথ্য পড়ুন (GET · ২০০)" data-en="Read data (GET · 200)">তথ্য পড়ুন (GET · ২০০)</span></option><option value="POST"><span data-bn="তথ্য তৈরি করুন (POST · ২০১)" data-en="Create data (POST · 201)">তথ্য তৈরি করুন (POST · ২০১)</span></option><option value="DELETE"><span data-bn="তথ্য মুছুন (DELETE · ২০৪)" data-en="Delete data (DELETE · 204)">তথ্য মুছুন (DELETE · ২০৪)</span></option><option value="BAD_REQUEST"><span data-bn="ভুল অনুরোধ অনুকরণ (৪০০)" data-en="Simulate Bad Request (400)">ভুল অনুরোধ অনুকরণ (৪০০)</span></option><option value="UNAUTHORIZED"><span data-bn="অননুমোদিত অনুরোধ অনুকরণ (৪০১)" data-en="Simulate Unauthorized (401)">অননুমোদিত অনুরোধ অনুকরণ (৪০১)</span></option></select></label>
+          <label class="block text-sm text-slate-300"><span data-bn="সম্পদ (Resource)" data-en="Resource">সম্পদ (Resource)</span><select id="api-resource" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3"><option value="sqa_users"><span data-bn="ব্যবহারকারী (sqa_users)" data-en="Users (sqa_users)">ব্যবহারকারী (sqa_users)</span></option><option value="sqa_orders"><span data-bn="অর্ডার (sqa_orders)" data-en="Orders (sqa_orders)">অর্ডার (sqa_orders)</span></option></select></label>
+          <label class="block text-sm text-slate-300"><span data-bn="রেকর্ড আইডি (DELETE-এর জন্য)" data-en="Record ID (for DELETE)">রেকর্ড আইডি (DELETE-এর জন্য)</span><input id="api-record-id" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3" placeholder="সঠিক রেকর্ড আইডি দিন" data-bn-placeholder="সঠিক রেকর্ড আইডি দিন" data-en-placeholder="Enter a record ID"></label>
+          <button id="run-api" class="w-full rounded-xl bg-blue-300 px-5 py-3 font-bold text-slate-950"><span data-bn="API অনুরোধ চালান" data-en="Run API Request">API অনুরোধ চালান</span></button>
+          <div class="rounded-xl border border-amber-400/20 bg-amber-400/5 p-3 text-xs leading-5 text-amber-100"><span data-bn="মোছার অনুরোধে বাস্তব ডেটা পরিবর্তিত হবে এবং নিশ্চিতকরণ চাওয়া হবে। ৪০০ ও ৪০১ প্রতিক্রিয়া কেবল স্থানীয়ভাবে অনুকৃত, সার্ভারে পাঠানো হয় না।" data-en="Delete requests change real data and require confirmation. 400 and 401 responses are simulated locally and are not sent to the server.">মোছার অনুরোধে বাস্তব ডেটা পরিবর্তিত হবে এবং নিশ্চিতকরণ চাওয়া হবে। ৪০০ ও ৪০১ প্রতিক্রিয়া কেবল স্থানীয়ভাবে অনুকৃত, সার্ভারে পাঠানো হয় না।</span></div>
         </div>
-        <div class="rounded-2xl border border-slate-800 bg-slate-950/50 p-5"><div class="flex flex-wrap justify-between gap-3"><h3 class="font-semibold">কাঁচা প্রতিক্রিয়া (Raw Response)</h3><div class="text-xs text-slate-400">অবস্থা: <b id="api-status" class="text-slate-200">—</b> · সময়: <b id="api-latency" class="text-slate-200">—</b></div></div><pre id="api-output" class="mt-4 min-h-64 overflow-auto rounded-xl bg-black/40 p-4 text-xs leading-5 text-emerald-200" aria-live="polite">অনুরোধের ফল এখানে দেখা যাবে।</pre></div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-950/50 p-5"><div class="flex flex-wrap justify-between gap-3"><h3 class="font-semibold"><span data-bn="কাঁচা প্রতিক্রিয়া (Raw Response)" data-en="Raw Response">কাঁচা প্রতিক্রিয়া (Raw Response)</span></h3><div class="text-xs text-slate-400"><span data-bn="অবস্থা:" data-en="Status:">অবস্থা:</span> <b id="api-status" class="text-slate-200">—</b> · <span data-bn="সময়:" data-en="Latency:">সময়:</span> <b id="api-latency" class="text-slate-200">—</b></div></div><pre id="api-output" class="mt-4 min-h-64 overflow-auto rounded-xl bg-black/40 p-4 text-xs leading-5 text-emerald-200" aria-live="polite"><span data-bn="অনুরোধের ফল এখানে দেখা যাবে।" data-en="The request result will appear here.">অনুরোধের ফল এখানে দেখা যাবে।</span></pre></div>
       </div>
     </section>
 
     <section id="panel-database" class="tab-panel glass rounded-2xl p-5 sm:p-7" role="tabpanel" aria-labelledby="tab-database" hidden>
-      <div class="mb-6"><p class="text-xs font-bold uppercase tracking-[.18em] text-amber-300">PostgreSQL · সম্পর্ক · ভলিউম</p><h2 class="mt-2 text-2xl font-bold">ডেটাবেস ও সম্পর্ক যাচাই</h2><p class="mt-2 text-sm text-slate-400">লাইভ রেকর্ড, ব্যবহারকারী-অর্ডার সম্পর্ক, খোঁজ এবং মুছে ফেলার কার্যক্রম পর্যালোচনা করুন।</p></div>
-      <div class="mb-4 flex flex-wrap gap-3"><input id="table-search" class="min-w-52 flex-1 rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="নাম, ইমেইল বা আইডি খুঁজুন"><button id="refresh-data" class="rounded-xl border border-slate-700 px-4 py-3 hover:bg-slate-800">তথ্য নবায়ন</button><button id="bulk-users" class="rounded-xl bg-amber-300 px-4 py-3 font-bold text-slate-950 hover:bg-amber-200">৫০টি পরীক্ষণ ব্যবহারকারী তৈরি করুন</button></div>
-      <div id="database-message" class="mb-4 text-sm text-slate-400" aria-live="polite">তথ্য লোড হচ্ছে…</div>
+      <div class="mb-6"><p class="text-xs font-bold uppercase tracking-[.18em] text-amber-300"><span data-bn="PostgreSQL · সম্পর্ক · ভলিউম" data-en="PostgreSQL · Relationships · Volume">PostgreSQL · সম্পর্ক · ভলিউম</span></p><h2 class="mt-2 text-2xl font-bold"><span data-bn="ডেটাবেস ও সম্পর্ক যাচাই" data-en="Database &amp; Relationship Verification">ডেটাবেস ও সম্পর্ক যাচাই</span></h2><p class="mt-2 text-sm text-slate-400"><span data-bn="লাইভ রেকর্ড, ব্যবহারকারী-অর্ডার সম্পর্ক, খোঁজ এবং মুছে ফেলার কার্যক্রম পর্যালোচনা করুন।" data-en="Review live records, user-order relationships, search, and delete operations.">লাইভ রেকর্ড, ব্যবহারকারী-অর্ডার সম্পর্ক, খোঁজ এবং মুছে ফেলার কার্যক্রম পর্যালোচনা করুন।</span></p></div>
+      <div class="mb-4 flex flex-wrap gap-3"><input id="table-search" class="min-w-52 flex-1 rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="নাম, ইমেইল বা আইডি খুঁজুন" data-bn-placeholder="নাম, ইমেইল বা আইডি খুঁজুন" data-en-placeholder="Search name, email, or ID"><button id="refresh-data" class="rounded-xl border border-slate-700 px-4 py-3 hover:bg-slate-800"><span data-bn="তথ্য নবায়ন" data-en="Refresh Data">তথ্য নবায়ন</span></button><button id="bulk-users" class="rounded-xl bg-amber-300 px-4 py-3 font-bold text-slate-950 hover:bg-amber-200"><span data-bn="৫০টি পরীক্ষণ ব্যবহারকারী তৈরি করুন" data-en="Generate 50 Test Users">৫০টি পরীক্ষণ ব্যবহারকারী তৈরি করুন</span></button></div>
+      <div id="database-message" class="mb-4 text-sm text-slate-400" aria-live="polite"><span data-bn="তথ্য লোড হচ্ছে…" data-en="Loading data…">তথ্য লোড হচ্ছে…</span></div>
       <div class="grid gap-5 xl:grid-cols-2">
-        <div class="overflow-hidden rounded-xl border border-slate-800"><h3 class="bg-slate-900 px-4 py-3 font-semibold">ব্যবহারকারী (sqa_users)</h3><div class="max-h-[28rem] overflow-auto"><table class="w-full text-left text-sm"><thead class="sticky top-0 bg-slate-950 text-xs text-slate-400"><tr><th class="p-3">নাম / ইমেইল</th><th class="p-3">বয়স</th><th class="p-3">আইডি</th><th class="p-3">কাজ</th></tr></thead><tbody id="users-table" class="divide-y divide-slate-800"></tbody></table></div></div>
-        <div class="overflow-hidden rounded-xl border border-slate-800"><h3 class="bg-slate-900 px-4 py-3 font-semibold">অর্ডার ও ব্যবহারকারী (sqa_orders)</h3><div class="max-h-[28rem] overflow-auto"><table class="w-full text-left text-sm"><thead class="sticky top-0 bg-slate-950 text-xs text-slate-400"><tr><th class="p-3">পণ্য</th><th class="p-3">পরিমাণ / মোট</th><th class="p-3">ব্যবহারকারী</th><th class="p-3">অবস্থা</th></tr></thead><tbody id="orders-table" class="divide-y divide-slate-800"></tbody></table></div></div>
+        <div class="overflow-hidden rounded-xl border border-slate-800"><h3 class="bg-slate-900 px-4 py-3 font-semibold"><span data-bn="ব্যবহারকারী (sqa_users)" data-en="Users (sqa_users)">ব্যবহারকারী (sqa_users)</span></h3><div class="max-h-[28rem] overflow-auto"><table class="w-full text-left text-sm"><thead class="sticky top-0 bg-slate-950 text-xs text-slate-400"><tr><th class="p-3"><span data-bn="নাম / ইমেইল" data-en="Name / Email">নাম / ইমেইল</span></th><th class="p-3"><span data-bn="বয়স" data-en="Age">বয়স</span></th><th class="p-3"><span data-bn="আইডি" data-en="ID">আইডি</span></th><th class="p-3"><span data-bn="কাজ" data-en="Actions">কাজ</span></th></tr></thead><tbody id="users-table" class="divide-y divide-slate-800"></tbody></table></div></div>
+        <div class="overflow-hidden rounded-xl border border-slate-800"><h3 class="bg-slate-900 px-4 py-3 font-semibold"><span data-bn="অর্ডার ও ব্যবহারকারী (sqa_orders)" data-en="Orders &amp; Users (sqa_orders)">অর্ডার ও ব্যবহারকারী (sqa_orders)</span></h3><div class="max-h-[28rem] overflow-auto"><table class="w-full text-left text-sm"><thead class="sticky top-0 bg-slate-950 text-xs text-slate-400"><tr><th class="p-3"><span data-bn="পণ্য" data-en="Product">পণ্য</span></th><th class="p-3"><span data-bn="পরিমাণ / মোট" data-en="Quantity / Total">পরিমাণ / মোট</span></th><th class="p-3"><span data-bn="ব্যবহারকারী" data-en="User">ব্যবহারকারী</span></th><th class="p-3"><span data-bn="অবস্থা" data-en="Status">অবস্থা</span></th></tr></thead><tbody id="orders-table" class="divide-y divide-slate-800"></tbody></table></div></div>
       </div>
-      <p class="mt-4 text-xs leading-5 text-slate-500">ভলিউম পরীক্ষায় ৫০টি স্বতন্ত্র পরীক্ষণ ইমেইল পাঠানো হয়। মুছে ফেলা স্থায়ী; প্রতিটি রেকর্ডের আগে নিশ্চিতকরণ দেখানো হবে।</p>
+      <p class="mt-4 text-xs leading-5 text-slate-500"><span data-bn="ভলিউম পরীক্ষায় ৫০টি স্বতন্ত্র পরীক্ষণ ইমেইল পাঠানো হয়। মুছে ফেলা স্থায়ী; প্রতিটি রেকর্ডের আগে নিশ্চিতকরণ দেখানো হবে।" data-en="Volume testing inserts 50 unique test emails. Deletion is permanent; each record requires confirmation.">ভলিউম পরীক্ষায় ৫০টি স্বতন্ত্র পরীক্ষণ ইমেইল পাঠানো হয়। মুছে ফেলা স্থায়ী; প্রতিটি রেকর্ডের আগে নিশ্চিতকরণ দেখানো হবে।</span></p>
     </section>
 
     <section id="panel-security" class="tab-panel glass rounded-2xl p-5 sm:p-7" role="tabpanel" aria-labelledby="tab-security" hidden>
-      <div class="mb-6"><p class="text-xs font-bold uppercase tracking-[.18em] text-rose-300">ইনপুট নিরাপত্তা · সীমাবদ্ধতা · প্রতিক্রিয়া সময়</p><h2 class="mt-2 text-2xl font-bold">নিরাপত্তা ও কর্মদক্ষতা পরীক্ষণ</h2><p class="mt-2 text-sm text-slate-400">নিরাপদ স্থানীয় সিমুলেশনে ইনপুট আচরণ এবং অনুরোধের কর্মদক্ষতা পরীক্ষা করুন।</p></div>
+      <div class="mb-6"><p class="text-xs font-bold uppercase tracking-[.18em] text-rose-300"><span data-bn="ইনপুট নিরাপত্তা · সীমাবদ্ধতা · প্রতিক্রিয়া সময়" data-en="Input Security · Rate Limits · Response Time">ইনপুট নিরাপত্তা · সীমাবদ্ধতা · প্রতিক্রিয়া সময়</span></p><h2 class="mt-2 text-2xl font-bold"><span data-bn="নিরাপত্তা ও কর্মদক্ষতা পরীক্ষণ" data-en="Security &amp; Performance Testing">নিরাপত্তা ও কর্মদক্ষতা পরীক্ষণ</span></h2><p class="mt-2 text-sm text-slate-400"><span data-bn="নিরাপদ স্থানীয় সিমুলেশনে ইনপুট আচরণ এবং অনুরোধের কর্মদক্ষতা পরীক্ষা করুন।" data-en="Test input handling and request performance in safe local simulations.">নিরাপদ স্থানীয় সিমুলেশনে ইনপুট আচরণ এবং অনুরোধের কর্মদক্ষতা পরীক্ষা করুন।</span></p></div>
       <div class="grid gap-5 lg:grid-cols-2">
-        <div class="space-y-4 rounded-2xl border border-slate-800 bg-slate-950/50 p-5"><label class="block text-sm text-slate-300">পরীক্ষার ইনপুট (Test Input)<input id="security-input" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3" placeholder="নিরাপদে পরীক্ষার স্ট্রিং লিখুন"></label><div class="flex flex-wrap gap-2"><button class="security-preset rounded-lg border border-slate-700 px-3 py-2 text-xs" data-value="' OR '1'='1">SQL ইনজেকশন পরীক্ষা</button><button class="security-preset rounded-lg border border-slate-700 px-3 py-2 text-xs" data-value="<script>alert('xss')</script>">XSS পরীক্ষা</button><button id="brute-force" class="rounded-lg border border-rose-400/40 px-3 py-2 text-xs text-rose-200">লগইন-লক অনুকরণ</button></div><button id="inspect-input" class="rounded-xl bg-rose-300 px-5 py-3 font-bold text-slate-950">ইনপুট পরীক্ষা করুন</button><div id="security-result" class="min-h-16 rounded-xl border border-slate-800 p-4 text-sm text-slate-300" aria-live="polite">পরীক্ষার ফল এখানে দেখা যাবে।</div><p class="text-xs leading-5 text-slate-500">ইনপুটটি শুধু স্থানীয়ভাবে বিশ্লেষিত হয়; ডেটাবেসে চালানো বা HTML হিসেবে রেন্ডার করা হয় না।</p></div>
-        <div class="rounded-2xl border border-slate-800 bg-slate-950/50 p-5"><h3 class="font-semibold">নিয়ন্ত্রিত লোড পর্যবেক্ষণ</h3><p class="mt-2 text-sm leading-6 text-slate-400">প্রকৃত সার্ভারে একযোগে ১০০টি অনুরোধ পাঠানো হয় না। পরিবর্তে একই ধরনের ১০০টি স্থানীয় নমুনা কাজের সময় মাপা হয় এবং বাস্তব API-র একটি হালকা পাঠ-অনুরোধ দিয়ে সার্ভার প্রতিক্রিয়া যাচাই করা যায়।</p><button id="run-load-test" class="mt-4 rounded-xl bg-violet-300 px-5 py-3 font-bold text-slate-950">১০০টি স্থানীয় লোড নমুনা চালান</button><div id="load-result" class="mt-4 min-h-20 rounded-xl border border-slate-800 p-4 text-sm text-slate-300" aria-live="polite">চালানোর পর পরিসংখ্যান এখানে দেখা যাবে।</div></div>
+        <div class="space-y-4 rounded-2xl border border-slate-800 bg-slate-950/50 p-5"><label class="block text-sm text-slate-300"><span data-bn="পরীক্ষার ইনপুট (Test Input)" data-en="Test Input">পরীক্ষার ইনপুট (Test Input)</span><input id="security-input" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3" placeholder="নিরাপদে পরীক্ষার স্ট্রিং লিখুন" data-bn-placeholder="নিরাপদে পরীক্ষার স্ট্রিং লিখুন" data-en-placeholder="Enter a test string safely"></label><div class="flex flex-wrap gap-2"><button class="security-preset rounded-lg border border-slate-700 px-3 py-2 text-xs" data-value="' OR '1'='1"><span data-bn="SQL ইনজেকশন পরীক্ষা" data-en="Test SQL Injection">SQL ইনজেকশন পরীক্ষা</span></button><button class="security-preset rounded-lg border border-slate-700 px-3 py-2 text-xs" data-value="<script>alert('xss')</script>"><span data-bn="XSS পরীক্ষা" data-en="Test XSS">XSS পরীক্ষা</span></button><button id="brute-force" class="rounded-lg border border-rose-400/40 px-3 py-2 text-xs text-rose-200"><span data-bn="লগইন-লক অনুকরণ" data-en="Simulate Login Lockout">লগইন-লক অনুকরণ</span></button></div><button id="inspect-input" class="rounded-xl bg-rose-300 px-5 py-3 font-bold text-slate-950"><span data-bn="ইনপুট পরীক্ষা করুন" data-en="Inspect Input">ইনপুট পরীক্ষা করুন</span></button><div id="security-result" class="min-h-16 rounded-xl border border-slate-800 p-4 text-sm text-slate-300" aria-live="polite"><span data-bn="পরীক্ষার ফল এখানে দেখা যাবে।" data-en="Test results will appear here.">পরীক্ষার ফল এখানে দেখা যাবে।</span></div><p class="text-xs leading-5 text-slate-500"><span data-bn="ইনপুটটি শুধু স্থানীয়ভাবে বিশ্লেষিত হয়; ডেটাবেসে চালানো বা HTML হিসেবে রেন্ডার করা হয় না।" data-en="Input is analyzed locally only; it is not run against the database or rendered as HTML.">ইনপুটটি শুধু স্থানীয়ভাবে বিশ্লেষিত হয়; ডেটাবেসে চালানো বা HTML হিসেবে রেন্ডার করা হয় না।</span></p></div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-950/50 p-5"><h3 class="font-semibold"><span data-bn="নিয়ন্ত্রিত লোড পর্যবেক্ষণ" data-en="Controlled Load Measurement">নিয়ন্ত্রিত লোড পর্যবেক্ষণ</span></h3><p class="mt-2 text-sm leading-6 text-slate-400"><span data-bn="প্রকৃত সার্ভারে একযোগে ১০০টি অনুরোধ পাঠানো হয় না। পরিবর্তে একই ধরনের ১০০টি স্থানীয় নমুনা কাজের সময় মাপা হয় এবং বাস্তব API-র একটি হালকা পাঠ-অনুরোধ দিয়ে সার্ভার প্রতিক্রিয়া যাচাই করা যায়।" data-en="100 concurrent requests are not sent to the live server. Instead, 100 local sample tasks are timed, and one lightweight read request can check the live API response.">প্রকৃত সার্ভারে একযোগে ১০০টি অনুরোধ পাঠানো হয় না। পরিবর্তে একই ধরনের ১০০টি স্থানীয় নমুনা কাজের সময় মাপা হয় এবং বাস্তব API-র একটি হালকা পাঠ-অনুরোধ দিয়ে সার্ভার প্রতিক্রিয়া যাচাই করা যায়।</span></p><button id="run-load-test" class="mt-4 rounded-xl bg-violet-300 px-5 py-3 font-bold text-slate-950"><span data-bn="১০০টি স্থানীয় লোড নমুনা চালান" data-en="Run 100 Local Load Samples">১০০টি স্থানীয় লোড নমুনা চালান</span></button><div id="load-result" class="mt-4 min-h-20 rounded-xl border border-slate-800 p-4 text-sm text-slate-300" aria-live="polite"><span data-bn="চালানোর পর পরিসংখ্যান এখানে দেখা যাবে।" data-en="Run the test to see the results.">চালানোর পর পরিসংখ্যান এখানে দেখা যাবে।</span></div></div>
       </div>
     </section>
 
     <section id="panel-bugs" class="tab-panel glass rounded-2xl p-5 sm:p-7" role="tabpanel" aria-labelledby="tab-bugs" hidden>
-      <div class="mb-6"><p class="text-xs font-bold uppercase tracking-[.18em] text-fuchsia-300">ত্রুটি ব্যবস্থাপনা · টেস্ট কেস</p><h2 class="mt-2 text-2xl font-bold">বাগ ট্র্যাকার ও পরীক্ষণ কেস</h2><p class="mt-2 text-sm text-slate-400">বাগ প্রতিবেদন জমা দিন, অগ্রগতি হালনাগাদ করুন এবং সাধারণ পরীক্ষণ কেস পর্যালোচনা করুন।</p></div>
+      <div class="mb-6"><p class="text-xs font-bold uppercase tracking-[.18em] text-fuchsia-300"><span data-bn="ত্রুটি ব্যবস্থাপনা · টেস্ট কেস" data-en="Defect Management · Test Cases">ত্রুটি ব্যবস্থাপনা · টেস্ট কেস</span></p><h2 class="mt-2 text-2xl font-bold"><span data-bn="বাগ ট্র্যাকার ও পরীক্ষণ কেস" data-en="Bug Tracker &amp; Test Cases">বাগ ট্র্যাকার ও পরীক্ষণ কেস</span></h2><p class="mt-2 text-sm text-slate-400"><span data-bn="বাগ প্রতিবেদন জমা দিন, অগ্রগতি হালনাগাদ করুন এবং সাধারণ পরীক্ষণ কেস পর্যালোচনা করুন।" data-en="Submit bug reports, update their status, and review standard test cases.">বাগ প্রতিবেদন জমা দিন, অগ্রগতি হালনাগাদ করুন এবং সাধারণ পরীক্ষণ কেস পর্যালোচনা করুন।</span></p></div>
       <div class="grid gap-6 xl:grid-cols-[.8fr_1.2fr]">
         <form id="bug-form" class="grid gap-4 sm:grid-cols-2 xl:grid-cols-1">
-          <label class="text-sm text-slate-300">মডিউল (Module)<input id="bug-module" required maxlength="100" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="যেমন: নিবন্ধন"></label>
-          <label class="text-sm text-slate-300">বাগের শিরোনাম (Bug Title)<input id="bug-title" required maxlength="180" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3"></label>
-          <div class="grid grid-cols-2 gap-3"><label class="text-sm text-slate-300">তীব্রতা (Severity)<select id="bug-severity" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-3"><option value="Critical">সংকটজনক (Critical)</option><option value="Major" selected>গুরুতর (Major)</option><option value="Minor">কম গুরুতর (Minor)</option><option value="Trivial">সামান্য (Trivial)</option></select></label><label class="text-sm text-slate-300">অগ্রাধিকার (Priority)<select id="bug-priority" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-3"><option value="High">উচ্চ (High)</option><option value="Medium" selected>মাঝারি (Medium)</option><option value="Low">নিম্ন (Low)</option></select></label></div>
-          <label class="text-sm text-slate-300 sm:col-span-2 xl:col-span-1">পুনরুৎপাদনের ধাপ (Steps)<textarea id="bug-steps" required rows="3" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3"></textarea></label>
-          <label class="text-sm text-slate-300 sm:col-span-2 xl:col-span-1">প্রত্যাশিত ফল (Expected Result)<textarea id="bug-expected" required rows="2" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3"></textarea></label>
-          <label class="text-sm text-slate-300 sm:col-span-2 xl:col-span-1">প্রকৃত ফল (Actual Result)<textarea id="bug-actual" required rows="2" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3"></textarea></label>
-          <button type="submit" class="rounded-xl bg-fuchsia-300 px-5 py-3 font-bold text-slate-950 sm:col-span-2 xl:col-span-1">বাগ প্রতিবেদন জমা দিন</button>
+          <label class="text-sm text-slate-300"><span data-bn="মডিউল (Module)" data-en="Module">মডিউল (Module)</span><input id="bug-module" required maxlength="100" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="যেমন: নিবন্ধন" data-bn-placeholder="যেমন: নিবন্ধন" data-en-placeholder="For example: Registration"></label>
+          <label class="text-sm text-slate-300"><span data-bn="বাগের শিরোনাম (Bug Title)" data-en="Bug Title">বাগের শিরোনাম (Bug Title)</span><input id="bug-title" required maxlength="180" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3"></label>
+          <div class="grid grid-cols-2 gap-3"><label class="text-sm text-slate-300"><span data-bn="তীব্রতা (Severity)" data-en="Severity">তীব্রতা (Severity)</span><select id="bug-severity" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-3"><option value="Critical"><span data-bn="সংকটজনক (Critical)" data-en="Critical">সংকটজনক (Critical)</span></option><option value="Major" selected><span data-bn="গুরুতর (Major)" data-en="Major">গুরুতর (Major)</span></option><option value="Minor"><span data-bn="কম গুরুতর (Minor)" data-en="Minor">কম গুরুতর (Minor)</span></option><option value="Trivial"><span data-bn="সামান্য (Trivial)" data-en="Trivial">সামান্য (Trivial)</span></option></select></label><label class="text-sm text-slate-300"><span data-bn="অগ্রাধিকার (Priority)" data-en="Priority">অগ্রাধিকার (Priority)</span><select id="bug-priority" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-3"><option value="High"><span data-bn="উচ্চ (High)" data-en="High">উচ্চ (High)</span></option><option value="Medium" selected><span data-bn="মাঝারি (Medium)" data-en="Medium">মাঝারি (Medium)</span></option><option value="Low"><span data-bn="নিম্ন (Low)" data-en="Low">নিম্ন (Low)</span></option></select></label></div>
+          <label class="text-sm text-slate-300 sm:col-span-2 xl:col-span-1"><span data-bn="পুনরুৎপাদনের ধাপ (Steps)" data-en="Steps to Reproduce">পুনরুৎপাদনের ধাপ (Steps)</span><textarea id="bug-steps" required rows="3" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3"></textarea></label>
+          <label class="text-sm text-slate-300 sm:col-span-2 xl:col-span-1"><span data-bn="প্রত্যাশিত ফল (Expected Result)" data-en="Expected Result">প্রত্যাশিত ফল (Expected Result)</span><textarea id="bug-expected" required rows="2" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3"></textarea></label>
+          <label class="text-sm text-slate-300 sm:col-span-2 xl:col-span-1"><span data-bn="প্রকৃত ফল (Actual Result)" data-en="Actual Result">প্রকৃত ফল (Actual Result)</span><textarea id="bug-actual" required rows="2" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3"></textarea></label>
+          <button type="submit" class="rounded-xl bg-fuchsia-300 px-5 py-3 font-bold text-slate-950 sm:col-span-2 xl:col-span-1"><span data-bn="বাগ প্রতিবেদন জমা দিন" data-en="Submit Bug Report">বাগ প্রতিবেদন জমা দিন</span></button>
           <div id="bug-result" class="text-sm text-slate-300 sm:col-span-2 xl:col-span-1" aria-live="polite"></div>
         </form>
         <div class="space-y-6">
-          <div class="overflow-hidden rounded-xl border border-slate-800"><h3 class="bg-slate-900 px-4 py-3 font-semibold">লাইভ বাগ তালিকা (sqa_bug_reports)</h3><div class="max-h-80 overflow-auto"><table class="w-full text-left text-sm"><thead class="sticky top-0 bg-slate-950 text-xs text-slate-400"><tr><th class="p-3">বাগ</th><th class="p-3">তীব্রতা</th><th class="p-3">অবস্থা</th></tr></thead><tbody id="bugs-table" class="divide-y divide-slate-800"></tbody></table></div></div>
-          <div class="overflow-hidden rounded-xl border border-slate-800"><h3 class="bg-slate-900 px-4 py-3 font-semibold">প্রাক-লোড করা ১০টি পরীক্ষণ কেস</h3><div class="max-h-72 overflow-auto"><table class="w-full text-left text-sm"><thead class="sticky top-0 bg-slate-950 text-xs text-slate-400"><tr><th class="p-3">আইডি</th><th class="p-3">পরীক্ষণ কেস</th><th class="p-3">ধরন</th><th class="p-3">অগ্রাধিকার</th></tr></thead><tbody id="test-cases" class="divide-y divide-slate-800"></tbody></table></div></div>
+          <div class="overflow-hidden rounded-xl border border-slate-800"><h3 class="bg-slate-900 px-4 py-3 font-semibold"><span data-bn="লাইভ বাগ তালিকা (sqa_bug_reports)" data-en="Live Bug Reports (sqa_bug_reports)">লাইভ বাগ তালিকা (sqa_bug_reports)</span></h3><div class="max-h-80 overflow-auto"><table class="w-full text-left text-sm"><thead class="sticky top-0 bg-slate-950 text-xs text-slate-400"><tr><th class="p-3"><span data-bn="বাগ" data-en="Bug">বাগ</span></th><th class="p-3"><span data-bn="তীব্রতা" data-en="Severity">তীব্রতা</span></th><th class="p-3"><span data-bn="অবস্থা" data-en="Status">অবস্থা</span></th></tr></thead><tbody id="bugs-table" class="divide-y divide-slate-800"></tbody></table></div></div>
+          <div class="overflow-hidden rounded-xl border border-slate-800"><h3 class="bg-slate-900 px-4 py-3 font-semibold"><span data-bn="প্রাক-লোড করা ১০টি পরীক্ষণ কেস" data-en="10 Preloaded Test Cases">প্রাক-লোড করা ১০টি পরীক্ষণ কেস</span></h3><div class="max-h-72 overflow-auto"><table class="w-full text-left text-sm"><thead class="sticky top-0 bg-slate-950 text-xs text-slate-400"><tr><th class="p-3"><span data-bn="আইডি" data-en="ID">আইডি</span></th><th class="p-3"><span data-bn="পরীক্ষণ কেস" data-en="Test Case">পরীক্ষণ কেস</span></th><th class="p-3"><span data-bn="ধরন" data-en="Type">ধরন</span></th><th class="p-3"><span data-bn="অগ্রাধিকার" data-en="Priority">অগ্রাধিকার</span></th></tr></thead><tbody id="test-cases" class="divide-y divide-slate-800"></tbody></table></div></div>
         </div>
       </div>
     </section>
 
-    <footer class="mt-8 border-t border-slate-800 py-5 text-center text-xs leading-5 text-slate-500">শিক্ষামূলক পরীক্ষণ স্যান্ডবক্স · বাস্তব ডেটা পরিবর্তনের আগে পর্যালোচনা করুন · প্রোডাকশনে ব্যবহারের জন্য নয়</footer>
+    <footer class="mt-8 border-t border-slate-800 py-5 text-center text-xs leading-5 text-slate-500"><span data-bn="শিক্ষামূলক পরীক্ষণ স্যান্ডবক্স · বাস্তব ডেটা পরিবর্তনের আগে পর্যালোচনা করুন · প্রোডাকশনে ব্যবহারের জন্য নয়" data-en="Educational testing sandbox · Review before changing live data · Not intended for production">শিক্ষামূলক পরীক্ষণ স্যান্ডবক্স · বাস্তব ডেটা পরিবর্তনের আগে পর্যালোচনা করুন · প্রোডাকশনে ব্যবহারের জন্য নয়</span></footer>
   </main>
   <div id="toast-container" class="fixed bottom-4 right-4 z-50 space-y-2" aria-live="polite"></div>
 
@@ -347,7 +348,6 @@
         'নিরাপত্তা সতর্কতা:': 'Security notice:',
         ' এই শিক্ষামূলক স্যান্ডবক্সে নির্দিষ্ট স্কিমা অনুযায়ী পাসওয়ার্ড কলামে মান পাঠানো হয়। বাস্তব ব্যবস্থায় কখনোই সরল পাঠ্যে পাসওয়ার্ড সংরক্ষণ করবেন না; নিরাপদ প্রমাণীকরণ ও হ্যাশিং ব্যবহার করুন। ভূমিকা নির্বাচকটি শুধু UI-তে থাকে, কারণ নির্ধারিত টেবিলে Role কলাম নেই।': ' This educational sandbox sends a value to the password column to match the specified schema. Never store plain-text passwords in a real system; use secure authentication and hashing. The role selector is UI-only because the specified table has no Role column.',
         'সংরক্ষণের ফল এখানে দেখা যাবে।': 'The save result will appear here.',
-        'কার্যকরী · নেগেটিভ · সীমামান · ভূমিকা': 'Functional · Negative · Boundary · Roles',
         'ই-কমার্স · হিসাব · ব্যবসায়িক নিয়ম': 'E-commerce · Calculations · Business Rules',
         'পণ্য অর্ডার পরীক্ষা': 'Product Order Testing',
         'ব্যবহারকারীর আইডি, পরিমাণ, কুপন এবং করসহ প্রকৃত অর্ডার সংরক্ষণ করুন।': 'Save real orders with a user ID, quantity, coupon, and tax.',
@@ -368,7 +368,6 @@
         'কর (১০%)': 'Tax (10%)',
         'সর্বমোট': 'Total',
         'অর্ডার সংরক্ষণ করুন': 'Save Order',
-        ' পরিমাণ ঋণাত্মক হতে পারে; ফলে মোট মূল্য কমে বা ঋণাত্মক হয়。': ' Quantity can be negative, reducing the total or making it negative.',
         'ব্যবহারযোগ্যতা · প্রবেশগম্যতা · সামঞ্জস্য': 'Usability · Accessibility · Compatibility',
         'দৃশ্যমান UI নিরীক্ষা': 'Visual UI Audit',
         'নমুনা ত্রুটিগুলো শনাক্ত করুন, ভিউপোর্ট পরিবর্তন করুন এবং প্রবেশগম্যতার (Accessibility) মৌলিক বিষয় যাচাই করুন।': 'Identify sample defects, change the viewport, and review accessibility basics.',
@@ -433,7 +432,6 @@
         'তথ্য নবায়ন': 'Refresh Data',
         '৫০টি পরীক্ষণ ব্যবহারকারী তৈরি করুন': 'Generate 50 Test Users',
         'তথ্য লোড হচ্ছে…': 'Loading data…',
-        'ব্যবহারকারী (sqa_users)': 'Users (sqa_users)',
         'নাম / ইমেইল': 'Name / Email',
         'বয়স': 'Age',
         'আইডি': 'ID',
@@ -505,7 +503,6 @@
         'ইচ্ছাকৃত বাগ: রিসেট বোতাম চাপলেও ফর্মের তথ্য অপরিবর্তিত রয়েছে।': 'Intentional bug: The form values remain unchanged after clicking Reset.',
         'অর্ডারটি ডেটাবেসে সংরক্ষিত হয়েছে।': 'The order was saved to the database.',
         'অর্ডার সংরক্ষিত হয়েছে।': 'Order saved.',
-        'ইচ্ছাকৃত বাগ:': 'Intentional bug:',
         'ব্যবহারকারী সংরক্ষিত হয়েছে।': 'User saved.',
         'ডেটাবেস থেকে তথ্য লোড হচ্ছে…': 'Loading records from the database…',
         ' জন ব্যবহারকারী, ': ' users, ',
@@ -515,6 +512,32 @@
         'কোনো অর্ডার পাওয়া যায়নি।': 'No orders found.',
         'এখনো কোনো বাগ প্রতিবেদন নেই।': 'There are no bug reports yet.',
         'মুছুন': 'Delete',
+        'স্মোক': 'Smoke',
+        'কার্যকরী': 'Functional',
+        'নেগেটিভ': 'Negative',
+        'সীমামান': 'Boundary',
+        'ব্যবসায়িক নিয়ম': 'Business Rules',
+        'ডেটাবেস': 'Database',
+        'রিগ্রেশন': 'Regression',
+        'প্রবেশগম্যতা': 'Accessibility',
+        'সামঞ্জস্য': 'Compatibility',
+        'অপেক্ষমাণ (Pending)': 'Pending',
+        'প্রক্রিয়াধীন (Processing)': 'Processing',
+        'পাঠানো হয়েছে (Shipped)': 'Shipped',
+        'পৌঁছেছে (Delivered)': 'Delivered',
+        'বাতিল (Cancelled)': 'Cancelled',
+        'খোলা (Open)': 'Open',
+        'চলমান (In Progress)': 'In Progress',
+        'সংশোধিত (Fixed)': 'Fixed',
+        'বন্ধ (Closed)': 'Closed',
+        'পরীক্ষণ কিবোর্ড': 'Test Keyboard',
+        'QA নোটবুক': 'QA Notebook',
+        'অটোমেশন কিট': 'Automation Kit',
+        'ব্যবহারকারী': 'User',
+        'তীব্রতা': 'Severity',
+        'পরীক্ষণ কেস': 'Test Case',
+        'অগ্রাধিকার': 'Priority',
+        'পরিমাণ ঋণাত্মক হতে পারে; ফলে মোট মূল্য কমে বা ঋণাত্মক হয়।': 'Quantity can be negative, reducing the total or making it negative.',
         'ব্যবহারকারী ': 'User ',
         ' স্থায়ীভাবে মুছবেন? সংশ্লিষ্ট অর্ডারের ওপর ডেটাবেস নীতির প্রভাব পড়তে পারে।': ' will be permanently deleted. Database rules may affect related orders.',
         'ব্যবহারকারী মুছে ফেলা হয়েছে।': 'User deleted.',
@@ -551,10 +574,8 @@
         'নেটওয়ার্ক ত্রুটি': 'Network Error',
         'API অনুরোধ ব্যর্থ হয়েছে: HTTP ': 'API request failed: HTTP ',
         'API অনুরোধ সফল: HTTP ': 'API request succeeded: HTTP ',
-        'ছাড় পেতে SAVE20 লিখুন': 'Enter SAVE20 for a discount',
         'পাশ': 'Pass',
         'ব্যর্থ': 'Fail',
-        'চালানোর পর পরিসংখ্যান এখানে দেখা যাবে।': 'Run the test to see the results.',
         'কোনো পরীক্ষা সম্পন্ন হয়নি।': 'No tests have been completed.',
         'টির মধ্যে ': ' of ',
         'টি পাশ এবং ': ' passed and ',
@@ -563,46 +584,46 @@
         'টি পরীক্ষার ফল বাকি।': ' test results remain.',
         'সব পরীক্ষার ফল নথিভুক্ত হয়েছে।': 'All test results have been recorded.',
         'Supabase লাইব্রেরি লোড হয়নি।': 'Supabase library did not load.',
-        'ডেটাবেসে সংযোগ বা অনুমতি সমস্যা': 'Database connection or permission issue',
         'টেবিলের স্কিমা, নেটওয়ার্ক এবং Supabase Row Level Security (RLS) নীতি যাচাই করুন।': 'Check the table schema, network, and Supabase Row Level Security (RLS) policies.',
         'টেস্ট ': 'Test ',
         'কেস ': 'Case ',
         ' · কেস ': ' · Case '
       };
-      const bengaliToEnglish = new Map(Object.entries(translations));
-      const englishToBengali = new Map([...bengaliToEnglish].map(([bengali, english]) => [english, bengali]));
-      const translationPattern = new RegExp([...bengaliToEnglish.keys()].sort((a, b) => b.length - a.length).map((text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'), 'g');
-      const englishPattern = new RegExp([...englishToBengali.keys()].filter(Boolean).sort((a, b) => b.length - a.length).map((text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'), 'g');
-      const originalText = new WeakMap();
-      const translateText = (value) => activeLanguage === 'bn' ? value : value.replace(translationPattern, (match) => bengaliToEnglish.get(match) || match);
-      const translateAttribute = (value) => activeLanguage === 'bn'
-        ? value.replace(englishPattern, (match) => englishToBengali.get(match) || match)
-        : value.replace(translationPattern, (match) => bengaliToEnglish.get(match) || match);
+      const t = (key) => activeLanguage === 'bn' ? key : (translations[key] || key);
+      const dynamicTranslations = Object.entries(translations)
+        .filter(([bengali]) => bengali)
+        .sort(([a], [b]) => b.length - a.length);
+      const englishTranslations = Object.entries(translations)
+        .filter(([, english]) => english)
+        .sort(([, a], [, b]) => b.length - a.length);
+      const englishToBengali = new Map(englishTranslations.map(([bengali, english]) => [english, bengali]));
+      const dynamicTranslationPattern = new RegExp(dynamicTranslations.map(([text]) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'), 'g');
+      const englishTranslationPattern = new RegExp(englishTranslations.map(([, text]) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'), 'g');
+      const translateDynamicText = (value) => String(value).replace(dynamicTranslationPattern, (match) => translations[match] || match);
+      const translateToBengali = (value) => String(value).replace(englishTranslationPattern, (match) => englishToBengali.get(match) || match);
+      const toBengaliDigits = (value) => String(value).replace(/\d/g, (digit) => '০১২৩৪৫৬৭৮৯'[Number(digit)]);
+      const toWesternDigits = (value) => String(value).replace(/[০-৯]/g, (digit) => String('০১২৩৪৫৬৭৮৯'.indexOf(digit)));
+      function setLocalizedText(element, bengaliText) {
+        const bengali = toBengaliDigits(translateToBengali(bengaliText));
+        element.dataset.bn = bengali;
+        element.dataset.en = toWesternDigits(translateDynamicText(bengali));
+        element.textContent = activeLanguage === 'bn' ? bengali : element.dataset.en;
+      }
       function translatePage() {
-        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
-        const textNodes = [];
-        while (walker.nextNode()) {
-          const node = walker.currentNode;
-          if (!node.parentElement.closest('.no-translate, pre, code')) textNodes.push(node);
-        }
-        textNodes.forEach((node) => {
-          if (!originalText.has(node)) originalText.set(node, node.nodeValue);
-          const translated = translateText(originalText.get(node));
-          if (translated !== node.nodeValue) node.nodeValue = translated;
+        $$('[data-bn][data-en]').forEach((element) => {
+          element.textContent = activeLanguage === 'bn' ? element.dataset.bn : element.dataset.en;
         });
-        $$('input[placeholder], textarea[placeholder], [aria-label], [title]').filter((element) => !element.closest('.no-translate')).forEach((element) => {
-          for (const attribute of ['placeholder', 'aria-label', 'title']) {
-            if (element.hasAttribute(attribute)) {
-              const original = element.getAttribute(attribute);
-              const translated = translateAttribute(original);
-              if (translated !== original) element.setAttribute(attribute, translated);
-            }
-          }
+        ['placeholder', 'aria-label', 'title'].forEach((attribute) => {
+          $$(`[data-bn-${attribute}][data-en-${attribute}]`).forEach((element) => {
+            const datasetKey = attribute.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
+            const keySuffix = datasetKey[0].toUpperCase() + datasetKey.slice(1);
+            element.setAttribute(attribute, activeLanguage === 'bn'
+              ? element.dataset[`bn${keySuffix}`]
+              : element.dataset[`en${keySuffix}`]);
+          });
         });
         document.documentElement.lang = activeLanguage;
-        document.title = activeLanguage === 'bn'
-          ? 'SQA এ টু জেড লাইভ টেস্টিং হাব (Complete SQA Enterprise Sandbox)'
-          : 'SQA A to Z Live Testing Hub (Complete SQA Enterprise Sandbox)';
+        document.title = t('SQA এ টু জেড লাইভ টেস্টিং হাব (Complete SQA Enterprise Sandbox)');
         $$('.language-toggle').forEach((button) => button.setAttribute('aria-label', activeLanguage === 'bn' ? 'Switch language to English' : 'বাংলা ভাষায় পরিবর্তন করুন'));
         updateThemeLabel();
       }
@@ -643,34 +664,30 @@
         translatePage();
         updateOrderTotal();
         updateSuiteSummary();
+        renderChecklist();
+        renderTestCases();
         if (activeAuthUser) {
           loadStats();
           refreshDatabase();
         }
       }));
       translatePage();
-      let translationPending = false;
-      new MutationObserver(() => {
-        if (translationPending) return;
-        translationPending = true;
-        queueMicrotask(() => {
-          translationPending = false;
-          translatePage();
-        });
-      }).observe(document.body, { childList: true, characterData: true, subtree: true });
-      const bnNumber = (number) => new Intl.NumberFormat(activeLanguage === 'bn' ? 'bn-BD' : 'en-US', { maximumFractionDigits: 2 }).format(Number(number) || 0);
+      const bnNumber = (number) => {
+        const formatted = new Intl.NumberFormat(activeLanguage === 'bn' ? 'bn-BD' : 'en-US', { maximumFractionDigits: 2, useGrouping: true }).format(Number(number) || 0);
+        return activeLanguage === 'bn' ? toBengaliDigits(formatted) : toWesternDigits(formatted);
+      };
       const money = (number) => `৳${bnNumber(number)}`;
       const escapeHTML = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
       const showToast = (message, type = 'success') => {
         const toast = document.createElement('div');
         toast.className = `toast max-w-sm rounded-xl border px-4 py-3 text-sm shadow-xl ${type === 'error' ? 'border-rose-400/30 bg-rose-950 text-rose-100' : 'border-emerald-400/30 bg-emerald-950 text-emerald-100'}`;
-        toast.textContent = message;
+        setLocalizedText(toast, message);
         $('#toast-container').appendChild(toast);
         window.setTimeout(() => toast.remove(), 4500);
       };
       const setConnection = (connected, label) => {
         $('#connection-dot').className = `h-2 w-2 rounded-full ${connected ? 'bg-emerald-400' : 'bg-rose-400'}`;
-        $('#connection-label').textContent = label;
+        setLocalizedText($('#connection-label'), label);
       };
       let db = null;
       const dbReady = new Promise((resolve, reject) => {
@@ -699,15 +716,15 @@
       });
       dbReady.catch(() => {
         setConnection(false, 'Supabase সংযোগ ব্যর্থ');
-        $('#auth-message').textContent = activeLanguage === 'bn'
+        setLocalizedText($('#auth-message'), activeLanguage === 'bn'
           ? 'Supabase Auth লাইব্রেরি লোড হয়নি। ইন্টারনেট সংযোগ যাচাই করে পৃষ্ঠাটি আবার খুলুন।'
-          : 'Supabase Auth could not load. Check your internet connection and reopen the page.';
+          : 'Supabase Auth could not load. Check your internet connection and reopen the page.');
       });
 
       const dbError = (error) => {
         const message = error?.message || 'অজানা ডেটাবেস ত্রুটি';
         setConnection(false, 'ডেটাবেসে সংযোগ বা অনুমতি সমস্যা');
-        return `ডেটাবেস ত্রুটি: ${message}। টেবিলের স্কিমা, নেটওয়ার্ক এবং Supabase Row Level Security (RLS) নীতি যাচাই করুন।`;
+        return translateDynamicText(`ডেটাবেস ত্রুটি: ${message}। টেবিলের স্কিমা, নেটওয়ার্ক এবং Supabase Row Level Security (RLS) নীতি যাচাই করুন।`);
       };
       const ensureDb = () => {
         if (!db) throw new Error('Supabase সংযোগ প্রস্তুত নয়।');
@@ -731,9 +748,9 @@
             db.from('sqa_bug_reports').select('bug_id', { count: 'exact', head: true }).in('status', ['Open', 'In Progress'])
           ]);
           for (const result of [users, orders, bugs]) if (result.error) throw result.error;
-          $('#stat-users').textContent = bnNumber(users.count);
-          $('#stat-orders').textContent = bnNumber(orders.count);
-          $('#stat-bugs').textContent = bnNumber(bugs.count);
+          setLocalizedText($('#stat-users'), bnNumber(users.count));
+          setLocalizedText($('#stat-orders'), bnNumber(orders.count));
+          setLocalizedText($('#stat-bugs'), bnNumber(bugs.count));
           setConnection(true, 'Supabase সংযুক্ত');
         } catch (error) {
           setConnection(false, 'ডেটাবেসে সংযোগ বা অনুমতি সমস্যা');
@@ -777,17 +794,17 @@
             full_name: name, email, password: `AUTH_MANAGED_${Date.now()}_${Math.random().toString(36).slice(2)}`, age, status: 'Active'
           }).select('id, full_name, email, age').single();
           if (error) throw error;
-          $('#registration-result').textContent = `ব্যবহারকারী সংরক্ষিত হয়েছে। আইডি: ${data.id} · ভূমিকা (UI): ${$('#reg-role').value}`;
+          setLocalizedText($('#registration-result'), `ব্যবহারকারী সংরক্ষিত হয়েছে। আইডি: ${data.id} · ভূমিকা (UI): ${$('#reg-role').value}`);
           showToast('ব্যবহারকারী সফলভাবে সংরক্ষিত হয়েছে।');
           await refreshDatabase();
         } catch (error) {
-          $('#registration-result').textContent = dbError(error);
+          setLocalizedText($('#registration-result'), dbError(error));
           showToast(dbError(error), 'error');
         }
       });
       // Intentional test defect: the reset button deliberately leaves form values unchanged.
       $('#reset-registration').addEventListener('click', () => {
-        $('#registration-result').textContent = 'ইচ্ছাকৃত বাগ: রিসেট বোতাম চাপলেও ফর্মের তথ্য অপরিবর্তিত রয়েছে।';
+        setLocalizedText($('#registration-result'), 'ইচ্ছাকৃত বাগ: রিসেট বোতাম চাপলেও ফর্মের তথ্য অপরিবর্তিত রয়েছে।');
       });
 
       const product = () => $('#order-product').selectedOptions[0];
@@ -817,11 +834,11 @@
             order_status: 'Pending'
           });
           if (error) throw error;
-          $('#order-result').textContent = 'অর্ডারটি ডেটাবেসে সংরক্ষিত হয়েছে।';
+          setLocalizedText($('#order-result'), 'অর্ডারটি ডেটাবেসে সংরক্ষিত হয়েছে।');
           showToast('অর্ডার সংরক্ষিত হয়েছে।');
           await refreshDatabase();
         } catch (error) {
-          $('#order-result').textContent = dbError(error);
+          setLocalizedText($('#order-result'), dbError(error));
           showToast(dbError(error), 'error');
         }
       });
@@ -831,7 +848,7 @@
         const mobile = button.dataset.viewport === 'mobile';
         $('#audit-frame').classList.toggle('max-w-sm', mobile);
         $('#audit-frame').classList.toggle('max-w-full', !mobile);
-        $('#viewport-label').textContent = mobile ? 'মোবাইল' : 'ডেস্কটপ';
+        setLocalizedText($('#viewport-label'), mobile ? 'মোবাইল' : 'ডেস্কটপ');
       }));
 
       const suiteCases = [
@@ -847,7 +864,10 @@
         ['মোবাইল ভিউতে বিষয়বস্তু মানিয়ে যায়', 'সামঞ্জস্য']
       ];
       const suiteResults = new Map();
-      $('#checklist').innerHTML = suiteCases.map(([name, type], index) => `<div class="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-800 bg-slate-950/50 p-4"><div><p class="text-sm font-medium">${escapeHTML(name)}</p><p class="mt-1 text-xs text-slate-500">${escapeHTML(type)} · কেস ${bnNumber(index + 1)}</p></div><div class="flex gap-2"><button class="suite-toggle rounded-lg border border-emerald-400/30 px-3 py-2 text-xs text-emerald-200" data-index="${index}" data-result="pass">পাশ</button><button class="suite-toggle rounded-lg border border-rose-400/30 px-3 py-2 text-xs text-rose-200" data-index="${index}" data-result="fail">ব্যর্থ</button></div></div>`).join('');
+      function renderChecklist() {
+        $('#checklist').innerHTML = suiteCases.map(([name, type], index) => `<div class="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-800 bg-slate-950/50 p-4"><div><p class="text-sm font-medium">${escapeHTML(t(name))}</p><p class="mt-1 text-xs text-slate-500">${escapeHTML(t(type))} · ${escapeHTML(t('কেস '))}${bnNumber(index + 1)}</p></div><div class="flex gap-2"><button class="suite-toggle rounded-lg border border-emerald-400/30 px-3 py-2 text-xs text-emerald-200" data-index="${index}" data-result="pass">${escapeHTML(t('পাশ'))}</button><button class="suite-toggle rounded-lg border border-rose-400/30 px-3 py-2 text-xs text-rose-200" data-index="${index}" data-result="fail">${escapeHTML(t('ব্যর্থ'))}</button></div></div>`).join('');
+      }
+      renderChecklist();
       $('#checklist').addEventListener('click', (event) => {
         const button = event.target.closest('.suite-toggle');
         if (!button) return;
@@ -860,17 +880,18 @@
         const failed = total - passed;
         const passRate = total ? Math.round((passed / total) * 100) : 0;
         const failRate = total ? Math.round((failed / total) * 100) : 0;
-        $('#pass-rate').textContent = `${bnNumber(passRate)}%`;
-        $('#fail-rate').textContent = `${bnNumber(failRate)}%`;
-        $('#suite-summary').textContent = total ? `${bnNumber(total)}টির মধ্যে ${bnNumber(passed)}টি পাশ এবং ${bnNumber(failed)}টি ব্যর্থ। ${total < suiteCases.length ? `আরও ${bnNumber(suiteCases.length - total)}টি পরীক্ষার ফল বাকি।` : 'সব পরীক্ষার ফল নথিভুক্ত হয়েছে।'}` : 'এখনো কোনো পরীক্ষা সম্পন্ন হয়নি।';
-        $('#stat-checks').textContent = `${bnNumber(total)} / ${bnNumber(suiteCases.length)} সম্পন্ন`;
+        setLocalizedText($('#pass-rate'), `${bnNumber(passRate)}%`);
+        setLocalizedText($('#fail-rate'), `${bnNumber(failRate)}%`);
+        setLocalizedText($('#suite-summary'), total ? `${bnNumber(total)}টির মধ্যে ${bnNumber(passed)}টি পাশ এবং ${bnNumber(failed)}টি ব্যর্থ। ${total < suiteCases.length ? `আরও ${bnNumber(suiteCases.length - total)}টি পরীক্ষার ফল বাকি।` : 'সব পরীক্ষার ফল নথিভুক্ত হয়েছে।'}` : 'এখনো কোনো পরীক্ষা সম্পন্ন হয়নি।');
+        setLocalizedText($('#stat-checks'), `${bnNumber(total)} / ${bnNumber(suiteCases.length)} সম্পন্ন`);
       }
+      updateSuiteSummary();
       $('#reset-suite').addEventListener('click', () => { suiteResults.clear(); updateSuiteSummary(); });
 
       function restUrl(resource) { return `${SUPABASE_URL}/rest/v1/${encodeURIComponent(resource)}`; }
       function displayApi(status, latency, body) {
-        $('#api-status').textContent = status;
-        $('#api-latency').textContent = `${bnNumber(latency)} ms`;
+        setLocalizedText($('#api-status'), status);
+        setLocalizedText($('#api-latency'), `${bnNumber(latency)} ms`);
         $('#api-output').textContent = typeof body === 'string' ? body : JSON.stringify(body, null, 2);
       }
       $('#run-api').addEventListener('click', async () => {
@@ -919,7 +940,7 @@
       let loadedUsers = [];
       async function refreshDatabase() {
         if (!db) return;
-        $('#database-message').textContent = 'ডেটাবেস থেকে তথ্য লোড হচ্ছে…';
+        setLocalizedText($('#database-message'), 'ডেটাবেস থেকে তথ্য লোড হচ্ছে…');
         try {
           const [usersResult, ordersResult, bugsResult] = await Promise.all([
             db.from('sqa_users').select('id, full_name, email, age, status, created_at').order('created_at', { ascending: false }).limit(200),
@@ -931,27 +952,32 @@
           renderUsers();
           renderOrders(ordersResult.data || [], loadedUsers);
           renderBugs(bugsResult.data || []);
-          $('#database-message').textContent = `${bnNumber(loadedUsers.length)} জন ব্যবহারকারী, ${bnNumber((ordersResult.data || []).length)}টি অর্ডার এবং ${bnNumber((bugsResult.data || []).length)}টি বাগ প্রতিবেদন লোড হয়েছে (প্রতি তালিকায় সর্বোচ্চ সীমা প্রযোজ্য)।`;
+          setLocalizedText($('#database-message'), `${bnNumber(loadedUsers.length)} জন ব্যবহারকারী, ${bnNumber((ordersResult.data || []).length)}টি অর্ডার এবং ${bnNumber((bugsResult.data || []).length)}টি বাগ প্রতিবেদন লোড হয়েছে (প্রতি তালিকায় সর্বোচ্চ সীমা প্রযোজ্য)।`);
           await loadStats();
         } catch (error) {
-          $('#database-message').textContent = dbError(error);
+          setLocalizedText($('#database-message'), dbError(error));
           showToast(dbError(error), 'error');
         }
       }
       function renderUsers() {
         const query = $('#table-search').value.trim().toLowerCase();
         const matches = loadedUsers.filter((user) => [user.full_name, user.email, user.id].some((value) => String(value || '').toLowerCase().includes(query)));
-        $('#users-table').innerHTML = matches.map((user) => `<tr><td class="p-3"><div>${escapeHTML(user.full_name)}</div><div class="text-xs text-slate-500">${escapeHTML(user.email)}</div></td><td class="p-3">${escapeHTML(user.age)}</td><td class="max-w-28 truncate p-3 text-xs text-slate-500" title="${escapeHTML(user.id)}">${escapeHTML(user.id)}</td><td class="p-3"><button class="delete-user rounded-lg border border-rose-400/30 px-2 py-1 text-xs text-rose-200" data-id="${escapeHTML(user.id)}">মুছুন</button></td></tr>`).join('') || '<tr><td colspan="4" class="p-4 text-slate-500">কোনো ব্যবহারকারী মেলেনি।</td></tr>';
+        $('#users-table').innerHTML = matches.map((user) => `<tr><td class="p-3"><div>${escapeHTML(user.full_name)}</div><div class="text-xs text-slate-500">${escapeHTML(user.email)}</div></td><td class="p-3">${bnNumber(user.age)}</td><td class="max-w-28 truncate p-3 text-xs text-slate-500" title="${escapeHTML(user.id)}">${escapeHTML(user.id)}</td><td class="p-3"><button class="delete-user rounded-lg border border-rose-400/30 px-2 py-1 text-xs text-rose-200" data-id="${escapeHTML(user.id)}">${escapeHTML(t('মুছুন'))}</button></td></tr>`).join('') || `<tr><td colspan="4" class="p-4 text-slate-500">${escapeHTML(t('কোনো ব্যবহারকারী মেলেনি।'))}</td></tr>`;
       }
       function renderOrders(orders, users) {
         const names = new Map(users.map((user) => [String(user.id), user.full_name]));
         const orderStatus = { Pending: 'অপেক্ষমাণ (Pending)', Processing: 'প্রক্রিয়াধীন (Processing)', Shipped: 'পাঠানো হয়েছে (Shipped)', Delivered: 'পৌঁছেছে (Delivered)', Cancelled: 'বাতিল (Cancelled)' };
-        $('#orders-table').innerHTML = orders.map((order) => `<tr><td class="p-3">${escapeHTML(order.product_name)}</td><td class="p-3">${escapeHTML(order.quantity)} / ${money(order.total_price)}</td><td class="p-3">${escapeHTML(names.get(String(order.user_id)) || String(order.user_id).slice(0, 12))}</td><td class="p-3">${escapeHTML(orderStatus[order.order_status] || order.order_status)}</td></tr>`).join('') || '<tr><td colspan="4" class="p-4 text-slate-500">কোনো অর্ডার পাওয়া যায়নি।</td></tr>';
+        $('#orders-table').innerHTML = orders.map((order) => `<tr><td class="p-3">${escapeHTML(t(order.product_name))}</td><td class="p-3">${bnNumber(order.quantity)} / ${money(order.total_price)}</td><td class="p-3">${escapeHTML(names.get(String(order.user_id)) || String(order.user_id).slice(0, 12))}</td><td class="p-3">${escapeHTML(t(orderStatus[order.order_status] || order.order_status))}</td></tr>`).join('') || `<tr><td colspan="4" class="p-4 text-slate-500">${escapeHTML(t('কোনো অর্ডার পাওয়া যায়নি।'))}</td></tr>`;
       }
       function renderBugs(bugs) {
         const severityLabel = { Critical: 'সংকটজনক (Critical)', Major: 'গুরুতর (Major)', Minor: 'কম গুরুতর (Minor)', Trivial: 'সামান্য (Trivial)' };
         const bugStatus = [['Open', 'খোলা (Open)'], ['In Progress', 'চলমান (In Progress)'], ['Fixed', 'সংশোধিত (Fixed)'], ['Closed', 'বন্ধ (Closed)']];
-        $('#bugs-table').innerHTML = bugs.map((bug) => `<tr><td class="p-3"><div class="font-medium">${escapeHTML(bug.bug_title)}</div><div class="text-xs text-slate-500">${escapeHTML(bug.module_name)} · ${escapeHTML(bug.bug_id)}</div></td><td class="p-3">${escapeHTML(severityLabel[bug.severity] || bug.severity)}</td><td class="p-3"><select class="bug-status rounded-lg border border-slate-700 bg-slate-900 px-2 py-2 text-xs" data-id="${escapeHTML(bug.bug_id)}" aria-label="${escapeHTML(bug.bug_title)} বাগের অবস্থা">${bugStatus.map(([value, label]) => `<option value="${escapeHTML(value)}" ${bug.status === value ? 'selected' : ''}>${escapeHTML(label)}</option>`).join('')}</select></td></tr>`).join('') || '<tr><td colspan="3" class="p-4 text-slate-500">এখনো কোনো বাগ প্রতিবেদন নেই।</td></tr>';
+        const rows = bugs.map((bug) => {
+          const statusAriaBn = `${bug.bug_title} বাগের অবস্থা`;
+          const statusAriaEn = translateDynamicText(statusAriaBn);
+          return `<tr><td class="p-3"><div class="font-medium">${escapeHTML(bug.bug_title)}</div><div class="text-xs text-slate-500">${escapeHTML(bug.module_name)} · ${escapeHTML(bug.bug_id)}</div></td><td class="p-3">${escapeHTML(t(severityLabel[bug.severity] || bug.severity))}</td><td class="p-3"><select class="bug-status rounded-lg border border-slate-700 bg-slate-900 px-2 py-2 text-xs" data-id="${escapeHTML(bug.bug_id)}" aria-label="${escapeHTML(activeLanguage === 'bn' ? statusAriaBn : statusAriaEn)}" data-bn-aria-label="${escapeHTML(statusAriaBn)}" data-en-aria-label="${escapeHTML(statusAriaEn)}">${bugStatus.map(([value, label]) => `<option value="${escapeHTML(value)}" ${bug.status === value ? 'selected' : ''}>${escapeHTML(t(label))}</option>`).join('')}</select></td></tr>`;
+        });
+        $('#bugs-table').innerHTML = rows.join('') || `<tr><td colspan="3" class="p-4 text-slate-500">${escapeHTML(t('এখনো কোনো বাগ প্রতিবেদন নেই।'))}</td></tr>`;
       }
       $('#table-search').addEventListener('input', renderUsers);
       $('#refresh-data').addEventListener('click', refreshDatabase);
@@ -1006,14 +1032,17 @@
         ['TC-009', 'কিবোর্ড প্রবেশগম্যতা পরীক্ষা', 'প্রবেশগম্যতা', 'মাঝারি'],
         ['TC-010', 'বাগের অবস্থা পরিবর্তন', 'রিগ্রেশন', 'নিম্ন']
       ];
-      $('#test-cases').innerHTML = testCases.map((test) => `<tr>${test.map((cell) => `<td class="p-3">${escapeHTML(cell)}</td>`).join('')}</tr>`).join('');
+      function renderTestCases() {
+        $('#test-cases').innerHTML = testCases.map((test) => `<tr>${test.map((cell) => `<td class="p-3">${escapeHTML(t(cell))}</td>`).join('')}</tr>`).join('');
+      }
+      renderTestCases();
 
       $$('.security-preset').forEach((button) => button.addEventListener('click', () => { $('#security-input').value = button.dataset.value; }));
       $('#inspect-input').addEventListener('click', () => {
         const value = $('#security-input').value;
         const sqlLike = /('|--|;|\b(OR|SELECT|DROP|UNION)\b)/i.test(value);
         const hasMarkup = /<\/?[a-z][\s\S]*?>/i.test(value);
-        $('#security-result').textContent = `ইনপুট দৈর্ঘ্য: ${bnNumber(value.length)} অক্ষর। ${sqlLike ? 'সম্ভাব্য SQL-সদৃশ চিহ্ন পাওয়া গেছে; প্যারামিটারযুক্ত কুয়েরি ব্যবহার করুন। ' : ''}${hasMarkup ? 'HTML ট্যাগ সদৃশ অংশ পাওয়া গেছে; আউটপুটকে টেক্সট হিসেবে এস্কেপ করুন। ' : ''}${!sqlLike && !hasMarkup ? 'সাধারণ স্ট্রিং হিসেবে চিহ্নিত। ' : ''}কোনো ইনপুট সার্ভারে পাঠানো হয়নি।`;
+        setLocalizedText($('#security-result'), `ইনপুট দৈর্ঘ্য: ${bnNumber(value.length)} অক্ষর। ${sqlLike ? 'সম্ভাব্য SQL-সদৃশ চিহ্ন পাওয়া গেছে; প্যারামিটারযুক্ত কুয়েরি ব্যবহার করুন। ' : ''}${hasMarkup ? 'HTML ট্যাগ সদৃশ অংশ পাওয়া গেছে; আউটপুটকে টেক্সট হিসেবে এস্কেপ করুন। ' : ''}${!sqlLike && !hasMarkup ? 'সাধারণ স্ট্রিং হিসেবে চিহ্নিত। ' : ''}কোনো ইনপুট সার্ভারে পাঠানো হয়নি।`);
       });
       let failedLogins = 0;
       let lockedUntil = 0;
@@ -1024,9 +1053,9 @@
         if (failedLogins >= 5) {
           lockedUntil = now + 30000;
           failedLogins = 0;
-          $('#security-result').textContent = 'সিমুলেশন: পাঁচটি ব্যর্থ চেষ্টার পর স্থানীয় পরীক্ষণ লগইন ৩০ সেকেন্ডের জন্য বন্ধ।';
+          setLocalizedText($('#security-result'), 'সিমুলেশন: পাঁচটি ব্যর্থ চেষ্টার পর স্থানীয় পরীক্ষণ লগইন ৩০ সেকেন্ডের জন্য বন্ধ।');
         } else {
-          $('#security-result').textContent = `সিমুলেশন: ব্যর্থ প্রচেষ্টা ${bnNumber(failedLogins)} / ৫।`;
+          setLocalizedText($('#security-result'), `সিমুলেশন: ব্যর্থ প্রচেষ্টা ${bnNumber(failedLogins)} / ৫।`);
         }
       });
       $('#run-load-test').addEventListener('click', async () => {
@@ -1035,13 +1064,13 @@
         const jobs = Array.from({ length: 100 }, (_, index) => Promise.resolve().then(() => index));
         const settled = await Promise.allSettled(jobs);
         const localMs = performance.now() - started;
-        result.textContent = `স্থানীয় নমুনা: ${bnNumber(settled.length)} / ১০০ সম্পন্ন · মোট সময় ${bnNumber(localMs)} ms। বাস্তব API-র হালকা পাঠ-পরীক্ষা চলছে…`;
+        setLocalizedText(result, `স্থানীয় নমুনা: ${bnNumber(settled.length)} / ১০০ সম্পন্ন · মোট সময় ${bnNumber(localMs)} ms। বাস্তব API-র হালকা পাঠ-পরীক্ষা চলছে…`);
         const apiStarted = performance.now();
         try {
           const response = await fetch(`${restUrl('sqa_users')}?select=id&limit=1`, { headers: await getAuthHeaders() });
-          result.textContent = `স্থানীয় নমুনা: ${bnNumber(settled.length)} / ১০০ সম্পন্ন · ${bnNumber(localMs)} ms। বাস্তব API পাঠ-অনুরোধ: HTTP ${bnNumber(response.status)} · ${bnNumber(performance.now() - apiStarted)} ms।`;
+          setLocalizedText(result, `স্থানীয় নমুনা: ${bnNumber(settled.length)} / ১০০ সম্পন্ন · ${bnNumber(localMs)} ms। বাস্তব API পাঠ-অনুরোধ: HTTP ${bnNumber(response.status)} · ${bnNumber(performance.now() - apiStarted)} ms।`);
         } catch (error) {
-          result.textContent = `স্থানীয় নমুনা: ${bnNumber(settled.length)} / ১০০ সম্পন্ন · ${bnNumber(localMs)} ms। বাস্তব API পাঠ-অনুরোধ ব্যর্থ: ${error.message}`;
+          setLocalizedText(result, `স্থানীয় নমুনা: ${bnNumber(settled.length)} / ১০০ সম্পন্ন · ${bnNumber(localMs)} ms। বাস্তব API পাঠ-অনুরোধ ব্যর্থ: ${error.message}`);
         }
       });
 
@@ -1059,12 +1088,12 @@
             actual_result: $('#bug-actual').value.trim()
           });
           if (error) throw error;
-          $('#bug-result').textContent = 'বাগ প্রতিবেদন সংরক্ষিত হয়েছে।';
+          setLocalizedText($('#bug-result'), 'বাগ প্রতিবেদন সংরক্ষিত হয়েছে।');
           $('#bug-form').reset();
           showToast('বাগ প্রতিবেদন জমা হয়েছে।');
           await refreshDatabase();
         } catch (error) {
-          $('#bug-result').textContent = dbError(error);
+          setLocalizedText($('#bug-result'), dbError(error));
           showToast(dbError(error), 'error');
         }
       });
@@ -1073,22 +1102,22 @@
       let activeAuthUser = null;
       function setAuthMessage(message, isError = false) {
         const element = $('#auth-message');
-        element.textContent = message;
+        setLocalizedText(element, message);
         element.classList.toggle('text-rose-200', isError);
         element.classList.toggle('text-slate-300', !isError);
       }
       function setAuthMode(mode) {
         authMode = mode;
         const signingUp = mode === 'signup';
-        $('#auth-heading').textContent = signingUp ? 'নতুন অ্যাকাউন্ট' : 'অ্যাকাউন্টে প্রবেশ';
-        $('#auth-description').textContent = signingUp
+        setLocalizedText($('#auth-heading'), signingUp ? 'নতুন অ্যাকাউন্ট' : 'অ্যাকাউন্টে প্রবেশ');
+        setLocalizedText($('#auth-description'), signingUp
           ? 'নিরাপদ প্রবেশের জন্য আপনার নতুন অ্যাকাউন্ট তৈরি করুন।'
-          : 'আপনার অ্যাকাউন্ট দিয়ে SQA পরীক্ষণ হাবে প্রবেশ করুন।';
+          : 'আপনার অ্যাকাউন্ট দিয়ে SQA পরীক্ষণ হাবে প্রবেশ করুন।');
         $('#auth-name-wrap').classList.toggle('hidden', !signingUp);
         $('#auth-name').required = signingUp;
         $('#auth-password').autocomplete = signingUp ? 'new-password' : 'current-password';
-        $('#auth-submit').textContent = signingUp ? 'অ্যাকাউন্ট তৈরি করুন' : 'লগইন করুন';
-        $('#auth-mode-toggle').textContent = signingUp ? 'ফিরে লগইন করুন' : 'নতুন অ্যাকাউন্ট তৈরি করুন';
+        setLocalizedText($('#auth-submit'), signingUp ? 'অ্যাকাউন্ট তৈরি করুন' : 'লগইন করুন');
+        setLocalizedText($('#auth-mode-toggle'), signingUp ? 'ফিরে লগইন করুন' : 'নতুন অ্যাকাউন্ট তৈরি করুন');
         $('#auth-reset').hidden = signingUp;
         $('#auth-resend-confirmation').hidden = signingUp;
         setAuthMessage(signingUp ? 'নিরাপদ প্রবেশের জন্য Supabase Auth ব্যবহৃত হয়।' : 'নিরাপদ প্রবেশের জন্য Supabase Auth ব্যবহৃত হয়।');
@@ -1097,11 +1126,15 @@
         const user = session?.user || null;
         const nextId = user?.id || null;
         const previousId = activeAuthUser?.id || null;
-        $('#auth-screen').hidden = Boolean(user);
-        $('#app-shell').hidden = !user;
+        const authenticated = Boolean(user);
+        $('#auth-screen').hidden = authenticated;
+        $('#app-shell').hidden = !authenticated;
         activeAuthUser = user;
         if (user) {
-          $('#signed-in-user').textContent = user.email || user.user_metadata?.full_name || user.id;
+          const userLabel = user.email || user.user_metadata?.full_name || user.id;
+          $('#signed-in-user').dataset.bn = userLabel;
+          $('#signed-in-user').dataset.en = userLabel;
+          $('#signed-in-user').textContent = userLabel;
           if (nextId !== previousId) {
             window.setTimeout(() => {
               refreshDatabase();
