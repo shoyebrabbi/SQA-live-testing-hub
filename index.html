@@ -25,11 +25,11 @@
     #auth-screen input:focus { outline: 2px solid rgba(52, 211, 153, .55); outline-offset: 1px; }
     #auth-submit { width: 100%; padding: .75rem 1.25rem; border: 0; border-radius: .75rem; background: #34d399; color: #020617; font-weight: 700 !important; }
     #auth-screen > div > div:nth-of-type(2) { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .75rem; margin-top: 1rem; font-size: .875rem; }
-    #auth-mode-toggle, #auth-reset { padding: 0; border: 0; background: transparent; color: #6ee7b7; }
+    #auth-mode-toggle, #auth-reset, #auth-resend-confirmation { padding: 0; border: 0; background: transparent; color: #6ee7b7; }
     #auth-reset { color: #94a3b8; }
     #auth-message { min-height: 3rem; box-sizing: border-box; margin-top: 1rem; padding: .75rem; border: 1px solid #1e293b; border-radius: .75rem; background: rgba(2, 6, 23, .5); color: #cbd5e1; font-size: .875rem; }
     #auth-screen > div > p:last-child { margin: 1rem 0 0; color: #64748b; font-size: .75rem; line-height: 1.25rem; }
-    #auth-screen #auth-name-wrap.hidden { display: none !important; }
+    #auth-screen [hidden], #auth-screen #auth-name-wrap.hidden { display: none !important; }
     body.light-mode #auth-screen h1 { color: #0f172a; }
     body.light-mode #auth-description, body.light-mode #auth-screen label { color: #475569; }
     body.light-mode #auth-screen .theme-toggle, body.light-mode #auth-screen .language-toggle { border-color: #cbd5e1; background: #e8eef5; color: #334155; }
@@ -99,6 +99,7 @@
       <div class="mt-4 flex flex-wrap justify-between gap-3 text-sm">
         <button id="auth-mode-toggle" type="button" class="text-emerald-300 hover:underline">নতুন অ্যাকাউন্ট তৈরি করুন</button>
         <button id="auth-reset" type="button" class="text-slate-400 hover:underline">পাসওয়ার্ড ভুলে গেছেন?</button>
+        <button id="auth-resend-confirmation" type="button" class="text-emerald-300 hover:underline">নিশ্চিতকরণ ইমেইল আবার পাঠান</button>
       </div>
       <div id="auth-message" class="mt-4 min-h-12 rounded-xl border border-slate-800 bg-slate-950/50 p-3 text-sm text-slate-300" aria-live="polite">নিরাপদ প্রবেশের জন্য Supabase Auth ব্যবহৃত হয়।</div>
       <p class="mt-4 text-xs leading-5 text-slate-500">নতুন অ্যাকাউন্টের জন্য প্রকল্পে ইমেইল নিশ্চিতকরণ চালু থাকলে, ইমেইল নিশ্চিত করার পর লগইন করুন। ডেটা ব্যবহারে Supabase টেবিলগুলোর Row Level Security (RLS) নীতিও সঠিকভাবে সেট করুন।</p>
@@ -259,6 +260,7 @@
       "use strict";
       const SUPABASE_URL = 'https://kmwjbvbraveiticesexm.supabase.co';
       const SUPABASE_KEY = 'sb_publishable__rWwIO8-QwBLF8_uOOVLPA_N2MacjAb';
+      const AUTH_REDIRECT_URL = 'https://shoyebrabbi.github.io/SQA-live-testing-hub/';
       const $ = (selector) => document.querySelector(selector);
       const $$ = (selector) => Array.from(document.querySelectorAll(selector));
       let activeLanguage = 'bn';
@@ -272,6 +274,9 @@
         'লগইন করুন': 'Sign In',
         'নতুন অ্যাকাউন্ট তৈরি করুন': 'Create a new account',
         'পাসওয়ার্ড ভুলে গেছেন?': 'Forgot password?',
+        'নিশ্চিতকরণ ইমেইল আবার পাঠান': 'Resend confirmation email',
+        'নিশ্চিতকরণ ইমেইল পাঠানোর জন্য প্রথমে ইমেইল লিখুন।': 'Enter your email first to resend the confirmation link.',
+        'নতুন নিশ্চিতকরণ লিংক পাঠানো হয়েছে। আপনার ইমেইল দেখুন।': 'A new confirmation link was sent. Check your email.',
         'নিরাপদ প্রবেশের জন্য Supabase Auth ব্যবহৃত হয়।': 'Supabase Auth is used for secure sign-in.',
         'এই ফর্মের আসল পাসওয়ার্ড ডেটাবেসে রাখা হয় না; নির্ধারিত কলামে কেবল অ-গোপন পরীক্ষণ চিহ্ন রাখা হয়। নিরাপদ প্রমাণীকরণ ও হ্যাশিং Supabase Auth পরিচালনা করে। ভূমিকা নির্বাচকটি শুধু UI-তে থাকে, কারণ নির্ধারিত টেবিলে Role কলাম নেই।': 'The real password from this form is never stored in the database; the specified column receives only a non-secret test marker. Supabase Auth handles secure authentication and password hashing. The role selector is UI-only because the specified table has no Role column.',
         'নতুন অ্যাকাউন্টের জন্য প্রকল্পে ইমেইল নিশ্চিতকরণ চালু থাকলে, ইমেইল নিশ্চিত করার পর লগইন করুন।': 'If email confirmation is enabled for new accounts, confirm your email before signing in.',
@@ -1085,6 +1090,7 @@
         $('#auth-submit').textContent = signingUp ? 'অ্যাকাউন্ট তৈরি করুন' : 'লগইন করুন';
         $('#auth-mode-toggle').textContent = signingUp ? 'ফিরে লগইন করুন' : 'নতুন অ্যাকাউন্ট তৈরি করুন';
         $('#auth-reset').hidden = signingUp;
+        $('#auth-resend-confirmation').hidden = signingUp;
         setAuthMessage(signingUp ? 'নিরাপদ প্রবেশের জন্য Supabase Auth ব্যবহৃত হয়।' : 'নিরাপদ প্রবেশের জন্য Supabase Auth ব্যবহৃত হয়।');
       }
       function updateAuthVisibility(session) {
@@ -1107,6 +1113,31 @@
         }
       }
       $('#auth-mode-toggle').addEventListener('click', () => setAuthMode(authMode === 'login' ? 'signup' : 'login'));
+      $('#auth-resend-confirmation').addEventListener('click', async () => {
+        const email = $('#auth-email').value.trim();
+        if (!email) {
+          setAuthMessage(activeLanguage === 'bn'
+            ? 'নিশ্চিতকরণ ইমেইল পাঠানোর জন্য প্রথমে ইমেইল লিখুন।'
+            : 'Enter your email first to resend the confirmation link.', true);
+          return;
+        }
+        try {
+          const client = await dbReady;
+          const { error } = await client.auth.resend({
+            type: 'signup',
+            email,
+            options: { emailRedirectTo: AUTH_REDIRECT_URL }
+          });
+          if (error) throw error;
+          setAuthMessage(activeLanguage === 'bn'
+            ? 'নতুন নিশ্চিতকরণ লিংক পাঠানো হয়েছে। আপনার ইমেইল দেখুন।'
+            : 'A new confirmation link was sent. Check your email.');
+        } catch (error) {
+          setAuthMessage(activeLanguage === 'bn'
+            ? `নিশ্চিতকরণ ইমেইল পাঠানো যায়নি: ${error.message}`
+            : `Could not resend confirmation email: ${error.message}`, true);
+        }
+      });
       $('#auth-form').addEventListener('submit', async (event) => {
         event.preventDefault();
         const email = $('#auth-email').value.trim();
@@ -1123,7 +1154,10 @@
             const { data, error } = await client.auth.signUp({
               email,
               password,
-              options: { data: { full_name: fullName } }
+              options: {
+                data: { full_name: fullName },
+                emailRedirectTo: AUTH_REDIRECT_URL
+              }
             });
             if (error) throw error;
             if (data.session) {
