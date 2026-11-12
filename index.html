@@ -1,0 +1,1187 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07111f">
+  <title>SQA এ টু জেড লাইভ টেস্টিং হাব (Complete SQA Enterprise Sandbox)</title>
+  <script defer src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, "Noto Sans Bengali", sans-serif; background: #07111f; }
+    .glass { background: rgba(15, 27, 45, .82); border: 1px solid rgba(148, 163, 184, .14); backdrop-filter: blur(14px); }
+    #auth-screen { display: flex; min-height: 100vh; align-items: center; justify-content: center; padding: 2rem 1rem; box-sizing: border-box; }
+    #auth-screen > div { width: 100%; max-width: 28rem; box-sizing: border-box; padding: 2rem; border-radius: 1.5rem; }
+    #auth-screen > div > div:first-child { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem; }
+    #auth-screen h1 { margin: 0; color: #f1f5f9; font-size: 1.5rem; line-height: 2rem; font-weight: 900; }
+    #auth-description { margin: .5rem 0 0; color: #94a3b8; font-size: .875rem; line-height: 1.5rem; }
+    #auth-screen > div > div:first-child > div:first-child > div { display: inline-flex; align-items: center; gap: .5rem; margin-bottom: .75rem; padding: .25rem .75rem; border: 1px solid rgba(52, 211, 153, .2); border-radius: 9999px; background: rgba(52, 211, 153, .1); color: #a7f3d0; font-size: .75rem; font-weight: 600; }
+    #auth-screen > div > div:first-child > div:last-child { display: flex; flex: none; flex-direction: column; gap: .5rem; }
+    #auth-screen button { cursor: pointer; font: inherit; }
+    #auth-screen .theme-toggle, #auth-screen .language-toggle { padding: .5rem .75rem; border: 1px solid #334155; border-radius: .5rem; background: rgba(15, 23, 42, .7); color: #cbd5e1; font-size: .75rem; }
+    #auth-form { display: grid; gap: 1rem; }
+    #auth-screen label { display: grid; gap: .5rem; color: #cbd5e1; font-size: .875rem; }
+    #auth-screen input { width: 100%; box-sizing: border-box; padding: .75rem 1rem; border: 1px solid #334155; border-radius: .75rem; background: rgba(2, 6, 23, .7); color: #f1f5f9; font: inherit; color-scheme: dark; }
+    #auth-screen input:focus { outline: 2px solid rgba(52, 211, 153, .55); outline-offset: 1px; }
+    #auth-submit { width: 100%; padding: .75rem 1.25rem; border: 0; border-radius: .75rem; background: #34d399; color: #020617; font-weight: 700 !important; }
+    #auth-screen > div > div:nth-of-type(2) { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .75rem; margin-top: 1rem; font-size: .875rem; }
+    #auth-mode-toggle, #auth-reset { padding: 0; border: 0; background: transparent; color: #6ee7b7; }
+    #auth-reset { color: #94a3b8; }
+    #auth-message { min-height: 3rem; box-sizing: border-box; margin-top: 1rem; padding: .75rem; border: 1px solid #1e293b; border-radius: .75rem; background: rgba(2, 6, 23, .5); color: #cbd5e1; font-size: .875rem; }
+    #auth-screen > div > p:last-child { margin: 1rem 0 0; color: #64748b; font-size: .75rem; line-height: 1.25rem; }
+    #auth-screen #auth-name-wrap.hidden { display: none !important; }
+    body.light-mode #auth-screen h1 { color: #0f172a; }
+    body.light-mode #auth-description, body.light-mode #auth-screen label { color: #475569; }
+    body.light-mode #auth-screen .theme-toggle, body.light-mode #auth-screen .language-toggle { border-color: #cbd5e1; background: #e8eef5; color: #334155; }
+    body.light-mode #auth-screen input { border-color: #cbd5e1; background: #f8fafc; color: #0f172a; color-scheme: light; }
+    body.light-mode #auth-message { border-color: #cbd5e1; background: #f8fafc; color: #334155; }
+    body.light-mode #auth-screen > div > p:last-child, body.light-mode #auth-reset { color: #475569; }
+    @media (max-width: 420px) {
+      #auth-screen > div { padding: 1.25rem; }
+      #auth-screen > div > div:first-child { gap: .5rem; }
+      #auth-screen > div > div:first-child > div:last-child { gap: .4rem; }
+    }
+    .tab-button[aria-selected="true"] { color: #a7f3d0; border-color: #34d399; background: rgba(16, 185, 129, .1); }
+    .tab-panel[hidden] { display: none; }
+    input, select, textarea { color-scheme: dark; }
+    input:focus, select:focus, textarea:focus { outline: 2px solid rgba(52, 211, 153, .55); outline-offset: 1px; }
+    .audit-overlap { position: relative; }
+    .audit-overlap .overlap-demo { position: absolute; top: -12px; left: 56%; z-index: 2; }
+    .broken-image { background: repeating-linear-gradient(135deg,#17263a,#17263a 10px,#1c2f45 10px,#1c2f45 20px); }
+    .toast { animation: toast-in .2s ease-out; }
+    body.light-mode { color-scheme: light; background: #f1f5f9; color: #0f172a; }
+    body.light-mode .glass { background: rgba(255,255,255,.9); border-color: #dbe3ee; box-shadow: 0 12px 32px rgba(15,23,42,.06); }
+    body.light-mode .text-slate-100, body.light-mode .text-slate-200, body.light-mode .text-slate-300 { color: #1e293b !important; }
+    body.light-mode .text-slate-400, body.light-mode .text-slate-500 { color: #475569 !important; }
+    body.light-mode .text-slate-600 { color: #334155 !important; }
+    body.light-mode .bg-slate-950, body.light-mode .bg-slate-950\/50, body.light-mode .bg-slate-950\/60, body.light-mode .bg-slate-950\/70 { background-color: #f8fafc !important; }
+    body.light-mode .bg-slate-900, body.light-mode .bg-slate-900\/70 { background-color: #e8eef5 !important; }
+    body.light-mode .bg-slate-800 { background-color: #e2e8f0 !important; }
+    body.light-mode .border-slate-800, body.light-mode .border-slate-700, body.light-mode .border-slate-600 { border-color: #cbd5e1 !important; }
+    body.light-mode .bg-black\/40 { background-color: #e8eef5 !important; }
+    body.light-mode .text-emerald-200, body.light-mode .text-emerald-300 { color: #047857 !important; }
+    body.light-mode .text-cyan-300 { color: #0e7490 !important; }
+    body.light-mode .text-blue-300 { color: #1d4ed8 !important; }
+    body.light-mode .text-violet-300 { color: #6d28d9 !important; }
+    body.light-mode .text-fuchsia-300 { color: #a21caf !important; }
+    body.light-mode .text-amber-100, body.light-mode .text-amber-200 { color: #92400e !important; }
+    body.light-mode .text-rose-100, body.light-mode .text-rose-200 { color: #be123c !important; }
+    body.light-mode .tab-button[aria-selected="true"] { color: #047857; background: #d1fae5; }
+    body.light-mode .broken-image { background: repeating-linear-gradient(135deg,#e2e8f0,#e2e8f0 10px,#cbd5e1 10px,#cbd5e1 20px); }
+    @keyframes toast-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; scroll-behavior: auto !important; } }
+  </style>
+</head>
+<body class="min-h-screen text-slate-100">
+  <div class="pointer-events-none fixed inset-0 overflow-hidden" aria-hidden="true">
+    <div class="absolute -left-32 -top-32 h-96 w-96 rounded-full bg-emerald-500/10 blur-3xl"></div>
+    <div class="absolute right-0 top-1/3 h-96 w-96 rounded-full bg-cyan-500/10 blur-3xl"></div>
+  </div>
+  <section id="auth-screen" class="relative mx-auto flex min-h-screen max-w-6xl items-center justify-center px-4 py-8 sm:px-7" aria-labelledby="auth-heading">
+    <div class="glass w-full max-w-md rounded-3xl p-6 sm:p-8">
+      <div class="mb-6 flex items-start justify-between gap-4">
+        <div>
+          <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-200">Supabase Auth</div>
+          <h1 id="auth-heading" class="text-2xl font-black">অ্যাকাউন্টে প্রবেশ</h1>
+          <p id="auth-description" class="mt-2 text-sm leading-6 text-slate-400">আপনার অ্যাকাউন্ট দিয়ে SQA পরীক্ষণ হাবে প্রবেশ করুন।</p>
+        </div>
+        <div class="flex shrink-0 flex-col gap-2">
+          <button type="button" class="theme-toggle no-translate rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 text-xs text-slate-300 hover:bg-slate-800" aria-pressed="false">☀️ দিন মোড</button>
+          <button type="button" class="language-toggle no-translate rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 text-xs text-slate-300 hover:bg-slate-800" aria-label="Switch language">English</button>
+        </div>
+      </div>
+      <form id="auth-form" class="space-y-4">
+        <label id="auth-name-wrap" class="hidden block text-sm text-slate-300">পূর্ণ নাম (Full Name)<input id="auth-name" maxlength="120" autocomplete="name" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="আপনার পূর্ণ নাম"></label>
+        <label class="block text-sm text-slate-300">ইমেইল (Email)<input id="auth-email" type="email" required maxlength="254" autocomplete="email" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="name@example.com"></label>
+        <label class="block text-sm text-slate-300">পাসওয়ার্ড (Password)<input id="auth-password" type="password" required minlength="6" autocomplete="current-password" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="কমপক্ষে ৬ অক্ষর"></label>
+        <button id="auth-submit" type="submit" class="w-full rounded-xl bg-emerald-400 px-5 py-3 font-bold text-slate-950 hover:bg-emerald-300">লগইন করুন</button>
+      </form>
+      <div class="mt-4 flex flex-wrap justify-between gap-3 text-sm">
+        <button id="auth-mode-toggle" type="button" class="text-emerald-300 hover:underline">নতুন অ্যাকাউন্ট তৈরি করুন</button>
+        <button id="auth-reset" type="button" class="text-slate-400 hover:underline">পাসওয়ার্ড ভুলে গেছেন?</button>
+      </div>
+      <div id="auth-message" class="mt-4 min-h-12 rounded-xl border border-slate-800 bg-slate-950/50 p-3 text-sm text-slate-300" aria-live="polite">নিরাপদ প্রবেশের জন্য Supabase Auth ব্যবহৃত হয়।</div>
+      <p class="mt-4 text-xs leading-5 text-slate-500">নতুন অ্যাকাউন্টের জন্য প্রকল্পে ইমেইল নিশ্চিতকরণ চালু থাকলে, ইমেইল নিশ্চিত করার পর লগইন করুন। ডেটা ব্যবহারে Supabase টেবিলগুলোর Row Level Security (RLS) নীতিও সঠিকভাবে সেট করুন।</p>
+    </div>
+  </section>
+  <main id="app-shell" hidden class="relative mx-auto max-w-[1600px] px-4 py-6 sm:px-7 lg:px-10">
+    <header class="mb-7 flex flex-col gap-5 border-b border-slate-800 pb-6 lg:flex-row lg:items-end lg:justify-between">
+      <div>
+        <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-200">
+          <span class="h-2 w-2 rounded-full bg-emerald-400" id="connection-dot"></span>
+          <span id="connection-label">ডেটাবেস সংযোগ পরীক্ষা চলছে</span>
+        </div>
+        <h1 class="text-3xl font-black tracking-tight sm:text-4xl">SQA এ টু জেড <span class="text-emerald-300">লাইভ টেস্টিং হাব</span></h1>
+        <p class="mt-2 max-w-3xl text-sm leading-6 text-slate-400">একটি ব্যবহারিক পরীক্ষণ পরিবেশে সফটওয়্যার গুণমান নিশ্চয়তার (Software Quality Assurance) আটটি গুরুত্বপূর্ণ ক্ষেত্র অনুশীলন করুন।</p>
+      </div>
+      <div class="flex flex-wrap items-center gap-2 text-xs">
+        <button type="button" class="theme-toggle no-translate rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 text-slate-300 hover:bg-slate-800" aria-pressed="false">☀️ দিন মোড</button>
+        <button type="button" class="language-toggle no-translate rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 text-slate-300 hover:bg-slate-800" aria-label="Switch language">English</button>
+        <span id="signed-in-user" class="max-w-48 truncate rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 text-slate-300"></span>
+        <button id="logout-button" type="button" class="rounded-lg border border-rose-400/30 px-3 py-2 text-rose-200 hover:bg-rose-400/10">লগআউট</button>
+        <span class="rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 text-slate-300">পরিবেশ: <b class="text-slate-100">পরীক্ষণ (Sandbox)</b></span>
+        <span class="rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 text-slate-300">ডেটা: <b class="text-slate-100">Supabase PostgreSQL</b></span>
+      </div>
+    </header>
+
+    <section class="mb-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4" aria-label="সারসংক্ষেপ">
+      <div class="glass rounded-2xl p-4"><p class="text-xs text-slate-400">নিবন্ধিত পরীক্ষণ ব্যবহারকারী</p><p id="stat-users" class="mt-2 text-2xl font-bold">—</p></div>
+      <div class="glass rounded-2xl p-4"><p class="text-xs text-slate-400">সংরক্ষিত অর্ডার</p><p id="stat-orders" class="mt-2 text-2xl font-bold">—</p></div>
+      <div class="glass rounded-2xl p-4"><p class="text-xs text-slate-400">খোলা বাগ প্রতিবেদন</p><p id="stat-bugs" class="mt-2 text-2xl font-bold">—</p></div>
+      <div class="glass rounded-2xl p-4"><p class="text-xs text-slate-400">পরীক্ষণ চেকলিস্ট</p><p id="stat-checks" class="mt-2 text-2xl font-bold">০ / ১০ সম্পন্ন</p></div>
+    </section>
+
+    <nav class="mb-5 flex gap-2 overflow-x-auto pb-2" role="tablist" aria-label="পরীক্ষণের বিভাগ">
+      <button class="tab-button whitespace-nowrap rounded-xl border border-slate-700 px-4 py-3 text-sm text-slate-300" role="tab" aria-selected="true" aria-controls="panel-registration" id="tab-registration">১ · নিবন্ধন ও যাচাই</button>
+      <button class="tab-button whitespace-nowrap rounded-xl border border-slate-700 px-4 py-3 text-sm text-slate-300" role="tab" aria-selected="false" aria-controls="panel-orders" id="tab-orders" tabindex="-1">২ · অর্ডার ও ব্যবসায়িক নিয়ম</button>
+      <button class="tab-button whitespace-nowrap rounded-xl border border-slate-700 px-4 py-3 text-sm text-slate-300" role="tab" aria-selected="false" aria-controls="panel-ui" id="tab-ui" tabindex="-1">৩ · UI/UX ও সামঞ্জস্য</button>
+      <button class="tab-button whitespace-nowrap rounded-xl border border-slate-700 px-4 py-3 text-sm text-slate-300" role="tab" aria-selected="false" aria-controls="panel-suite" id="tab-suite" tabindex="-1">৪ · টেস্ট স্যুট</button>
+      <button class="tab-button whitespace-nowrap rounded-xl border border-slate-700 px-4 py-3 text-sm text-slate-300" role="tab" aria-selected="false" aria-controls="panel-api" id="tab-api" tabindex="-1">৫ · REST API</button>
+      <button class="tab-button whitespace-nowrap rounded-xl border border-slate-700 px-4 py-3 text-sm text-slate-300" role="tab" aria-selected="false" aria-controls="panel-database" id="tab-database" tabindex="-1">৬ · ডেটাবেস যাচাই</button>
+      <button class="tab-button whitespace-nowrap rounded-xl border border-slate-700 px-4 py-3 text-sm text-slate-300" role="tab" aria-selected="false" aria-controls="panel-security" id="tab-security" tabindex="-1">৭ · নিরাপত্তা ও কর্মদক্ষতা</button>
+      <button class="tab-button whitespace-nowrap rounded-xl border border-slate-700 px-4 py-3 text-sm text-slate-300" role="tab" aria-selected="false" aria-controls="panel-bugs" id="tab-bugs" tabindex="-1">৮ · বাগ ও টেস্ট কেস</button>
+    </nav>
+
+    <section id="panel-registration" class="tab-panel glass rounded-2xl p-5 sm:p-7" role="tabpanel" aria-labelledby="tab-registration">
+      <div class="mb-6"><p class="text-xs font-bold uppercase tracking-[.18em] text-emerald-300">কার্যকরী · নেগেটিভ · সীমামান · ভূমিকা</p><h2 class="mt-2 text-2xl font-bold">ব্যবহারকারী নিবন্ধন পরীক্ষা</h2><p class="mt-2 text-sm text-slate-400">ইনপুট যাচাই, সীমামান বিশ্লেষণ (Boundary Value Analysis) এবং ভূমিকা-ভিত্তিক প্রবেশাধিকার (RBAC) অনুশীলন করুন।</p></div>
+      <div class="grid gap-6 lg:grid-cols-[1fr_.8fr]">
+        <form id="registration-form" class="grid gap-4 sm:grid-cols-2">
+          <label class="text-sm text-slate-300">পূর্ণ নাম (Full Name)<input id="reg-name" required maxlength="120" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="যেমন: নুসরাত জাহান"></label>
+          <label class="text-sm text-slate-300">ইমেইল (Email)<input id="reg-email" type="email" required maxlength="254" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="name@example.com"></label>
+          <label class="text-sm text-slate-300">পাসওয়ার্ড (Password · ৬–১২ অক্ষর)<input id="reg-password" type="password" minlength="6" maxlength="12" required autocomplete="new-password" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="৬ থেকে ১২ অক্ষর"></label>
+          <label class="text-sm text-slate-300">বয়স (Age · ১৮–৬০)<input id="reg-age" type="number" max="60" required class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="১৮–৬০"></label>
+          <label class="text-sm text-slate-300">ব্যবহারকারীর ভূমিকা (Role)<select id="reg-role" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3"><option value="User">ব্যবহারকারী (User)</option><option value="QA">পরীক্ষক (QA)</option><option value="Admin">প্রশাসক (Admin)</option></select></label>
+          <div class="flex flex-wrap items-end gap-3 sm:col-span-2">
+            <button type="submit" class="rounded-xl bg-emerald-400 px-5 py-3 font-bold text-slate-950 hover:bg-emerald-300">ব্যবহারকারী সংরক্ষণ করুন</button>
+            <button type="button" id="reset-registration" class="rounded-xl border border-amber-400/40 px-5 py-3 font-semibold text-amber-200 hover:bg-amber-400/10">ফর্ম রিসেট করুন</button>
+          </div>
+        </form>
+        <aside class="space-y-4">
+          <div class="rounded-xl border border-amber-400/30 bg-amber-400/5 p-4 text-sm leading-6 text-amber-100"><b>ইচ্ছাকৃত বাগ:</b> ১৭ বছর বয়সের সীমার নিচের মানটি জাভাস্ক্রিপ্ট যাচাই এড়িয়ে সংরক্ষণের চেষ্টা করে; ডেটাবেসের নিজস্ব নিয়ম থাকলে সংরক্ষণ প্রত্যাখ্যাত হবে। রিসেট বোতামটি ইনপুট পরিষ্কার করে না।</div>
+          <div class="rounded-xl border border-rose-400/20 bg-rose-400/5 p-4 text-sm leading-6 text-slate-300"><b class="text-rose-200">নিরাপত্তা সতর্কতা:</b> এই ফর্মের আসল পাসওয়ার্ড ডেটাবেসে রাখা হয় না; নির্ধারিত কলামে কেবল অ-গোপন পরীক্ষণ চিহ্ন রাখা হয়। নিরাপদ প্রমাণীকরণ ও হ্যাশিং Supabase Auth পরিচালনা করে। ভূমিকা নির্বাচকটি শুধু UI-তে থাকে, কারণ নির্ধারিত টেবিলে Role কলাম নেই।</div>
+          <div id="registration-result" class="min-h-12 rounded-xl border border-slate-800 bg-slate-950/50 p-4 text-sm text-slate-300" aria-live="polite">সংরক্ষণের ফল এখানে দেখা যাবে।</div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="panel-orders" class="tab-panel glass rounded-2xl p-5 sm:p-7" role="tabpanel" aria-labelledby="tab-orders" hidden>
+      <div class="mb-6"><p class="text-xs font-bold uppercase tracking-[.18em] text-cyan-300">ই-কমার্স · হিসাব · ব্যবসায়িক নিয়ম</p><h2 class="mt-2 text-2xl font-bold">পণ্য অর্ডার পরীক্ষা</h2><p class="mt-2 text-sm text-slate-400">ব্যবহারকারীর আইডি, পরিমাণ, কুপন এবং করসহ প্রকৃত অর্ডার সংরক্ষণ করুন।</p></div>
+      <form id="order-form" class="grid gap-5 lg:grid-cols-2">
+        <div class="grid gap-4 sm:grid-cols-2">
+          <label class="text-sm text-slate-300 sm:col-span-2">ব্যবহারকারীর আইডি (User ID)<input id="order-user-id" required class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="sqa_users থেকে আইডি দিন"></label>
+          <label class="text-sm text-slate-300">পণ্য (Product)<select id="order-product" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3"><option value="পরীক্ষণ কিবোর্ড" data-price="1200">পরীক্ষণ কিবোর্ড · ৳১,২০০</option><option value="QA নোটবুক" data-price="350">QA নোটবুক · ৳৩৫০</option><option value="অটোমেশন কিট" data-price="2800">অটোমেশন কিট · ৳২,৮০০</option></select></label>
+          <div class="text-sm text-slate-300">পরিমাণ (Quantity)<div class="mt-2 flex items-center gap-2"><button type="button" id="qty-minus" class="rounded-lg border border-slate-700 px-4 py-3" aria-label="পরিমাণ কমান">−</button><input id="order-quantity" type="number" value="1" class="w-24 rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-3 text-center" aria-label="পরিমাণ"><button type="button" id="qty-plus" class="rounded-lg border border-slate-700 px-4 py-3" aria-label="পরিমাণ বাড়ান">+</button></div></div>
+          <label class="text-sm text-slate-300 sm:col-span-2">কুপন কোড (Coupon Code)<input id="order-coupon" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="ছাড় পেতে SAVE20 লিখুন"></label>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-950/50 p-5">
+          <h3 class="font-semibold">অর্ডারের হিসাব (Order Summary)</h3><div class="mt-4 space-y-3 text-sm text-slate-400"><p class="flex justify-between"><span>পণ্যের মূল্য</span><b id="subtotal" class="text-slate-100">৳১,২০০</b></p><p class="flex justify-between"><span>ছাড় (SAVE20)</span><b id="discount" class="text-slate-100">৳০</b></p><p class="flex justify-between"><span>কর (১০%)</span><b id="tax" class="text-slate-100">৳১২০</b></p><p class="flex justify-between border-t border-slate-800 pt-3 text-base"><span>সর্বমোট</span><b id="total" class="text-emerald-300">৳১,৩২০</b></p></div>
+          <button type="submit" class="mt-5 w-full rounded-xl bg-cyan-300 px-5 py-3 font-bold text-slate-950 hover:bg-cyan-200">অর্ডার সংরক্ষণ করুন</button>
+        </div>
+      </form>
+      <p class="mt-4 rounded-xl border border-amber-400/30 bg-amber-400/5 p-4 text-sm leading-6 text-amber-100"><b>ইচ্ছাকৃত বাগ:</b> পরিমাণ ঋণাত্মক হতে পারে; ফলে মোট মূল্য কমে বা ঋণাত্মক হয়।</p>
+      <div id="order-result" class="mt-4 text-sm text-slate-300" aria-live="polite"></div>
+    </section>
+
+    <section id="panel-ui" class="tab-panel glass rounded-2xl p-5 sm:p-7" role="tabpanel" aria-labelledby="tab-ui" hidden>
+      <div class="mb-6"><p class="text-xs font-bold uppercase tracking-[.18em] text-violet-300">ব্যবহারযোগ্যতা · প্রবেশগম্যতা · সামঞ্জস্য</p><h2 class="mt-2 text-2xl font-bold">দৃশ্যমান UI নিরীক্ষা</h2><p class="mt-2 text-sm text-slate-400">নমুনা ত্রুটিগুলো শনাক্ত করুন, ভিউপোর্ট পরিবর্তন করুন এবং প্রবেশগম্যতার (Accessibility) মৌলিক বিষয় যাচাই করুন।</p></div>
+      <div class="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-800 bg-slate-950/50 p-4"><span class="text-sm text-slate-300">বর্তমান ভিউপোর্ট (Viewport): <b id="viewport-label" class="text-emerald-300">ডেস্কটপ</b></span><div class="flex gap-2"><button type="button" class="viewport-toggle rounded-lg border border-slate-700 px-4 py-2 text-sm" data-viewport="desktop">ডেস্কটপ</button><button type="button" class="viewport-toggle rounded-lg border border-slate-700 px-4 py-2 text-sm" data-viewport="mobile">মোবাইল</button></div></div>
+      <div id="audit-frame" class="mx-auto mt-5 w-full max-w-full rounded-2xl border border-slate-700 bg-slate-900 p-5 transition-all">
+        <div class="audit-overlap flex min-h-20 items-center gap-4 rounded-xl border border-slate-700 bg-slate-950/60 p-4"><span class="text-sm text-slate-300">এই নমুনা কার্ডে দুটি বোতামের অবস্থান পরীক্ষা করুন।</span><button class="overlap-demo rounded-lg bg-rose-400 px-3 py-2 text-xs font-bold text-slate-950">ওভারল্যাপ</button><button class="rounded-lg border border-slate-600 px-3 py-2 text-xs">বিস্তারিত</button></div>
+        <div class="mt-5 grid gap-4 md:grid-cols-2"><div class="broken-image flex h-44 flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-slate-500 text-center text-sm text-slate-400"><span aria-hidden="true" class="text-4xl">▧</span><span>ভাঙা ছবি স্থানধারক (Broken image)<br>পণ্যের পূর্বরূপ অনুপস্থিত</span></div><div class="rounded-xl border border-slate-700 p-4"><h3 class="font-semibold">প্রবেশগম্যতা যাচাই</h3><ul class="mt-3 list-disc space-y-2 pl-5 text-sm text-slate-400"><li>ফর্ম লেবেল ইনপুটের সঙ্গে যুক্ত আছে কি?</li><li>কিবোর্ড দিয়ে সব নিয়ন্ত্রণে যাওয়া যায় কি?</li><li>ত্রুটির বিবরণ সহায়ক প্রযুক্তিতে ঘোষণা হয় কি?</li><li>রঙ ছাড়াও অবস্থা বোঝার উপায় আছে কি?</li></ul></div></div>
+      </div>
+      <p class="mt-4 rounded-xl border border-violet-400/20 bg-violet-400/5 p-4 text-sm text-violet-100"><b>ইচ্ছাকৃত UI ত্রুটি:</b> নমুনা বোতামটি অন্য উপাদানের ওপর পড়ে এবং ছবির উৎস অনুপস্থিত।</p>
+    </section>
+
+    <section id="panel-suite" class="tab-panel glass rounded-2xl p-5 sm:p-7" role="tabpanel" aria-labelledby="tab-suite" hidden>
+      <div class="mb-6"><p class="text-xs font-bold uppercase tracking-[.18em] text-emerald-300">স্মোক · স্যানিটি · রিগ্রেশন</p><h2 class="mt-2 text-2xl font-bold">পরীক্ষণ সম্পাদন চেকলিস্ট</h2><p class="mt-2 text-sm text-slate-400">প্রতিটি পরীক্ষার ফল নির্বাচন করলে পাশ/ব্যর্থতার হার ও সারাংশ তাৎক্ষণিকভাবে হালনাগাদ হবে।</p></div>
+      <div class="grid gap-5 lg:grid-cols-[1.2fr_.8fr]"><div id="checklist" class="space-y-3"></div><aside class="rounded-2xl border border-slate-800 bg-slate-950/50 p-5"><h3 class="font-semibold">লাইভ পরীক্ষণ সারাংশ</h3><div class="mt-4 grid grid-cols-2 gap-3"><div class="rounded-xl bg-emerald-400/10 p-4"><p class="text-xs text-emerald-200">পাশের হার</p><p id="pass-rate" class="mt-1 text-2xl font-bold">০%</p></div><div class="rounded-xl bg-rose-400/10 p-4"><p class="text-xs text-rose-200">ব্যর্থতার হার</p><p id="fail-rate" class="mt-1 text-2xl font-bold">০%</p></div></div><p id="suite-summary" class="mt-4 text-sm leading-6 text-slate-400" aria-live="polite">এখনো কোনো পরীক্ষা সম্পন্ন হয়নি।</p><button id="reset-suite" class="mt-4 rounded-lg border border-slate-700 px-4 py-2 text-sm hover:bg-slate-800">সব ফল মুছুন</button></aside></div>
+    </section>
+
+    <section id="panel-api" class="tab-panel glass rounded-2xl p-5 sm:p-7" role="tabpanel" aria-labelledby="tab-api" hidden>
+      <div class="mb-6"><p class="text-xs font-bold uppercase tracking-[.18em] text-blue-300">HTTP · REST · প্রতিক্রিয়া পর্যবেক্ষণ</p><h2 class="mt-2 text-2xl font-bold">লাইভ REST API পরীক্ষণ স্যান্ডবক্স</h2><p class="mt-2 text-sm text-slate-400">Supabase REST API-তে GET, POST ও DELETE অনুরোধ পাঠান; ত্রুটি-অবস্থাগুলো নিরাপদে অনুকরণ করা হয়।</p></div>
+      <div class="grid gap-5 lg:grid-cols-[.8fr_1.2fr]">
+        <div class="space-y-4 rounded-2xl border border-slate-800 bg-slate-950/50 p-5">
+          <label class="block text-sm text-slate-300">HTTP পদ্ধতি<select id="api-method" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3"><option value="GET">তথ্য পড়ুন (GET · ২০০)</option><option value="POST">তথ্য তৈরি করুন (POST · ২০১)</option><option value="DELETE">তথ্য মুছুন (DELETE · ২০৪)</option><option value="BAD_REQUEST">ভুল অনুরোধ অনুকরণ (৪০০)</option><option value="UNAUTHORIZED">অননুমোদিত অনুরোধ অনুকরণ (৪০১)</option></select></label>
+          <label class="block text-sm text-slate-300">সম্পদ (Resource)<select id="api-resource" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3"><option value="sqa_users">ব্যবহারকারী (sqa_users)</option><option value="sqa_orders">অর্ডার (sqa_orders)</option></select></label>
+          <label class="block text-sm text-slate-300">রেকর্ড আইডি (DELETE-এর জন্য)<input id="api-record-id" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3" placeholder="সঠিক রেকর্ড আইডি দিন"></label>
+          <button id="run-api" class="w-full rounded-xl bg-blue-300 px-5 py-3 font-bold text-slate-950">API অনুরোধ চালান</button>
+          <div class="rounded-xl border border-amber-400/20 bg-amber-400/5 p-3 text-xs leading-5 text-amber-100">মোছার অনুরোধে বাস্তব ডেটা পরিবর্তিত হবে এবং নিশ্চিতকরণ চাওয়া হবে। ৪০০ ও ৪০১ প্রতিক্রিয়া কেবল স্থানীয়ভাবে অনুকৃত, সার্ভারে পাঠানো হয় না।</div>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-950/50 p-5"><div class="flex flex-wrap justify-between gap-3"><h3 class="font-semibold">কাঁচা প্রতিক্রিয়া (Raw Response)</h3><div class="text-xs text-slate-400">অবস্থা: <b id="api-status" class="text-slate-200">—</b> · সময়: <b id="api-latency" class="text-slate-200">—</b></div></div><pre id="api-output" class="mt-4 min-h-64 overflow-auto rounded-xl bg-black/40 p-4 text-xs leading-5 text-emerald-200" aria-live="polite">অনুরোধের ফল এখানে দেখা যাবে।</pre></div>
+      </div>
+    </section>
+
+    <section id="panel-database" class="tab-panel glass rounded-2xl p-5 sm:p-7" role="tabpanel" aria-labelledby="tab-database" hidden>
+      <div class="mb-6"><p class="text-xs font-bold uppercase tracking-[.18em] text-amber-300">PostgreSQL · সম্পর্ক · ভলিউম</p><h2 class="mt-2 text-2xl font-bold">ডেটাবেস ও সম্পর্ক যাচাই</h2><p class="mt-2 text-sm text-slate-400">লাইভ রেকর্ড, ব্যবহারকারী-অর্ডার সম্পর্ক, খোঁজ এবং মুছে ফেলার কার্যক্রম পর্যালোচনা করুন।</p></div>
+      <div class="mb-4 flex flex-wrap gap-3"><input id="table-search" class="min-w-52 flex-1 rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="নাম, ইমেইল বা আইডি খুঁজুন"><button id="refresh-data" class="rounded-xl border border-slate-700 px-4 py-3 hover:bg-slate-800">তথ্য নবায়ন</button><button id="bulk-users" class="rounded-xl bg-amber-300 px-4 py-3 font-bold text-slate-950 hover:bg-amber-200">৫০টি পরীক্ষণ ব্যবহারকারী তৈরি করুন</button></div>
+      <div id="database-message" class="mb-4 text-sm text-slate-400" aria-live="polite">তথ্য লোড হচ্ছে…</div>
+      <div class="grid gap-5 xl:grid-cols-2">
+        <div class="overflow-hidden rounded-xl border border-slate-800"><h3 class="bg-slate-900 px-4 py-3 font-semibold">ব্যবহারকারী (sqa_users)</h3><div class="max-h-[28rem] overflow-auto"><table class="w-full text-left text-sm"><thead class="sticky top-0 bg-slate-950 text-xs text-slate-400"><tr><th class="p-3">নাম / ইমেইল</th><th class="p-3">বয়স</th><th class="p-3">আইডি</th><th class="p-3">কাজ</th></tr></thead><tbody id="users-table" class="divide-y divide-slate-800"></tbody></table></div></div>
+        <div class="overflow-hidden rounded-xl border border-slate-800"><h3 class="bg-slate-900 px-4 py-3 font-semibold">অর্ডার ও ব্যবহারকারী (sqa_orders)</h3><div class="max-h-[28rem] overflow-auto"><table class="w-full text-left text-sm"><thead class="sticky top-0 bg-slate-950 text-xs text-slate-400"><tr><th class="p-3">পণ্য</th><th class="p-3">পরিমাণ / মোট</th><th class="p-3">ব্যবহারকারী</th><th class="p-3">অবস্থা</th></tr></thead><tbody id="orders-table" class="divide-y divide-slate-800"></tbody></table></div></div>
+      </div>
+      <p class="mt-4 text-xs leading-5 text-slate-500">ভলিউম পরীক্ষায় ৫০টি স্বতন্ত্র পরীক্ষণ ইমেইল পাঠানো হয়। মুছে ফেলা স্থায়ী; প্রতিটি রেকর্ডের আগে নিশ্চিতকরণ দেখানো হবে।</p>
+    </section>
+
+    <section id="panel-security" class="tab-panel glass rounded-2xl p-5 sm:p-7" role="tabpanel" aria-labelledby="tab-security" hidden>
+      <div class="mb-6"><p class="text-xs font-bold uppercase tracking-[.18em] text-rose-300">ইনপুট নিরাপত্তা · সীমাবদ্ধতা · প্রতিক্রিয়া সময়</p><h2 class="mt-2 text-2xl font-bold">নিরাপত্তা ও কর্মদক্ষতা পরীক্ষণ</h2><p class="mt-2 text-sm text-slate-400">নিরাপদ স্থানীয় সিমুলেশনে ইনপুট আচরণ এবং অনুরোধের কর্মদক্ষতা পরীক্ষা করুন।</p></div>
+      <div class="grid gap-5 lg:grid-cols-2">
+        <div class="space-y-4 rounded-2xl border border-slate-800 bg-slate-950/50 p-5"><label class="block text-sm text-slate-300">পরীক্ষার ইনপুট (Test Input)<input id="security-input" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3" placeholder="নিরাপদে পরীক্ষার স্ট্রিং লিখুন"></label><div class="flex flex-wrap gap-2"><button class="security-preset rounded-lg border border-slate-700 px-3 py-2 text-xs" data-value="' OR '1'='1">SQL ইনজেকশন পরীক্ষা</button><button class="security-preset rounded-lg border border-slate-700 px-3 py-2 text-xs" data-value="<script>alert('xss')</script>">XSS পরীক্ষা</button><button id="brute-force" class="rounded-lg border border-rose-400/40 px-3 py-2 text-xs text-rose-200">লগইন-লক অনুকরণ</button></div><button id="inspect-input" class="rounded-xl bg-rose-300 px-5 py-3 font-bold text-slate-950">ইনপুট পরীক্ষা করুন</button><div id="security-result" class="min-h-16 rounded-xl border border-slate-800 p-4 text-sm text-slate-300" aria-live="polite">পরীক্ষার ফল এখানে দেখা যাবে।</div><p class="text-xs leading-5 text-slate-500">ইনপুটটি শুধু স্থানীয়ভাবে বিশ্লেষিত হয়; ডেটাবেসে চালানো বা HTML হিসেবে রেন্ডার করা হয় না।</p></div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-950/50 p-5"><h3 class="font-semibold">নিয়ন্ত্রিত লোড পর্যবেক্ষণ</h3><p class="mt-2 text-sm leading-6 text-slate-400">প্রকৃত সার্ভারে একযোগে ১০০টি অনুরোধ পাঠানো হয় না। পরিবর্তে একই ধরনের ১০০টি স্থানীয় নমুনা কাজের সময় মাপা হয় এবং বাস্তব API-র একটি হালকা পাঠ-অনুরোধ দিয়ে সার্ভার প্রতিক্রিয়া যাচাই করা যায়।</p><button id="run-load-test" class="mt-4 rounded-xl bg-violet-300 px-5 py-3 font-bold text-slate-950">১০০টি স্থানীয় লোড নমুনা চালান</button><div id="load-result" class="mt-4 min-h-20 rounded-xl border border-slate-800 p-4 text-sm text-slate-300" aria-live="polite">চালানোর পর পরিসংখ্যান এখানে দেখা যাবে।</div></div>
+      </div>
+    </section>
+
+    <section id="panel-bugs" class="tab-panel glass rounded-2xl p-5 sm:p-7" role="tabpanel" aria-labelledby="tab-bugs" hidden>
+      <div class="mb-6"><p class="text-xs font-bold uppercase tracking-[.18em] text-fuchsia-300">ত্রুটি ব্যবস্থাপনা · টেস্ট কেস</p><h2 class="mt-2 text-2xl font-bold">বাগ ট্র্যাকার ও পরীক্ষণ কেস</h2><p class="mt-2 text-sm text-slate-400">বাগ প্রতিবেদন জমা দিন, অগ্রগতি হালনাগাদ করুন এবং সাধারণ পরীক্ষণ কেস পর্যালোচনা করুন।</p></div>
+      <div class="grid gap-6 xl:grid-cols-[.8fr_1.2fr]">
+        <form id="bug-form" class="grid gap-4 sm:grid-cols-2 xl:grid-cols-1">
+          <label class="text-sm text-slate-300">মডিউল (Module)<input id="bug-module" required maxlength="100" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="যেমন: নিবন্ধন"></label>
+          <label class="text-sm text-slate-300">বাগের শিরোনাম (Bug Title)<input id="bug-title" required maxlength="180" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3"></label>
+          <div class="grid grid-cols-2 gap-3"><label class="text-sm text-slate-300">তীব্রতা (Severity)<select id="bug-severity" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-3"><option value="Critical">সংকটজনক (Critical)</option><option value="Major" selected>গুরুতর (Major)</option><option value="Minor">কম গুরুতর (Minor)</option><option value="Trivial">সামান্য (Trivial)</option></select></label><label class="text-sm text-slate-300">অগ্রাধিকার (Priority)<select id="bug-priority" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-3"><option value="High">উচ্চ (High)</option><option value="Medium" selected>মাঝারি (Medium)</option><option value="Low">নিম্ন (Low)</option></select></label></div>
+          <label class="text-sm text-slate-300 sm:col-span-2 xl:col-span-1">পুনরুৎপাদনের ধাপ (Steps)<textarea id="bug-steps" required rows="3" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3"></textarea></label>
+          <label class="text-sm text-slate-300 sm:col-span-2 xl:col-span-1">প্রত্যাশিত ফল (Expected Result)<textarea id="bug-expected" required rows="2" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3"></textarea></label>
+          <label class="text-sm text-slate-300 sm:col-span-2 xl:col-span-1">প্রকৃত ফল (Actual Result)<textarea id="bug-actual" required rows="2" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3"></textarea></label>
+          <button type="submit" class="rounded-xl bg-fuchsia-300 px-5 py-3 font-bold text-slate-950 sm:col-span-2 xl:col-span-1">বাগ প্রতিবেদন জমা দিন</button>
+          <div id="bug-result" class="text-sm text-slate-300 sm:col-span-2 xl:col-span-1" aria-live="polite"></div>
+        </form>
+        <div class="space-y-6">
+          <div class="overflow-hidden rounded-xl border border-slate-800"><h3 class="bg-slate-900 px-4 py-3 font-semibold">লাইভ বাগ তালিকা (sqa_bug_reports)</h3><div class="max-h-80 overflow-auto"><table class="w-full text-left text-sm"><thead class="sticky top-0 bg-slate-950 text-xs text-slate-400"><tr><th class="p-3">বাগ</th><th class="p-3">তীব্রতা</th><th class="p-3">অবস্থা</th></tr></thead><tbody id="bugs-table" class="divide-y divide-slate-800"></tbody></table></div></div>
+          <div class="overflow-hidden rounded-xl border border-slate-800"><h3 class="bg-slate-900 px-4 py-3 font-semibold">প্রাক-লোড করা ১০টি পরীক্ষণ কেস</h3><div class="max-h-72 overflow-auto"><table class="w-full text-left text-sm"><thead class="sticky top-0 bg-slate-950 text-xs text-slate-400"><tr><th class="p-3">আইডি</th><th class="p-3">পরীক্ষণ কেস</th><th class="p-3">ধরন</th><th class="p-3">অগ্রাধিকার</th></tr></thead><tbody id="test-cases" class="divide-y divide-slate-800"></tbody></table></div></div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="mt-8 border-t border-slate-800 py-5 text-center text-xs leading-5 text-slate-500">শিক্ষামূলক পরীক্ষণ স্যান্ডবক্স · বাস্তব ডেটা পরিবর্তনের আগে পর্যালোচনা করুন · প্রোডাকশনে ব্যবহারের জন্য নয়</footer>
+  </main>
+  <div id="toast-container" class="fixed bottom-4 right-4 z-50 space-y-2" aria-live="polite"></div>
+
+  <script>
+    function startApp() {
+      "use strict";
+      const SUPABASE_URL = 'https://kmwjbvbraveiticesexm.supabase.co';
+      const SUPABASE_KEY = 'sb_publishable__rWwIO8-QwBLF8_uOOVLPA_N2MacjAb';
+      const $ = (selector) => document.querySelector(selector);
+      const $$ = (selector) => Array.from(document.querySelectorAll(selector));
+      let activeLanguage = 'bn';
+      const translations = {
+        'SQA এ টু জেড লাইভ টেস্টিং হাব (Complete SQA Enterprise Sandbox)': 'SQA A to Z Live Testing Hub (Complete SQA Enterprise Sandbox)',
+        'অ্যাকাউন্টে প্রবেশ': 'Sign in to your account',
+        'আপনার অ্যাকাউন্ট দিয়ে SQA পরীক্ষণ হাবে প্রবেশ করুন।': 'Sign in to the SQA Testing Hub with your account.',
+        'আপনার পূর্ণ নাম': 'Your full name',
+        'নিরাপদ প্রবেশের জন্য আপনার নতুন অ্যাকাউন্ট তৈরি করুন।': 'Create a new account for secure access.',
+        'কমপক্ষে ৬ অক্ষর': 'At least 6 characters',
+        'লগইন করুন': 'Sign In',
+        'নতুন অ্যাকাউন্ট তৈরি করুন': 'Create a new account',
+        'পাসওয়ার্ড ভুলে গেছেন?': 'Forgot password?',
+        'নিরাপদ প্রবেশের জন্য Supabase Auth ব্যবহৃত হয়।': 'Supabase Auth is used for secure sign-in.',
+        'এই ফর্মের আসল পাসওয়ার্ড ডেটাবেসে রাখা হয় না; নির্ধারিত কলামে কেবল অ-গোপন পরীক্ষণ চিহ্ন রাখা হয়। নিরাপদ প্রমাণীকরণ ও হ্যাশিং Supabase Auth পরিচালনা করে। ভূমিকা নির্বাচকটি শুধু UI-তে থাকে, কারণ নির্ধারিত টেবিলে Role কলাম নেই।': 'The real password from this form is never stored in the database; the specified column receives only a non-secret test marker. Supabase Auth handles secure authentication and password hashing. The role selector is UI-only because the specified table has no Role column.',
+        'নতুন অ্যাকাউন্টের জন্য প্রকল্পে ইমেইল নিশ্চিতকরণ চালু থাকলে, ইমেইল নিশ্চিত করার পর লগইন করুন।': 'If email confirmation is enabled for new accounts, confirm your email before signing in.',
+        ' ডেটা ব্যবহারে Supabase টেবিলগুলোর Row Level Security (RLS) নীতিও সঠিকভাবে সেট করুন।': ' Configure Row Level Security (RLS) policies for the Supabase tables before accessing data.',
+        'নতুন অ্যাকাউন্ট': 'Create account',
+        'ফিরে লগইন করুন': 'Back to sign in',
+        'অ্যাকাউন্ট তৈরি করুন': 'Create Account',
+        'ইমেইল ও পাসওয়ার্ড দিন।': 'Enter your email and password.',
+        'পূর্ণ নাম দিন।': 'Enter your full name.',
+        'ইমেইল নিশ্চিতকরণ লিংক পাঠানো হয়েছে। ইমেইল নিশ্চিত করে লগইন করুন।': 'A confirmation link was sent. Confirm your email, then sign in.',
+        'অ্যাকাউন্ট তৈরি হয়েছে। এখন প্রবেশ করা যাচ্ছে…': 'Account created. Signing you in…',
+        'লগইন সফল হয়েছে।': 'Signed in successfully.',
+        'লগইন ব্যর্থ হয়েছে। ইমেইল ও পাসওয়ার্ড যাচাই করুন।': 'Sign-in failed. Check your email and password.',
+        'প্রবেশ করা যায়নি: ': 'Authentication failed: ',
+        'পাসওয়ার্ড পুনরুদ্ধার করা যায়নি: ': 'Password reset failed: ',
+        'লগআউট করা যায়নি: ': 'Sign out failed: ',
+        'এই ইমেইল দিয়ে অ্যাকাউন্ট আছে। লগইন করুন অথবা পাসওয়ার্ড পুনরুদ্ধার করুন।': 'An account already exists for this email. Sign in or reset your password.',
+        'পাসওয়ার্ড অন্তত ৬ অক্ষরের হতে হবে।': 'Password must be at least 6 characters.',
+        'পাসওয়ার্ড পুনরুদ্ধারের লিংক পাঠানো হয়েছে। আপনার ইমেইল দেখুন।': 'A password reset link was sent. Check your email.',
+        'পাসওয়ার্ড পুনরুদ্ধারের জন্য প্রথমে ইমেইল লিখুন।': 'Enter your email first to reset your password.',
+        'অ্যাকাউন্ট থেকে বের হয়ে গেছেন।': 'You have signed out.',
+        'লগআউট': 'Sign Out',
+        'Supabase Auth লাইব্রেরি লোড হয়নি। ইন্টারনেট সংযোগ যাচাই করে পৃষ্ঠাটি আবার খুলুন।': 'Supabase Auth could not load. Check your internet connection and reopen the page.',
+        'Supabase লাইব্রেরি লোড হতে সময়সীমা অতিক্রম করেছে।': 'Timed out while loading the Supabase library.',
+        'লগইন করার জন্য Supabase Auth-এ সংযোগ করা যাচ্ছে না।': 'Could not connect to Supabase Auth.',
+        'প্রবেশের অবস্থা যাচাই করা যাচ্ছে না। পৃষ্ঠা পুনরায় খুলুন।': 'Could not verify sign-in status. Reload the page.',
+        'এই ব্রাউজারে পছন্দ সংরক্ষণ করা যায়নি।': 'Could not save this preference in the browser.',
+        'অ্যাকাউন্ট নিরাপত্তার কারণে পাসওয়ার্ড পরিবর্তনের জন্য ইমেইল লিংক ব্যবহার করুন।': 'For account security, use the email link to reset your password.',
+        'ডেটাবেস সংযোগ পরীক্ষা চলছে': 'Checking database connection',
+        'লাইভ টেস্টিং হাব': 'Live Testing Hub',
+        'একটি ব্যবহারিক পরীক্ষণ পরিবেশে সফটওয়্যার গুণমান নিশ্চয়তার (Software Quality Assurance) আটটি গুরুত্বপূর্ণ ক্ষেত্র অনুশীলন করুন।': 'Explore eight essential areas of Software Quality Assurance in a hands-on testing environment.',
+        'পরিবেশ:': 'Environment:',
+        'পরীক্ষণ (Sandbox)': 'Testing (Sandbox)',
+        'ডেটা:': 'Data:',
+        'সারসংক্ষেপ': 'Overview',
+        'নিবন্ধিত পরীক্ষণ ব্যবহারকারী': 'Registered test users',
+        'সংরক্ষিত অর্ডার': 'Saved orders',
+        'খোলা বাগ প্রতিবেদন': 'Open bug reports',
+        'পরীক্ষণ চেকলিস্ট': 'Test checklist',
+        'সম্পন্ন': 'complete',
+        'পরীক্ষণের বিভাগ': 'Testing sections',
+        '১ · নিবন্ধন ও যাচাই': '1 · Registration & Validation',
+        '২ · অর্ডার ও ব্যবসায়িক নিয়ম': '2 · Orders & Business Rules',
+        '৩ · UI/UX ও সামঞ্জস্য': '3 · UI/UX & Compatibility',
+        '৪ · টেস্ট স্যুট': '4 · Test Suite',
+        '৫ · REST API': '5 · REST API',
+        '৬ · ডেটাবেস যাচাই': '6 · Database Verification',
+        '৭ · নিরাপত্তা ও কর্মদক্ষতা': '7 · Security & Performance',
+        '৮ · বাগ ও টেস্ট কেস': '8 · Bugs & Test Cases',
+        'কার্যকরী · নেগেটিভ · সীমামান · ভূমিকা': 'Functional · Negative · Boundary · Roles',
+        'ব্যবহারকারী নিবন্ধন পরীক্ষা': 'User Registration Testing',
+        'ইনপুট যাচাই, সীমামান বিশ্লেষণ (Boundary Value Analysis) এবং ভূমিকা-ভিত্তিক প্রবেশাধিকার (RBAC) অনুশীলন করুন।': 'Practice input validation, Boundary Value Analysis, and role-based access control (RBAC).',
+        'পূর্ণ নাম (Full Name)': 'Full Name',
+        'যেমন: নুসরাত জাহান': 'For example: Nusrat Jahan',
+        'ইমেইল (Email)': 'Email',
+        'পাসওয়ার্ড (Password · ৬–১২ অক্ষর)': 'Password · 6–12 characters',
+        'পাসওয়ার্ড (Password)': 'Password',
+        '৬ থেকে ১২ অক্ষর': '6 to 12 characters',
+        'বয়স (Age · ১৮–৬০)': 'Age · 18–60',
+        'ব্যবহারকারীর ভূমিকা (Role)': 'User Role',
+        'ব্যবহারকারী (User)': 'User',
+        'পরীক্ষক (QA)': 'QA',
+        'প্রশাসক (Admin)': 'Admin',
+        'ব্যবহারকারী সংরক্ষণ করুন': 'Save User',
+        'ফর্ম রিসেট করুন': 'Reset Form',
+        'ইচ্ছাকৃত বাগ:': 'Intentional bug:',
+        ' ১৭ বছর বয়সের সীমার নিচের মানটি জাভাস্ক্রিপ্ট যাচাই এড়িয়ে সংরক্ষণের চেষ্টা করে; ডেটাবেসের নিজস্ব নিয়ম থাকলে সংরক্ষণ প্রত্যাখ্যাত হবে। রিসেট বোতামটি ইনপুট পরিষ্কার করে না।': ' An age below the 18-year limit bypasses JavaScript validation and attempts to save; the database may reject it if it enforces its own rule. The reset button does not clear the inputs.',
+        'নিরাপত্তা সতর্কতা:': 'Security notice:',
+        ' এই শিক্ষামূলক স্যান্ডবক্সে নির্দিষ্ট স্কিমা অনুযায়ী পাসওয়ার্ড কলামে মান পাঠানো হয়। বাস্তব ব্যবস্থায় কখনোই সরল পাঠ্যে পাসওয়ার্ড সংরক্ষণ করবেন না; নিরাপদ প্রমাণীকরণ ও হ্যাশিং ব্যবহার করুন। ভূমিকা নির্বাচকটি শুধু UI-তে থাকে, কারণ নির্ধারিত টেবিলে Role কলাম নেই।': ' This educational sandbox sends a value to the password column to match the specified schema. Never store plain-text passwords in a real system; use secure authentication and hashing. The role selector is UI-only because the specified table has no Role column.',
+        'সংরক্ষণের ফল এখানে দেখা যাবে।': 'The save result will appear here.',
+        'কার্যকরী · নেগেটিভ · সীমামান · ভূমিকা': 'Functional · Negative · Boundary · Roles',
+        'ই-কমার্স · হিসাব · ব্যবসায়িক নিয়ম': 'E-commerce · Calculations · Business Rules',
+        'পণ্য অর্ডার পরীক্ষা': 'Product Order Testing',
+        'ব্যবহারকারীর আইডি, পরিমাণ, কুপন এবং করসহ প্রকৃত অর্ডার সংরক্ষণ করুন।': 'Save real orders with a user ID, quantity, coupon, and tax.',
+        'ব্যবহারকারীর আইডি (User ID)': 'User ID',
+        'sqa_users থেকে আইডি দিন': 'Enter an ID from sqa_users',
+        'পণ্য (Product)': 'Product',
+        'পরীক্ষণ কিবোর্ড · ৳১,২০০': 'Test Keyboard · ৳1,200',
+        'QA নোটবুক · ৳৩৫০': 'QA Notebook · ৳350',
+        'অটোমেশন কিট · ৳২,৮০০': 'Automation Kit · ৳2,800',
+        'পরিমাণ (Quantity)': 'Quantity',
+        'পরিমাণ কমান': 'Decrease quantity',
+        'পরিমাণ বাড়ান': 'Increase quantity',
+        'কুপন কোড (Coupon Code)': 'Coupon Code',
+        'ছাড় পেতে SAVE20 লিখুন': 'Enter SAVE20 for a discount',
+        'অর্ডারের হিসাব (Order Summary)': 'Order Summary',
+        'পণ্যের মূল্য': 'Subtotal',
+        'ছাড় (SAVE20)': 'Discount (SAVE20)',
+        'কর (১০%)': 'Tax (10%)',
+        'সর্বমোট': 'Total',
+        'অর্ডার সংরক্ষণ করুন': 'Save Order',
+        ' পরিমাণ ঋণাত্মক হতে পারে; ফলে মোট মূল্য কমে বা ঋণাত্মক হয়。': ' Quantity can be negative, reducing the total or making it negative.',
+        'ব্যবহারযোগ্যতা · প্রবেশগম্যতা · সামঞ্জস্য': 'Usability · Accessibility · Compatibility',
+        'দৃশ্যমান UI নিরীক্ষা': 'Visual UI Audit',
+        'নমুনা ত্রুটিগুলো শনাক্ত করুন, ভিউপোর্ট পরিবর্তন করুন এবং প্রবেশগম্যতার (Accessibility) মৌলিক বিষয় যাচাই করুন।': 'Identify sample defects, change the viewport, and review accessibility basics.',
+        'বর্তমান ভিউপোর্ট (Viewport):': 'Current viewport:',
+        'ডেস্কটপ': 'Desktop',
+        'মোবাইল': 'Mobile',
+        'এই নমুনা কার্ডে দুটি বোতামের অবস্থান পরীক্ষা করুন।': 'Inspect the placement of the two buttons in this sample card.',
+        'ওভারল্যাপ': 'Overlap',
+        'বিস্তারিত': 'Details',
+        'ভাঙা ছবি স্থানধারক (Broken image)': 'Broken image placeholder',
+        'পণ্যের পূর্বরূপ ছবি অনুপস্থিত': 'Product preview image is missing',
+        'পণ্যের পূর্বরূপ অনুপস্থিত': 'Product preview is unavailable',
+        'প্রবেশগম্যতা যাচাই': 'Accessibility Checklist',
+        'ফর্ম লেবেল ইনপুটের সঙ্গে যুক্ত আছে কি?': 'Are form labels associated with their inputs?',
+        'কিবোর্ড দিয়ে সব নিয়ন্ত্রণে যাওয়া যায় কি?': 'Can all controls be reached with a keyboard?',
+        'ত্রুটির বিবরণ সহায়ক প্রযুক্তিতে ঘোষণা হয় কি?': 'Are errors announced to assistive technologies?',
+        'রঙ ছাড়াও অবস্থা বোঝার উপায় আছে কি?': 'Can status be understood without relying on color?',
+        'ইচ্ছাকৃত UI ত্রুটি:': 'Intentional UI defects:',
+        ' নমুনা বোতামটি অন্য উপাদানের ওপর পড়ে এবং ছবির উৎস অনুপস্থিত।': ' The sample button overlaps another element, and the image source is missing.',
+        'স্মোক · স্যানিটি · রিগ্রেশন': 'Smoke · Sanity · Regression',
+        'পরীক্ষণ সম্পাদন চেকলিস্ট': 'Test Execution Checklist',
+        'প্রতিটি পরীক্ষার ফল নির্বাচন করলে পাশ/ব্যর্থতার হার ও সারাংশ তাৎক্ষণিকভাবে হালনাগাদ হবে।': 'Choose a result for each test to update the pass/fail rates and summary instantly.',
+        'পাশের হার': 'Pass Rate',
+        'ব্যর্থতার হার': 'Fail Rate',
+        'এখনো কোনো পরীক্ষা সম্পন্ন হয়নি।': 'No tests have been completed yet.',
+        'সব ফল মুছুন': 'Clear Results',
+        'প্রধান পৃষ্ঠা সফলভাবে খোলে': 'Main page opens successfully',
+        'ব্যবহারকারী নিবন্ধন ফর্ম জমা হয়': 'User registration form submits',
+        'অবৈধ ইমেইল প্রত্যাখ্যাত হয়': 'Invalid email is rejected',
+        'পাসওয়ার্ডের সর্বনিম্ন সীমা যাচাই হয়': 'Minimum password length is validated',
+        'অর্ডার মোট ও কর সঠিক গণনা হয়': 'Order total and tax are calculated correctly',
+        'SAVE20 কুপনে ২০% ছাড় প্রয়োগ হয়': 'SAVE20 applies a 20% discount',
+        'ব্যবহারকারী ও অর্ডারের সম্পর্ক বজায় থাকে': 'User-order relationship is maintained',
+        'বাগের অবস্থা হালনাগাদ হয়': 'Bug status updates successfully',
+        'কিবোর্ড দিয়ে ট্যাব ব্যবহার করা যায়': 'Tabs are keyboard accessible',
+        'মোবাইল ভিউতে বিষয়বস্তু মানিয়ে যায়': 'Content adapts to mobile view',
+        'লাইভ পরীক্ষণ সারাংশ': 'Live Test Execution Summary',
+        'লাইভ REST API পরীক্ষণ স্যান্ডবক্স': 'Live REST API Testing Sandbox',
+        'HTTP · REST · প্রতিক্রিয়া পর্যবেক্ষণ': 'HTTP · REST · Response Monitoring',
+        'Supabase REST API-তে GET, POST ও DELETE অনুরোধ পাঠান; ত্রুটি-অবস্থাগুলো নিরাপদে অনুকরণ করা হয়।': 'Send GET, POST, and DELETE requests to the Supabase REST API; error scenarios are safely simulated.',
+        'HTTP পদ্ধতি': 'HTTP Method',
+        'তথ্য পড়ুন (GET · ২০০)': 'Read data (GET · 200)',
+        'তথ্য তৈরি করুন (POST · ২০১)': 'Create data (POST · 201)',
+        'তথ্য মুছুন (DELETE · ২০৪)': 'Delete data (DELETE · 204)',
+        'ভুল অনুরোধ অনুকরণ (৪০০)': 'Simulate Bad Request (400)',
+        'অননুমোদিত অনুরোধ অনুকরণ (৪০১)': 'Simulate Unauthorized (401)',
+        'সম্পদ (Resource)': 'Resource',
+        'ব্যবহারকারী (sqa_users)': 'Users (sqa_users)',
+        'অর্ডার (sqa_orders)': 'Orders (sqa_orders)',
+        'রেকর্ড আইডি (DELETE-এর জন্য)': 'Record ID (for DELETE)',
+        'সঠিক রেকর্ড আইডি দিন': 'Enter a record ID',
+        'API অনুরোধ চালান': 'Run API Request',
+        'মোছার অনুরোধে বাস্তব ডেটা পরিবর্তিত হবে এবং নিশ্চিতকরণ চাওয়া হবে। ৪০০ ও ৪০১ প্রতিক্রিয়া কেবল স্থানীয়ভাবে অনুকৃত, সার্ভারে পাঠানো হয় না।': 'Delete requests change real data and require confirmation. 400 and 401 responses are simulated locally and are not sent to the server.',
+        'কাঁচা প্রতিক্রিয়া (Raw Response)': 'Raw Response',
+        'অবস্থা:': 'Status:',
+        'সময়:': 'Latency:',
+        'অনুরোধের ফল এখানে দেখা যাবে।': 'The request result will appear here.',
+        'PostgreSQL · সম্পর্ক · ভলিউম': 'PostgreSQL · Relationships · Volume',
+        'ডেটাবেস ও সম্পর্ক যাচাই': 'Database & Relationship Verification',
+        'লাইভ রেকর্ড, ব্যবহারকারী-অর্ডার সম্পর্ক, খোঁজ এবং মুছে ফেলার কার্যক্রম পর্যালোচনা করুন।': 'Review live records, user-order relationships, search, and delete operations.',
+        'নাম, ইমেইল বা আইডি খুঁজুন': 'Search name, email, or ID',
+        'তথ্য নবায়ন': 'Refresh Data',
+        '৫০টি পরীক্ষণ ব্যবহারকারী তৈরি করুন': 'Generate 50 Test Users',
+        'তথ্য লোড হচ্ছে…': 'Loading data…',
+        'ব্যবহারকারী (sqa_users)': 'Users (sqa_users)',
+        'নাম / ইমেইল': 'Name / Email',
+        'বয়স': 'Age',
+        'আইডি': 'ID',
+        'কাজ': 'Actions',
+        'অর্ডার ও ব্যবহারকারী (sqa_orders)': 'Orders & Users (sqa_orders)',
+        'পণ্য': 'Product',
+        'পরিমাণ / মোট': 'Quantity / Total',
+        'অবস্থা': 'Status',
+        'ভলিউম পরীক্ষায় ৫০টি স্বতন্ত্র পরীক্ষণ ইমেইল পাঠানো হয়। মুছে ফেলা স্থায়ী; প্রতিটি রেকর্ডের আগে নিশ্চিতকরণ দেখানো হবে।': 'Volume testing inserts 50 unique test emails. Deletion is permanent; each record requires confirmation.',
+        'নিরাপত্তা ও কর্মদক্ষতা পরীক্ষণ': 'Security & Performance Testing',
+        'ইনপুট নিরাপত্তা · সীমাবদ্ধতা · প্রতিক্রিয়া সময়': 'Input Security · Rate Limits · Response Time',
+        'নিরাপদ স্থানীয় সিমুলেশনে ইনপুট আচরণ এবং অনুরোধের কর্মদক্ষতা পরীক্ষা করুন।': 'Test input handling and request performance in safe local simulations.',
+        'পরীক্ষার ইনপুট (Test Input)': 'Test Input',
+        'নিরাপদে পরীক্ষার স্ট্রিং লিখুন': 'Enter a test string safely',
+        'SQL ইনজেকশন পরীক্ষা': 'Test SQL Injection',
+        'XSS পরীক্ষা': 'Test XSS',
+        'লগইন-লক অনুকরণ': 'Simulate Login Lockout',
+        'ইনপুট পরীক্ষা করুন': 'Inspect Input',
+        'পরীক্ষার ফল এখানে দেখা যাবে।': 'Test results will appear here.',
+        'ইনপুটটি শুধু স্থানীয়ভাবে বিশ্লেষিত হয়; ডেটাবেসে চালানো বা HTML হিসেবে রেন্ডার করা হয় না।': 'Input is analyzed locally only; it is not run against the database or rendered as HTML.',
+        'নিয়ন্ত্রিত লোড পর্যবেক্ষণ': 'Controlled Load Measurement',
+        'প্রকৃত সার্ভারে একযোগে ১০০টি অনুরোধ পাঠানো হয় না। পরিবর্তে একই ধরনের ১০০টি স্থানীয় নমুনা কাজের সময় মাপা হয় এবং বাস্তব API-র একটি হালকা পাঠ-অনুরোধ দিয়ে সার্ভার প্রতিক্রিয়া যাচাই করা যায়।': '100 concurrent requests are not sent to the live server. Instead, 100 local sample tasks are timed, and one lightweight read request can check the live API response.',
+        '১০০টি স্থানীয় লোড নমুনা চালান': 'Run 100 Local Load Samples',
+        'চালানোর পর পরিসংখ্যান এখানে দেখা যাবে।': 'Run the test to see measurements here.',
+        'ত্রুটি ব্যবস্থাপনা · টেস্ট কেস': 'Defect Management · Test Cases',
+        'বাগ ট্র্যাকার ও পরীক্ষণ কেস': 'Bug Tracker & Test Cases',
+        'বাগ প্রতিবেদন জমা দিন, অগ্রগতি হালনাগাদ করুন এবং সাধারণ পরীক্ষণ কেস পর্যালোচনা করুন।': 'Submit bug reports, update their status, and review standard test cases.',
+        'মডিউল (Module)': 'Module',
+        'যেমন: নিবন্ধন': 'For example: Registration',
+        'বাগের শিরোনাম (Bug Title)': 'Bug Title',
+        'তীব্রতা (Severity)': 'Severity',
+        'সংকটজনক (Critical)': 'Critical',
+        'গুরুতর (Major)': 'Major',
+        'কম গুরুতর (Minor)': 'Minor',
+        'সামান্য (Trivial)': 'Trivial',
+        'অগ্রাধিকার (Priority)': 'Priority',
+        'উচ্চ (High)': 'High',
+        'মাঝারি (Medium)': 'Medium',
+        'নিম্ন (Low)': 'Low',
+        'পুনরুৎপাদনের ধাপ (Steps)': 'Steps to Reproduce',
+        'প্রত্যাশিত ফল (Expected Result)': 'Expected Result',
+        'প্রকৃত ফল (Actual Result)': 'Actual Result',
+        'বাগ প্রতিবেদন জমা দিন': 'Submit Bug Report',
+        'লাইভ বাগ তালিকা (sqa_bug_reports)': 'Live Bug Reports (sqa_bug_reports)',
+        'বাগ': 'Bug',
+        'প্রাক-লোড করা ১০টি পরীক্ষণ কেস': '10 Preloaded Test Cases',
+        'ধরন': 'Type',
+        'সঠিক তথ্য দিয়ে নিবন্ধন': 'Register with valid details',
+        'ভুল ইমেইল প্রত্যাখ্যান': 'Reject invalid email',
+        'পাসওয়ার্ডের ৬ অক্ষরের সীমা': 'Password minimum 6-character boundary',
+        'বয়স ১৮ সীমার মান যাচাই': 'Age 18 boundary validation',
+        'নিবন্ধন ফর্ম রিসেট': 'Registration form reset',
+        'SAVE20 কুপন ছাড় যাচাই': 'Validate SAVE20 coupon discount',
+        'শূন্য ও ঋণাত্মক পরিমাণ যাচাই': 'Validate zero and negative quantities',
+        'ব্যবহারকারী-অর্ডার সম্পর্ক যাচাই': 'Verify user-order relationship',
+        'কিবোর্ড প্রবেশগম্যতা পরীক্ষা': 'Test keyboard accessibility',
+        'বাগের অবস্থা পরিবর্তন': 'Change bug status',
+        'শিক্ষামূলক পরীক্ষণ স্যান্ডবক্স · বাস্তব ডেটা পরিবর্তনের আগে পর্যালোচনা করুন · প্রোডাকশনে ব্যবহারের জন্য নয়': 'Educational testing sandbox · Review before changing live data · Not intended for production',
+        'Supabase সংযুক্ত': 'Supabase connected',
+        'ডেটাবেসে সংযোগ বা অনুমতি সমস্যা': 'Database connection or permission issue',
+        'ডেটাবেস সংযোগ প্রস্তুত নয়।': 'Supabase connection is not ready.',
+        'ডেটাবেস ত্রুটি: ': 'Database error: ',
+        '। টেবিলের স্কিমা, নেটওয়ার্ক এবং Supabase Row Level Security (RLS) নীতি যাচাই করুন।': '. Check the table schema, network, and Supabase Row Level Security (RLS) policies.',
+        'পাসওয়ার্ড ৬ থেকে ১২ অক্ষরের মধ্যে হতে হবে।': 'Password must be 6 to 12 characters.',
+        'বয়স ১৭ থেকে ৬০-এর মধ্যে দিন।': 'Enter an age from 17 to 60.',
+        'ব্যবহারকারী সংরক্ষিত হয়েছে। আইডি: ': 'User saved. ID: ',
+        ' · ভূমিকা (UI): ': ' · Role (UI): ',
+        'ব্যবহারকারী সফলভাবে সংরক্ষিত হয়েছে।': 'User saved successfully.',
+        'ইচ্ছাকৃত বাগ: রিসেট বোতাম চাপলেও ফর্মের তথ্য অপরিবর্তিত রয়েছে।': 'Intentional bug: The form values remain unchanged after clicking Reset.',
+        'অর্ডারটি ডেটাবেসে সংরক্ষিত হয়েছে।': 'The order was saved to the database.',
+        'অর্ডার সংরক্ষিত হয়েছে।': 'Order saved.',
+        'ইচ্ছাকৃত বাগ:': 'Intentional bug:',
+        'ব্যবহারকারী সংরক্ষিত হয়েছে।': 'User saved.',
+        'ডেটাবেস থেকে তথ্য লোড হচ্ছে…': 'Loading records from the database…',
+        ' জন ব্যবহারকারী, ': ' users, ',
+        'টি অর্ডার এবং ': ' orders and ',
+        'টি বাগ প্রতিবেদন লোড হয়েছে (প্রতি তালিকায় সর্বোচ্চ সীমা প্রযোজ্য)।': ' bug reports loaded (each list is capped).',
+        'কোনো ব্যবহারকারী মেলেনি।': 'No users found.',
+        'কোনো অর্ডার পাওয়া যায়নি।': 'No orders found.',
+        'এখনো কোনো বাগ প্রতিবেদন নেই।': 'There are no bug reports yet.',
+        'মুছুন': 'Delete',
+        'ব্যবহারকারী ': 'User ',
+        ' স্থায়ীভাবে মুছবেন? সংশ্লিষ্ট অর্ডারের ওপর ডেটাবেস নীতির প্রভাব পড়তে পারে।': ' will be permanently deleted. Database rules may affect related orders.',
+        'ব্যবহারকারী মুছে ফেলা হয়েছে।': 'User deleted.',
+        '৫০টি পরীক্ষণ ব্যবহারকারী বাস্তব ডেটাবেসে তৈরি করবেন?': 'Create 50 test users in the live database?',
+        'পরীক্ষণ ব্যবহারকারী ': 'Test User ',
+        '৫০টি পরীক্ষণ ব্যবহারকারী সফলভাবে তৈরি হয়েছে।': '50 test users were created successfully.',
+        'বাগের অবস্থা হালনাগাদ হয়েছে।': 'Bug status updated.',
+        'বাগ প্রতিবেদন সংরক্ষিত হয়েছে।': 'Bug report saved.',
+        'বাগ প্রতিবেদন জমা হয়েছে।': 'Bug report submitted.',
+        'ইনপুট দৈর্ঘ্য: ': 'Input length: ',
+        ' অক্ষর। ': ' characters. ',
+        'সম্ভাব্য SQL-সদৃশ চিহ্ন পাওয়া গেছে; প্যারামিটারযুক্ত কুয়েরি ব্যবহার করুন। ': 'Potential SQL-like pattern detected; use parameterized queries. ',
+        'HTML ট্যাগ সদৃশ অংশ পাওয়া গেছে; আউটপুটকে টেক্সট হিসেবে এস্কেপ করুন। ': 'HTML-like markup detected; escape output as text. ',
+        'সাধারণ স্ট্রিং হিসেবে চিহ্নিত। ': 'Identified as a plain string. ',
+        'কোনো ইনপুট সার্ভারে পাঠানো হয়নি।': 'No input was sent to the server.',
+        'লগইন সাময়িকভাবে বন্ধ। ': 'Login temporarily locked. ',
+        ' সেকেন্ড অপেক্ষা করুন।': ' seconds remaining.',
+        'সিমুলেশন: পাঁচটি ব্যর্থ চেষ্টার পর স্থানীয় পরীক্ষণ লগইন ৩০ সেকেন্ডের জন্য বন্ধ।': 'Simulation: Local test login is locked for 30 seconds after five failed attempts.',
+        'সিমুলেশন: ব্যর্থ প্রচেষ্টা ': 'Simulation: Failed attempt ',
+        ' / ৫।': ' / 5.',
+        'স্থানীয় নমুনা: ': 'Local samples: ',
+        ' / ১০০ সম্পন্ন · মোট সময় ': ' / 100 completed · total time ',
+        ' ms। বাস্তব API-র একটি হালকা পাঠ-অনুরোধ দিয়ে সার্ভার প্রতিক্রিয়া যাচাই করা যায়।': ' ms. A lightweight live API read can also check the server response.',
+        ' ms। বাস্তব API পাঠ-অনুরোধ: HTTP ': ' ms. Live API read request: HTTP ',
+        ' · ': ' · ',
+        ' ms।': ' ms.',
+        ' ms। বাস্তব API পাঠ-অনুরোধ ব্যর্থ: ': ' ms. Live API read request failed: ',
+        'API-তে সংযোগ করা যায়নি। নেটওয়ার্ক ও CORS সেটিংস যাচাই করুন।': 'Could not connect to the API. Check the network and CORS settings.',
+        'DELETE-এর জন্য রেকর্ড আইডি আবশ্যক।': 'A record ID is required for DELETE.',
+        'আপনি কি ': 'Permanently delete ',
+        ' থেকে ': ' from ',
+        ' রেকর্ডটি স্থায়ীভাবে মুছতে চান?': '?',
+        '(খালি প্রতিক্রিয়া — HTTP ২০৪)': '(Empty response — HTTP 204)',
+        'নেটওয়ার্ক ত্রুটি': 'Network Error',
+        'API অনুরোধ ব্যর্থ হয়েছে: HTTP ': 'API request failed: HTTP ',
+        'API অনুরোধ সফল: HTTP ': 'API request succeeded: HTTP ',
+        'ছাড় পেতে SAVE20 লিখুন': 'Enter SAVE20 for a discount',
+        'পাশ': 'Pass',
+        'ব্যর্থ': 'Fail',
+        'চালানোর পর পরিসংখ্যান এখানে দেখা যাবে।': 'Run the test to see the results.',
+        'কোনো পরীক্ষা সম্পন্ন হয়নি।': 'No tests have been completed.',
+        'টির মধ্যে ': ' of ',
+        'টি পাশ এবং ': ' passed and ',
+        'টি ব্যর্থ। ': ' failed. ',
+        'আরও ': 'Another ',
+        'টি পরীক্ষার ফল বাকি।': ' test results remain.',
+        'সব পরীক্ষার ফল নথিভুক্ত হয়েছে।': 'All test results have been recorded.',
+        'Supabase লাইব্রেরি লোড হয়নি।': 'Supabase library did not load.',
+        'ডেটাবেসে সংযোগ বা অনুমতি সমস্যা': 'Database connection or permission issue',
+        'টেবিলের স্কিমা, নেটওয়ার্ক এবং Supabase Row Level Security (RLS) নীতি যাচাই করুন।': 'Check the table schema, network, and Supabase Row Level Security (RLS) policies.',
+        'টেস্ট ': 'Test ',
+        'কেস ': 'Case ',
+        ' · কেস ': ' · Case '
+      };
+      const bengaliToEnglish = new Map(Object.entries(translations));
+      const englishToBengali = new Map([...bengaliToEnglish].map(([bengali, english]) => [english, bengali]));
+      const translationPattern = new RegExp([...bengaliToEnglish.keys()].sort((a, b) => b.length - a.length).map((text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'), 'g');
+      const englishPattern = new RegExp([...englishToBengali.keys()].filter(Boolean).sort((a, b) => b.length - a.length).map((text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'), 'g');
+      const originalText = new WeakMap();
+      const translateText = (value) => activeLanguage === 'bn' ? value : value.replace(translationPattern, (match) => bengaliToEnglish.get(match) || match);
+      const translateAttribute = (value) => activeLanguage === 'bn'
+        ? value.replace(englishPattern, (match) => englishToBengali.get(match) || match)
+        : value.replace(translationPattern, (match) => bengaliToEnglish.get(match) || match);
+      function translatePage() {
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+        const textNodes = [];
+        while (walker.nextNode()) {
+          const node = walker.currentNode;
+          if (!node.parentElement.closest('.no-translate, pre, code')) textNodes.push(node);
+        }
+        textNodes.forEach((node) => {
+          if (!originalText.has(node)) originalText.set(node, node.nodeValue);
+          const translated = translateText(originalText.get(node));
+          if (translated !== node.nodeValue) node.nodeValue = translated;
+        });
+        $$('input[placeholder], textarea[placeholder], [aria-label], [title]').filter((element) => !element.closest('.no-translate')).forEach((element) => {
+          for (const attribute of ['placeholder', 'aria-label', 'title']) {
+            if (element.hasAttribute(attribute)) {
+              const original = element.getAttribute(attribute);
+              const translated = translateAttribute(original);
+              if (translated !== original) element.setAttribute(attribute, translated);
+            }
+          }
+        });
+        document.documentElement.lang = activeLanguage;
+        document.title = activeLanguage === 'bn'
+          ? 'SQA এ টু জেড লাইভ টেস্টিং হাব (Complete SQA Enterprise Sandbox)'
+          : 'SQA A to Z Live Testing Hub (Complete SQA Enterprise Sandbox)';
+        $$('.language-toggle').forEach((button) => button.setAttribute('aria-label', activeLanguage === 'bn' ? 'Switch language to English' : 'বাংলা ভাষায় পরিবর্তন করুন'));
+        updateThemeLabel();
+      }
+      function readPreference(key, fallback) {
+        try { return localStorage.getItem(key) || fallback; }
+        catch { return fallback; }
+      }
+      function writePreference(key, value) {
+        try { localStorage.setItem(key, value); }
+        catch { showToast(activeLanguage === 'bn' ? 'এই ব্রাউজারে পছন্দ সংরক্ষণ করা যায়নি।' : 'Could not save this preference in the browser.', 'error'); }
+      }
+      activeLanguage = readPreference('sqa-language', 'bn') === 'en' ? 'en' : 'bn';
+      function updateThemeLabel() {
+        const themeLabel = activeLanguage === 'bn'
+          ? (document.body.classList.contains('light-mode') ? '🌙 রাত মোড' : '☀️ দিন মোড')
+          : (document.body.classList.contains('light-mode') ? '🌙 Dark mode' : '☀️ Light mode');
+        const languageLabel = activeLanguage === 'bn' ? 'English' : 'বাংলা';
+        $$('.theme-toggle').forEach((button) => {
+          if (button.textContent !== themeLabel) button.textContent = themeLabel;
+        });
+        $$('.language-toggle').forEach((button) => {
+          if (button.textContent !== languageLabel) button.textContent = languageLabel;
+        });
+      }
+      function setTheme(theme, persist = true) {
+        const light = theme === 'light';
+        document.body.classList.toggle('light-mode', light);
+        document.documentElement.style.colorScheme = light ? 'light' : 'dark';
+        $$('.theme-toggle').forEach((button) => button.setAttribute('aria-pressed', String(light)));
+        updateThemeLabel();
+        if (persist) writePreference('sqa-theme', light ? 'light' : 'dark');
+      }
+      setTheme(readPreference('sqa-theme', 'dark'), false);
+      $$('.theme-toggle').forEach((button) => button.addEventListener('click', () => setTheme(document.body.classList.contains('light-mode') ? 'dark' : 'light')));
+      $$('.language-toggle').forEach((button) => button.addEventListener('click', () => {
+        activeLanguage = activeLanguage === 'bn' ? 'en' : 'bn';
+        writePreference('sqa-language', activeLanguage);
+        translatePage();
+        updateOrderTotal();
+        updateSuiteSummary();
+        if (activeAuthUser) {
+          loadStats();
+          refreshDatabase();
+        }
+      }));
+      translatePage();
+      let translationPending = false;
+      new MutationObserver(() => {
+        if (translationPending) return;
+        translationPending = true;
+        queueMicrotask(() => {
+          translationPending = false;
+          translatePage();
+        });
+      }).observe(document.body, { childList: true, characterData: true, subtree: true });
+      const bnNumber = (number) => new Intl.NumberFormat(activeLanguage === 'bn' ? 'bn-BD' : 'en-US', { maximumFractionDigits: 2 }).format(Number(number) || 0);
+      const money = (number) => `৳${bnNumber(number)}`;
+      const escapeHTML = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
+      const showToast = (message, type = 'success') => {
+        const toast = document.createElement('div');
+        toast.className = `toast max-w-sm rounded-xl border px-4 py-3 text-sm shadow-xl ${type === 'error' ? 'border-rose-400/30 bg-rose-950 text-rose-100' : 'border-emerald-400/30 bg-emerald-950 text-emerald-100'}`;
+        toast.textContent = message;
+        $('#toast-container').appendChild(toast);
+        window.setTimeout(() => toast.remove(), 4500);
+      };
+      const setConnection = (connected, label) => {
+        $('#connection-dot').className = `h-2 w-2 rounded-full ${connected ? 'bg-emerald-400' : 'bg-rose-400'}`;
+        $('#connection-label').textContent = label;
+      };
+      let db = null;
+      const dbReady = new Promise((resolve, reject) => {
+        const makeClient = () => {
+          if (!window.supabase?.createClient) return reject(new Error('Supabase লাইব্রেরি লোড হয়নি।'));
+          try {
+            db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+              auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+            });
+            resolve(db);
+          } catch (error) {
+            reject(error);
+          }
+        };
+        if (window.supabase?.createClient) return makeClient();
+        const loader = document.createElement('script');
+        loader.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+        loader.async = true;
+        const loadTimeout = window.setTimeout(() => reject(new Error('Supabase লাইব্রেরি লোড হতে সময়সীমা অতিক্রম করেছে।')), 12000);
+        loader.onload = () => { window.clearTimeout(loadTimeout); makeClient(); };
+        loader.onerror = () => {
+          window.clearTimeout(loadTimeout);
+          reject(new Error('Supabase লাইব্রেরি লোড হয়নি।'));
+        };
+        document.head.appendChild(loader);
+      });
+      dbReady.catch(() => {
+        setConnection(false, 'Supabase সংযোগ ব্যর্থ');
+        $('#auth-message').textContent = activeLanguage === 'bn'
+          ? 'Supabase Auth লাইব্রেরি লোড হয়নি। ইন্টারনেট সংযোগ যাচাই করে পৃষ্ঠাটি আবার খুলুন।'
+          : 'Supabase Auth could not load. Check your internet connection and reopen the page.';
+      });
+
+      const dbError = (error) => {
+        const message = error?.message || 'অজানা ডেটাবেস ত্রুটি';
+        setConnection(false, 'ডেটাবেসে সংযোগ বা অনুমতি সমস্যা');
+        return `ডেটাবেস ত্রুটি: ${message}। টেবিলের স্কিমা, নেটওয়ার্ক এবং Supabase Row Level Security (RLS) নীতি যাচাই করুন।`;
+      };
+      const ensureDb = () => {
+        if (!db) throw new Error('Supabase সংযোগ প্রস্তুত নয়।');
+        return db;
+      };
+      async function getAuthHeaders() {
+        const client = await dbReady;
+        const { data, error } = await client.auth.getSession();
+        if (error) throw error;
+        return {
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${data.session?.access_token || SUPABASE_KEY}`
+        };
+      }
+      const loadStats = async () => {
+        if (!db) return;
+        try {
+          const [users, orders, bugs] = await Promise.all([
+            db.from('sqa_users').select('id', { count: 'exact', head: true }),
+            db.from('sqa_orders').select('order_id', { count: 'exact', head: true }),
+            db.from('sqa_bug_reports').select('bug_id', { count: 'exact', head: true }).in('status', ['Open', 'In Progress'])
+          ]);
+          for (const result of [users, orders, bugs]) if (result.error) throw result.error;
+          $('#stat-users').textContent = bnNumber(users.count);
+          $('#stat-orders').textContent = bnNumber(orders.count);
+          $('#stat-bugs').textContent = bnNumber(bugs.count);
+          setConnection(true, 'Supabase সংযুক্ত');
+        } catch (error) {
+          setConnection(false, 'ডেটাবেসে সংযোগ বা অনুমতি সমস্যা');
+        }
+      };
+
+      // Accessible tab navigation with arrow-key support.
+      const tabs = $$('.tab-button');
+      tabs.forEach((tab, index) => {
+        tab.addEventListener('click', () => activateTab(index));
+        tab.addEventListener('keydown', (event) => {
+          if (!['ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(event.key)) return;
+          event.preventDefault();
+          const next = event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1
+            : (index + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+          activateTab(next);
+          tabs[next].focus();
+        });
+      });
+      function activateTab(index) {
+        tabs.forEach((tab, i) => {
+          const active = i === index;
+          tab.setAttribute('aria-selected', String(active));
+          tab.tabIndex = active ? 0 : -1;
+          document.getElementById(tab.getAttribute('aria-controls')).hidden = !active;
+        });
+      }
+
+      $('#registration-form').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const name = $('#reg-name').value.trim();
+        const email = $('#reg-email').value.trim();
+        const password = $('#reg-password').value;
+        const age = Number($('#reg-age').value);
+        if (password.length < 6 || password.length > 12) return showToast('পাসওয়ার্ড ৬ থেকে ১২ অক্ষরের মধ্যে হতে হবে।', 'error');
+        // Intentional test defect: age 17 is allowed through this client-side check.
+        if (!Number.isInteger(age) || age < 17 || age > 60) return showToast('বয়স ১৭ থেকে ৬০-এর মধ্যে দিন।', 'error');
+        try {
+          const client = ensureDb();
+          const { data, error } = await client.from('sqa_users').insert({
+            full_name: name, email, password: `AUTH_MANAGED_${Date.now()}_${Math.random().toString(36).slice(2)}`, age, status: 'Active'
+          }).select('id, full_name, email, age').single();
+          if (error) throw error;
+          $('#registration-result').textContent = `ব্যবহারকারী সংরক্ষিত হয়েছে। আইডি: ${data.id} · ভূমিকা (UI): ${$('#reg-role').value}`;
+          showToast('ব্যবহারকারী সফলভাবে সংরক্ষিত হয়েছে।');
+          await refreshDatabase();
+        } catch (error) {
+          $('#registration-result').textContent = dbError(error);
+          showToast(dbError(error), 'error');
+        }
+      });
+      // Intentional test defect: the reset button deliberately leaves form values unchanged.
+      $('#reset-registration').addEventListener('click', () => {
+        $('#registration-result').textContent = 'ইচ্ছাকৃত বাগ: রিসেট বোতাম চাপলেও ফর্মের তথ্য অপরিবর্তিত রয়েছে।';
+      });
+
+      const product = () => $('#order-product').selectedOptions[0];
+      function updateOrderTotal() {
+        const quantity = Number($('#order-quantity').value) || 0;
+        const subtotal = Number(product().dataset.price) * quantity;
+        const discounted = $('#order-coupon').value.trim().toUpperCase() === 'SAVE20' ? subtotal * .2 : 0;
+        const tax = (subtotal - discounted) * .1;
+        $('#subtotal').textContent = money(subtotal);
+        $('#discount').textContent = money(discounted);
+        $('#tax').textContent = money(tax);
+        $('#total').textContent = money(subtotal - discounted + tax);
+        return subtotal - discounted + tax;
+      }
+      ['#order-quantity', '#order-product', '#order-coupon'].forEach((selector) => $(selector).addEventListener('input', updateOrderTotal));
+      $('#qty-minus').addEventListener('click', () => { $('#order-quantity').value = Number($('#order-quantity').value || 0) - 1; updateOrderTotal(); });
+      $('#qty-plus').addEventListener('click', () => { $('#order-quantity').value = Number($('#order-quantity').value || 0) + 1; updateOrderTotal(); });
+      $('#order-form').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        try {
+          const quantity = Number($('#order-quantity').value);
+          const { error } = await ensureDb().from('sqa_orders').insert({
+            user_id: $('#order-user-id').value.trim(),
+            product_name: product().value,
+            quantity,
+            total_price: updateOrderTotal(),
+            order_status: 'Pending'
+          });
+          if (error) throw error;
+          $('#order-result').textContent = 'অর্ডারটি ডেটাবেসে সংরক্ষিত হয়েছে।';
+          showToast('অর্ডার সংরক্ষিত হয়েছে।');
+          await refreshDatabase();
+        } catch (error) {
+          $('#order-result').textContent = dbError(error);
+          showToast(dbError(error), 'error');
+        }
+      });
+      updateOrderTotal();
+
+      $$('.viewport-toggle').forEach((button) => button.addEventListener('click', () => {
+        const mobile = button.dataset.viewport === 'mobile';
+        $('#audit-frame').classList.toggle('max-w-sm', mobile);
+        $('#audit-frame').classList.toggle('max-w-full', !mobile);
+        $('#viewport-label').textContent = mobile ? 'মোবাইল' : 'ডেস্কটপ';
+      }));
+
+      const suiteCases = [
+        ['প্রধান পৃষ্ঠা সফলভাবে খোলে', 'স্মোক'],
+        ['ব্যবহারকারী নিবন্ধন ফর্ম জমা হয়', 'কার্যকরী'],
+        ['অবৈধ ইমেইল প্রত্যাখ্যাত হয়', 'নেগেটিভ'],
+        ['পাসওয়ার্ডের সর্বনিম্ন সীমা যাচাই হয়', 'সীমামান'],
+        ['অর্ডার মোট ও কর সঠিক গণনা হয়', 'ব্যবসায়িক নিয়ম'],
+        ['SAVE20 কুপনে ২০% ছাড় প্রয়োগ হয়', 'ব্যবসায়িক নিয়ম'],
+        ['ব্যবহারকারী ও অর্ডারের সম্পর্ক বজায় থাকে', 'ডেটাবেস'],
+        ['বাগের অবস্থা হালনাগাদ হয়', 'রিগ্রেশন'],
+        ['কিবোর্ড দিয়ে ট্যাব ব্যবহার করা যায়', 'প্রবেশগম্যতা'],
+        ['মোবাইল ভিউতে বিষয়বস্তু মানিয়ে যায়', 'সামঞ্জস্য']
+      ];
+      const suiteResults = new Map();
+      $('#checklist').innerHTML = suiteCases.map(([name, type], index) => `<div class="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-800 bg-slate-950/50 p-4"><div><p class="text-sm font-medium">${escapeHTML(name)}</p><p class="mt-1 text-xs text-slate-500">${escapeHTML(type)} · কেস ${bnNumber(index + 1)}</p></div><div class="flex gap-2"><button class="suite-toggle rounded-lg border border-emerald-400/30 px-3 py-2 text-xs text-emerald-200" data-index="${index}" data-result="pass">পাশ</button><button class="suite-toggle rounded-lg border border-rose-400/30 px-3 py-2 text-xs text-rose-200" data-index="${index}" data-result="fail">ব্যর্থ</button></div></div>`).join('');
+      $('#checklist').addEventListener('click', (event) => {
+        const button = event.target.closest('.suite-toggle');
+        if (!button) return;
+        suiteResults.set(Number(button.dataset.index), button.dataset.result);
+        updateSuiteSummary();
+      });
+      function updateSuiteSummary() {
+        const total = suiteResults.size;
+        const passed = [...suiteResults.values()].filter((value) => value === 'pass').length;
+        const failed = total - passed;
+        const passRate = total ? Math.round((passed / total) * 100) : 0;
+        const failRate = total ? Math.round((failed / total) * 100) : 0;
+        $('#pass-rate').textContent = `${bnNumber(passRate)}%`;
+        $('#fail-rate').textContent = `${bnNumber(failRate)}%`;
+        $('#suite-summary').textContent = total ? `${bnNumber(total)}টির মধ্যে ${bnNumber(passed)}টি পাশ এবং ${bnNumber(failed)}টি ব্যর্থ। ${total < suiteCases.length ? `আরও ${bnNumber(suiteCases.length - total)}টি পরীক্ষার ফল বাকি।` : 'সব পরীক্ষার ফল নথিভুক্ত হয়েছে।'}` : 'এখনো কোনো পরীক্ষা সম্পন্ন হয়নি।';
+        $('#stat-checks').textContent = `${bnNumber(total)} / ${bnNumber(suiteCases.length)} সম্পন্ন`;
+      }
+      $('#reset-suite').addEventListener('click', () => { suiteResults.clear(); updateSuiteSummary(); });
+
+      function restUrl(resource) { return `${SUPABASE_URL}/rest/v1/${encodeURIComponent(resource)}`; }
+      function displayApi(status, latency, body) {
+        $('#api-status').textContent = status;
+        $('#api-latency').textContent = `${bnNumber(latency)} ms`;
+        $('#api-output').textContent = typeof body === 'string' ? body : JSON.stringify(body, null, 2);
+      }
+      $('#run-api').addEventListener('click', async () => {
+        const method = $('#api-method').value;
+        const resource = $('#api-resource').value;
+        if (method === 'BAD_REQUEST') return displayApi('৪০০ · ভুল অনুরোধ (অনুকৃত)', 0, { code: 'PGRST100', message: 'অনুরোধের পরামিতি অবৈধ — নিরাপদ স্থানীয় অনুকরণ।' });
+        if (method === 'UNAUTHORIZED') return displayApi('৪০১ · অননুমোদিত (অনুকৃত)', 0, { code: '401', message: 'প্রমাণীকরণ প্রয়োজন — নিরাপদ স্থানীয় অনুকরণ।' });
+        let url = restUrl(resource);
+        const headers = await getAuthHeaders();
+        const options = { method, headers };
+        if (method === 'GET') url += '?select=*';
+        if (method === 'POST') {
+          headers['Content-Type'] = 'application/json';
+          headers.Prefer = 'return=representation';
+          options.body = JSON.stringify(resource === 'sqa_users'
+            ? { full_name: 'API পরীক্ষণ ব্যবহারকারী', email: `api-${Date.now()}@example.test`, password: `AUTH_MANAGED_${Date.now()}`, age: 25, status: 'Active' }
+            : { user_id: $('#api-record-id').value.trim(), product_name: 'API পরীক্ষণ পণ্য', quantity: 1, total_price: 100, order_status: 'Pending' });
+        }
+        if (method === 'DELETE') {
+          const recordId = $('#api-record-id').value.trim();
+          if (!recordId) return showToast('DELETE-এর জন্য রেকর্ড আইডি আবশ্যক।', 'error');
+          if (!window.confirm(`আপনি কি ${resource} থেকে ${recordId} রেকর্ডটি স্থায়ীভাবে মুছতে চান?`)) return;
+          const key = resource === 'sqa_users' ? 'id' : 'order_id';
+          url += `?${key}=eq.${encodeURIComponent(recordId)}`;
+          headers.Prefer = 'return=minimal';
+        }
+        const startedAt = performance.now();
+        try {
+          const response = await fetch(url, options);
+          const latency = performance.now() - startedAt;
+          const raw = response.status === 204 ? '(খালি প্রতিক্রিয়া — HTTP ২০৪)' : await response.text();
+          let body = raw;
+          try { body = raw ? JSON.parse(raw) : null; } catch { /* সার্ভারের অ-JSON প্রতিক্রিয়া অপরিবর্তিত দেখান। */ }
+          displayApi(`${response.status} ${response.statusText}`, latency, body);
+          if (!response.ok) showToast(`API অনুরোধ ব্যর্থ হয়েছে: HTTP ${bnNumber(response.status)}।`, 'error');
+          else {
+            showToast(`API অনুরোধ সফল: HTTP ${bnNumber(response.status)}।`);
+            refreshDatabase();
+          }
+        } catch (error) {
+          displayApi('নেটওয়ার্ক ত্রুটি', performance.now() - startedAt, { message: error.message });
+          showToast('API-তে সংযোগ করা যায়নি। নেটওয়ার্ক ও CORS সেটিংস যাচাই করুন।', 'error');
+        }
+      });
+
+      let loadedUsers = [];
+      async function refreshDatabase() {
+        if (!db) return;
+        $('#database-message').textContent = 'ডেটাবেস থেকে তথ্য লোড হচ্ছে…';
+        try {
+          const [usersResult, ordersResult, bugsResult] = await Promise.all([
+            db.from('sqa_users').select('id, full_name, email, age, status, created_at').order('created_at', { ascending: false }).limit(200),
+            db.from('sqa_orders').select('order_id, user_id, product_name, quantity, total_price, order_status, ordered_at').order('ordered_at', { ascending: false }).limit(200),
+            db.from('sqa_bug_reports').select('bug_id, module_name, bug_title, severity, priority, status, reported_at').order('reported_at', { ascending: false }).limit(100)
+          ]);
+          for (const result of [usersResult, ordersResult, bugsResult]) if (result.error) throw result.error;
+          loadedUsers = usersResult.data || [];
+          renderUsers();
+          renderOrders(ordersResult.data || [], loadedUsers);
+          renderBugs(bugsResult.data || []);
+          $('#database-message').textContent = `${bnNumber(loadedUsers.length)} জন ব্যবহারকারী, ${bnNumber((ordersResult.data || []).length)}টি অর্ডার এবং ${bnNumber((bugsResult.data || []).length)}টি বাগ প্রতিবেদন লোড হয়েছে (প্রতি তালিকায় সর্বোচ্চ সীমা প্রযোজ্য)।`;
+          await loadStats();
+        } catch (error) {
+          $('#database-message').textContent = dbError(error);
+          showToast(dbError(error), 'error');
+        }
+      }
+      function renderUsers() {
+        const query = $('#table-search').value.trim().toLowerCase();
+        const matches = loadedUsers.filter((user) => [user.full_name, user.email, user.id].some((value) => String(value || '').toLowerCase().includes(query)));
+        $('#users-table').innerHTML = matches.map((user) => `<tr><td class="p-3"><div>${escapeHTML(user.full_name)}</div><div class="text-xs text-slate-500">${escapeHTML(user.email)}</div></td><td class="p-3">${escapeHTML(user.age)}</td><td class="max-w-28 truncate p-3 text-xs text-slate-500" title="${escapeHTML(user.id)}">${escapeHTML(user.id)}</td><td class="p-3"><button class="delete-user rounded-lg border border-rose-400/30 px-2 py-1 text-xs text-rose-200" data-id="${escapeHTML(user.id)}">মুছুন</button></td></tr>`).join('') || '<tr><td colspan="4" class="p-4 text-slate-500">কোনো ব্যবহারকারী মেলেনি।</td></tr>';
+      }
+      function renderOrders(orders, users) {
+        const names = new Map(users.map((user) => [String(user.id), user.full_name]));
+        const orderStatus = { Pending: 'অপেক্ষমাণ (Pending)', Processing: 'প্রক্রিয়াধীন (Processing)', Shipped: 'পাঠানো হয়েছে (Shipped)', Delivered: 'পৌঁছেছে (Delivered)', Cancelled: 'বাতিল (Cancelled)' };
+        $('#orders-table').innerHTML = orders.map((order) => `<tr><td class="p-3">${escapeHTML(order.product_name)}</td><td class="p-3">${escapeHTML(order.quantity)} / ${money(order.total_price)}</td><td class="p-3">${escapeHTML(names.get(String(order.user_id)) || String(order.user_id).slice(0, 12))}</td><td class="p-3">${escapeHTML(orderStatus[order.order_status] || order.order_status)}</td></tr>`).join('') || '<tr><td colspan="4" class="p-4 text-slate-500">কোনো অর্ডার পাওয়া যায়নি।</td></tr>';
+      }
+      function renderBugs(bugs) {
+        const severityLabel = { Critical: 'সংকটজনক (Critical)', Major: 'গুরুতর (Major)', Minor: 'কম গুরুতর (Minor)', Trivial: 'সামান্য (Trivial)' };
+        const bugStatus = [['Open', 'খোলা (Open)'], ['In Progress', 'চলমান (In Progress)'], ['Fixed', 'সংশোধিত (Fixed)'], ['Closed', 'বন্ধ (Closed)']];
+        $('#bugs-table').innerHTML = bugs.map((bug) => `<tr><td class="p-3"><div class="font-medium">${escapeHTML(bug.bug_title)}</div><div class="text-xs text-slate-500">${escapeHTML(bug.module_name)} · ${escapeHTML(bug.bug_id)}</div></td><td class="p-3">${escapeHTML(severityLabel[bug.severity] || bug.severity)}</td><td class="p-3"><select class="bug-status rounded-lg border border-slate-700 bg-slate-900 px-2 py-2 text-xs" data-id="${escapeHTML(bug.bug_id)}" aria-label="${escapeHTML(bug.bug_title)} বাগের অবস্থা">${bugStatus.map(([value, label]) => `<option value="${escapeHTML(value)}" ${bug.status === value ? 'selected' : ''}>${escapeHTML(label)}</option>`).join('')}</select></td></tr>`).join('') || '<tr><td colspan="3" class="p-4 text-slate-500">এখনো কোনো বাগ প্রতিবেদন নেই।</td></tr>';
+      }
+      $('#table-search').addEventListener('input', renderUsers);
+      $('#refresh-data').addEventListener('click', refreshDatabase);
+      $('#users-table').addEventListener('click', async (event) => {
+        const button = event.target.closest('.delete-user');
+        if (!button) return;
+        if (!window.confirm(`ব্যবহারকারী ${button.dataset.id} স্থায়ীভাবে মুছবেন? সংশ্লিষ্ট অর্ডারের ওপর ডেটাবেস নীতির প্রভাব পড়তে পারে।`)) return;
+        try {
+          const { error } = await ensureDb().from('sqa_users').delete().eq('id', button.dataset.id);
+          if (error) throw error;
+          showToast('ব্যবহারকারী মুছে ফেলা হয়েছে।');
+          await refreshDatabase();
+        } catch (error) { showToast(dbError(error), 'error'); }
+      });
+      $('#bulk-users').addEventListener('click', async () => {
+        if (!window.confirm('৫০টি পরীক্ষণ ব্যবহারকারী বাস্তব ডেটাবেসে তৈরি করবেন?')) return;
+        const stamp = Date.now();
+        const rows = Array.from({ length: 50 }, (_, index) => ({
+          full_name: `পরীক্ষণ ব্যবহারকারী ${index + 1}`,
+          email: `sqa-load-${stamp}-${index + 1}@example.test`,
+          password: `AUTH_MANAGED_${stamp}_${index + 1}`,
+          age: 18 + (index % 43),
+          status: 'Active'
+        }));
+        try {
+          const { error } = await ensureDb().from('sqa_users').insert(rows);
+          if (error) throw error;
+          showToast('৫০টি পরীক্ষণ ব্যবহারকারী সফলভাবে তৈরি হয়েছে।');
+          await refreshDatabase();
+        } catch (error) { showToast(dbError(error), 'error'); }
+      });
+      $('#bugs-table').addEventListener('change', async (event) => {
+        const select = event.target.closest('.bug-status');
+        if (!select) return;
+        try {
+          const { error } = await ensureDb().from('sqa_bug_reports').update({ status: select.value }).eq('bug_id', select.dataset.id);
+          if (error) throw error;
+          showToast('বাগের অবস্থা হালনাগাদ হয়েছে।');
+          await loadStats();
+        } catch (error) { showToast(dbError(error), 'error'); refreshDatabase(); }
+      });
+
+      const testCases = [
+        ['TC-001', 'সঠিক তথ্য দিয়ে নিবন্ধন', 'কার্যকরী', 'উচ্চ'],
+        ['TC-002', 'ভুল ইমেইল প্রত্যাখ্যান', 'নেগেটিভ', 'উচ্চ'],
+        ['TC-003', 'পাসওয়ার্ডের ৬ অক্ষরের সীমা', 'সীমামান', 'মাঝারি'],
+        ['TC-004', 'বয়স ১৮ সীমার মান যাচাই', 'সীমামান', 'উচ্চ'],
+        ['TC-005', 'নিবন্ধন ফর্ম রিসেট', 'UI', 'মাঝারি'],
+        ['TC-006', 'SAVE20 কুপন ছাড় যাচাই', 'ব্যবসায়িক নিয়ম', 'উচ্চ'],
+        ['TC-007', 'শূন্য ও ঋণাত্মক পরিমাণ যাচাই', 'নেগেটিভ', 'উচ্চ'],
+        ['TC-008', 'ব্যবহারকারী-অর্ডার সম্পর্ক যাচাই', 'ডেটাবেস', 'মাঝারি'],
+        ['TC-009', 'কিবোর্ড প্রবেশগম্যতা পরীক্ষা', 'প্রবেশগম্যতা', 'মাঝারি'],
+        ['TC-010', 'বাগের অবস্থা পরিবর্তন', 'রিগ্রেশন', 'নিম্ন']
+      ];
+      $('#test-cases').innerHTML = testCases.map((test) => `<tr>${test.map((cell) => `<td class="p-3">${escapeHTML(cell)}</td>`).join('')}</tr>`).join('');
+
+      $$('.security-preset').forEach((button) => button.addEventListener('click', () => { $('#security-input').value = button.dataset.value; }));
+      $('#inspect-input').addEventListener('click', () => {
+        const value = $('#security-input').value;
+        const sqlLike = /('|--|;|\b(OR|SELECT|DROP|UNION)\b)/i.test(value);
+        const hasMarkup = /<\/?[a-z][\s\S]*?>/i.test(value);
+        $('#security-result').textContent = `ইনপুট দৈর্ঘ্য: ${bnNumber(value.length)} অক্ষর। ${sqlLike ? 'সম্ভাব্য SQL-সদৃশ চিহ্ন পাওয়া গেছে; প্যারামিটারযুক্ত কুয়েরি ব্যবহার করুন। ' : ''}${hasMarkup ? 'HTML ট্যাগ সদৃশ অংশ পাওয়া গেছে; আউটপুটকে টেক্সট হিসেবে এস্কেপ করুন। ' : ''}${!sqlLike && !hasMarkup ? 'সাধারণ স্ট্রিং হিসেবে চিহ্নিত। ' : ''}কোনো ইনপুট সার্ভারে পাঠানো হয়নি।`;
+      });
+      let failedLogins = 0;
+      let lockedUntil = 0;
+      $('#brute-force').addEventListener('click', () => {
+        const now = Date.now();
+        if (now < lockedUntil) return showToast(`লগইন সাময়িকভাবে বন্ধ। ${bnNumber(Math.ceil((lockedUntil - now) / 1000))} সেকেন্ড অপেক্ষা করুন।`, 'error');
+        failedLogins += 1;
+        if (failedLogins >= 5) {
+          lockedUntil = now + 30000;
+          failedLogins = 0;
+          $('#security-result').textContent = 'সিমুলেশন: পাঁচটি ব্যর্থ চেষ্টার পর স্থানীয় পরীক্ষণ লগইন ৩০ সেকেন্ডের জন্য বন্ধ।';
+        } else {
+          $('#security-result').textContent = `সিমুলেশন: ব্যর্থ প্রচেষ্টা ${bnNumber(failedLogins)} / ৫।`;
+        }
+      });
+      $('#run-load-test').addEventListener('click', async () => {
+        const result = $('#load-result');
+        const started = performance.now();
+        const jobs = Array.from({ length: 100 }, (_, index) => Promise.resolve().then(() => index));
+        const settled = await Promise.allSettled(jobs);
+        const localMs = performance.now() - started;
+        result.textContent = `স্থানীয় নমুনা: ${bnNumber(settled.length)} / ১০০ সম্পন্ন · মোট সময় ${bnNumber(localMs)} ms। বাস্তব API-র হালকা পাঠ-পরীক্ষা চলছে…`;
+        const apiStarted = performance.now();
+        try {
+          const response = await fetch(`${restUrl('sqa_users')}?select=id&limit=1`, { headers: await getAuthHeaders() });
+          result.textContent = `স্থানীয় নমুনা: ${bnNumber(settled.length)} / ১০০ সম্পন্ন · ${bnNumber(localMs)} ms। বাস্তব API পাঠ-অনুরোধ: HTTP ${bnNumber(response.status)} · ${bnNumber(performance.now() - apiStarted)} ms।`;
+        } catch (error) {
+          result.textContent = `স্থানীয় নমুনা: ${bnNumber(settled.length)} / ১০০ সম্পন্ন · ${bnNumber(localMs)} ms। বাস্তব API পাঠ-অনুরোধ ব্যর্থ: ${error.message}`;
+        }
+      });
+
+      $('#bug-form').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        try {
+          const { error } = await ensureDb().from('sqa_bug_reports').insert({
+            module_name: $('#bug-module').value.trim(),
+            bug_title: $('#bug-title').value.trim(),
+            severity: $('#bug-severity').value,
+            priority: $('#bug-priority').value,
+            status: 'Open',
+            steps_to_reproduce: $('#bug-steps').value.trim(),
+            expected_result: $('#bug-expected').value.trim(),
+            actual_result: $('#bug-actual').value.trim()
+          });
+          if (error) throw error;
+          $('#bug-result').textContent = 'বাগ প্রতিবেদন সংরক্ষিত হয়েছে।';
+          $('#bug-form').reset();
+          showToast('বাগ প্রতিবেদন জমা হয়েছে।');
+          await refreshDatabase();
+        } catch (error) {
+          $('#bug-result').textContent = dbError(error);
+          showToast(dbError(error), 'error');
+        }
+      });
+
+      let authMode = 'login';
+      let activeAuthUser = null;
+      function setAuthMessage(message, isError = false) {
+        const element = $('#auth-message');
+        element.textContent = message;
+        element.classList.toggle('text-rose-200', isError);
+        element.classList.toggle('text-slate-300', !isError);
+      }
+      function setAuthMode(mode) {
+        authMode = mode;
+        const signingUp = mode === 'signup';
+        $('#auth-heading').textContent = signingUp ? 'নতুন অ্যাকাউন্ট' : 'অ্যাকাউন্টে প্রবেশ';
+        $('#auth-description').textContent = signingUp
+          ? 'নিরাপদ প্রবেশের জন্য আপনার নতুন অ্যাকাউন্ট তৈরি করুন।'
+          : 'আপনার অ্যাকাউন্ট দিয়ে SQA পরীক্ষণ হাবে প্রবেশ করুন।';
+        $('#auth-name-wrap').classList.toggle('hidden', !signingUp);
+        $('#auth-name').required = signingUp;
+        $('#auth-password').autocomplete = signingUp ? 'new-password' : 'current-password';
+        $('#auth-submit').textContent = signingUp ? 'অ্যাকাউন্ট তৈরি করুন' : 'লগইন করুন';
+        $('#auth-mode-toggle').textContent = signingUp ? 'ফিরে লগইন করুন' : 'নতুন অ্যাকাউন্ট তৈরি করুন';
+        $('#auth-reset').hidden = signingUp;
+        setAuthMessage(signingUp ? 'নিরাপদ প্রবেশের জন্য Supabase Auth ব্যবহৃত হয়।' : 'নিরাপদ প্রবেশের জন্য Supabase Auth ব্যবহৃত হয়।');
+      }
+      function updateAuthVisibility(session) {
+        const user = session?.user || null;
+        const nextId = user?.id || null;
+        const previousId = activeAuthUser?.id || null;
+        $('#auth-screen').hidden = Boolean(user);
+        $('#app-shell').hidden = !user;
+        activeAuthUser = user;
+        if (user) {
+          $('#signed-in-user').textContent = user.email || user.user_metadata?.full_name || user.id;
+          if (nextId !== previousId) {
+            window.setTimeout(() => {
+              refreshDatabase();
+              loadStats();
+            }, 0);
+          }
+        } else {
+          $('#signed-in-user').textContent = '';
+        }
+      }
+      $('#auth-mode-toggle').addEventListener('click', () => setAuthMode(authMode === 'login' ? 'signup' : 'login'));
+      $('#auth-form').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const email = $('#auth-email').value.trim();
+        const password = $('#auth-password').value;
+        const fullName = $('#auth-name').value.trim();
+        if (!email || !password) return setAuthMessage('ইমেইল ও পাসওয়ার্ড দিন।', true);
+        if (authMode === 'signup' && !fullName) return setAuthMessage('পূর্ণ নাম দিন।', true);
+        if (authMode === 'signup' && password.length < 6) return setAuthMessage('পাসওয়ার্ড অন্তত ৬ অক্ষরের হতে হবে।', true);
+        const submitButton = $('#auth-submit');
+        submitButton.disabled = true;
+        try {
+          const client = await dbReady;
+          if (authMode === 'signup') {
+            const { data, error } = await client.auth.signUp({
+              email,
+              password,
+              options: { data: { full_name: fullName } }
+            });
+            if (error) throw error;
+            if (data.session) {
+              setAuthMessage('অ্যাকাউন্ট তৈরি হয়েছে। এখন প্রবেশ করা যাচ্ছে…');
+            } else {
+              setAuthMessage('ইমেইল নিশ্চিতকরণ লিংক পাঠানো হয়েছে। ইমেইল নিশ্চিত করে লগইন করুন।');
+            }
+          } else {
+            const { error } = await client.auth.signInWithPassword({ email, password });
+            if (error) throw error;
+            setAuthMessage('লগইন সফল হয়েছে।');
+          }
+        } catch (error) {
+          const message = error.message || '';
+          const translatedError = activeLanguage === 'bn'
+            ? (/invalid login credentials/i.test(message) ? 'লগইন ব্যর্থ হয়েছে। ইমেইল ও পাসওয়ার্ড যাচাই করুন।'
+              : /already registered|user already exists/i.test(message) ? 'এই ইমেইল দিয়ে অ্যাকাউন্ট আছে। লগইন করুন অথবা পাসওয়ার্ড পুনরুদ্ধার করুন।'
+              : `প্রবেশ করা যায়নি: ${message}`)
+            : `Authentication failed: ${message}`;
+          setAuthMessage(translatedError, true);
+        } finally {
+          submitButton.disabled = false;
+        }
+      });
+      $('#auth-reset').addEventListener('click', async () => {
+        const email = $('#auth-email').value.trim();
+        if (!email) return setAuthMessage('পাসওয়ার্ড পুনরুদ্ধারের জন্য প্রথমে ইমেইল লিখুন।', true);
+        try {
+          const client = await dbReady;
+          const { error } = await client.auth.resetPasswordForEmail(email);
+          if (error) throw error;
+          setAuthMessage('পাসওয়ার্ড পুনরুদ্ধারের লিংক পাঠানো হয়েছে। আপনার ইমেইল দেখুন।');
+        } catch (error) {
+          setAuthMessage(activeLanguage === 'bn' ? `পাসওয়ার্ড পুনরুদ্ধার করা যায়নি: ${error.message}` : `Password reset failed: ${error.message}`, true);
+        }
+      });
+      $('#logout-button').addEventListener('click', async () => {
+        try {
+          const client = await dbReady;
+          const { error } = await client.auth.signOut();
+          if (error) throw error;
+          setAuthMessage('অ্যাকাউন্ট থেকে বের হয়ে গেছেন।');
+        } catch (error) {
+          showToast(activeLanguage === 'bn' ? `লগআউট করা যায়নি: ${error.message}` : `Sign out failed: ${error.message}`, 'error');
+        }
+      });
+      dbReady.then(async (client) => {
+        client.auth.onAuthStateChange((_event, session) => updateAuthVisibility(session));
+        const { data, error } = await client.auth.getSession();
+        if (error) throw error;
+        updateAuthVisibility(data.session);
+      }).catch((error) => {
+        setAuthMessage(activeLanguage === 'bn'
+          ? `লগইন করার জন্য Supabase Auth-এ সংযোগ করা যাচ্ছে না। ${error.message}`
+          : `Could not connect to Supabase Auth. ${error.message}`, true);
+      });
+    }
+    startApp();
+  </script>
+</body>
+</html>
