@@ -17,23 +17,24 @@
     body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, "Noto Sans Bengali", sans-serif; background: #07111f; }
     .glass { background: rgba(15, 27, 45, .82); border: 1px solid rgba(148, 163, 184, .14); backdrop-filter: blur(14px); }
     #auth-screen[hidden], #app-shell[hidden] { display: none !important; }
-    #auth-screen { display: flex; min-height: 100vh; align-items: center; justify-content: center; padding: 2rem 1rem; box-sizing: border-box; }
-    #auth-screen > div { width: 100%; max-width: 28rem; box-sizing: border-box; padding: 2rem; border-radius: 1.5rem; }
-    #auth-screen > div > div:first-child { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem; }
-    #auth-screen h1 { margin: 0; color: #f1f5f9; font-size: 1.5rem; line-height: 2rem; font-weight: 900; }
-    #auth-description { margin: .5rem 0 0; color: #94a3b8; font-size: .875rem; line-height: 1.5rem; }
-    #auth-screen > div > div:first-child > div:first-child > div { display: inline-flex; align-items: center; gap: .5rem; margin-bottom: .75rem; padding: .25rem .75rem; border: 1px solid rgba(52, 211, 153, .2); border-radius: 9999px; background: rgba(52, 211, 153, .1); color: #a7f3d0; font-size: .75rem; font-weight: 600; }
-    #auth-screen > div > div:first-child > div:last-child { display: flex; flex: none; flex-direction: column; gap: .5rem; }
+    #auth-screen { display: flex; min-height: 100vh; align-items: center; justify-content: center; padding: 1rem; box-sizing: border-box; }
+    #auth-screen > div { width: 100%; max-width: 48rem; box-sizing: border-box; padding: 1.25rem; border-radius: 1.5rem; }
+    #auth-screen h1 { margin: 0; color: #f1f5f9; }
+    #auth-description { margin: .125rem 0 0; color: #94a3b8; font-size: .75rem; line-height: 1rem; }
+    #auth-screen .auth-badge { display: inline-flex; align-items: center; gap: .5rem; margin-bottom: .75rem; padding: .25rem .75rem; border: 1px solid rgba(52, 211, 153, .2); border-radius: 9999px; background: rgba(52, 211, 153, .1); color: #a7f3d0; font-size: .75rem; font-weight: 600; }
     #auth-screen button { cursor: pointer; font: inherit; }
+    #auth-screen #auth-submit, #auth-screen #guest-mode-button { font-size: .85rem; }
     #auth-screen .theme-toggle, #auth-screen .language-toggle { padding: .5rem .75rem; border: 1px solid #334155; border-radius: .5rem; background: rgba(15, 23, 42, .7); color: #cbd5e1; font-size: .75rem; }
-    #auth-form { display: grid; gap: 1rem; }
-    #auth-screen label { display: grid; gap: .5rem; color: #cbd5e1; font-size: .875rem; }
-    #auth-screen input { width: 100%; box-sizing: border-box; padding: .75rem 1rem; border: 1px solid #334155; border-radius: .75rem; background: rgba(2, 6, 23, .7); color: #f1f5f9; font: inherit; color-scheme: dark; }
+    #auth-form { display: grid; gap: 0; }
+    #auth-screen label { display: block; width: 100%; margin: 0; color: #cbd5e1; font-size: .8rem; }
+    #auth-screen input, #auth-submit, #guest-mode-button { width: 100%; max-width: 100%; box-sizing: border-box; min-height: 2.5rem; padding: .5rem .85rem; border-radius: .65rem; font-size: .85rem; }
+    #auth-screen input { border: 1px solid #334155; background: rgba(2, 6, 23, .7); color: #f1f5f9; color-scheme: dark; }
+    #auth-screen label input { margin-top: .3rem; }
     #auth-screen input:focus { outline: 2px solid rgba(52, 211, 153, .55); outline-offset: 1px; }
-    #auth-submit { width: 100%; padding: .75rem 1.25rem; border: 0; border-radius: .75rem; background: #34d399; color: #020617; font-weight: 700 !important; }
-    #guest-mode-button { width: 100%; margin-top: .75rem; padding: .75rem 1.25rem; border: 1px solid rgba(52, 211, 153, .45); border-radius: .75rem; background: rgba(16, 185, 129, .12); color: #a7f3d0; font-weight: 700; }
+    #auth-submit { border: 0; background: #34d399; color: #020617; font-weight: 700 !important; }
+    #guest-mode-button { margin: 0; border: 1px solid rgba(52, 211, 153, .45); background: rgba(16, 185, 129, .12); color: #a7f3d0; }
     #guest-mode-note, #guest-mode-banner { border: 1px solid rgba(34, 211, 238, .24); border-radius: .75rem; background: rgba(34, 211, 238, .08); color: #bae6fd; }
-    #guest-mode-note { margin-top: .75rem; padding: .75rem; font-size: .8rem; line-height: 1.5rem; }
+    #guest-mode-note { margin-top: 0; padding: .625rem; font-size: .75rem; line-height: 1.25rem; }
     #guest-mode-banner { margin: -1rem 0 1.5rem; padding: .85rem 1rem; }
     dialog.edit-dialog { width: min(94vw, 36rem); max-height: 88vh; overflow: auto; border: 1px solid var(--theme-line, #334155); border-radius: 1rem; padding: 1.25rem; background: #0f1b2d; color: #e2e8f0; box-shadow: 0 24px 80px rgba(0,0,0,.4); }
     dialog.edit-dialog::backdrop { background: rgba(2, 6, 23, .72); backdrop-filter: blur(4px); }
@@ -62,29 +63,23 @@
     body.light-mode .status-fixed { background: #d1fae5; border-color: #059669; color: #065f46; }
     #site-announcement-auth[hidden] { display: none !important; }
     #site-announcement-app[hidden] { display: none !important; }
-    #site-announcement-auth { margin-top: .75rem; border: 1px solid #f59e0b; border-radius: .75rem; background: #fffbeb; color: #78350f; padding: .75rem; font-size: .85rem; line-height: 1.5; }
+    #site-announcement-auth { margin-top: 0; border: 1px solid #f59e0b; border-radius: .75rem; background: #fffbeb; color: #78350f; padding: .625rem; font-size: .75rem; line-height: 1.25rem; }
     #performance-metrics [data-metric] { font-variant-numeric: tabular-nums; }
     @media (max-width: 640px) {
       #app-shell nav[role="tablist"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .tab-button { min-width: 0; white-space: normal !important; padding: .7rem .55rem !important; line-height: 1.25; }
     }
-    #auth-screen > div > div:nth-of-type(3) { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .75rem; margin-top: 1rem; font-size: .875rem; }
     #auth-mode-toggle, #auth-reset, #auth-resend-confirmation { padding: 0; border: 0; background: transparent; color: #6ee7b7; }
     #auth-reset { color: #94a3b8; }
-    #auth-message { min-height: 3rem; box-sizing: border-box; margin-top: 1rem; padding: .75rem; border: 1px solid #1e293b; border-radius: .75rem; background: rgba(2, 6, 23, .5); color: #cbd5e1; font-size: .875rem; }
-    #auth-screen > div > p:last-child { margin: 1rem 0 0; color: #64748b; font-size: .75rem; line-height: 1.25rem; }
+    #auth-message { min-height: 0; box-sizing: border-box; margin-top: 0; padding: .625rem; border: 1px solid #1e293b; border-radius: .75rem; background: rgba(2, 6, 23, .5); color: #cbd5e1; font-size: .75rem; }
+    #auth-message:empty { display: none; }
     #auth-screen [hidden], #auth-screen #auth-name-wrap.hidden { display: none !important; }
     body.light-mode #auth-screen h1 { color: #0f172a; }
     body.light-mode #auth-description, body.light-mode #auth-screen label { color: #475569; }
     body.light-mode #auth-screen .theme-toggle, body.light-mode #auth-screen .language-toggle { border-color: #cbd5e1; background: #e8eef5; color: #334155; }
     body.light-mode #auth-screen input { border-color: #cbd5e1; background: #f8fafc; color: #0f172a; color-scheme: light; }
     body.light-mode #auth-message { border-color: #cbd5e1; background: #f8fafc; color: #334155; }
-    body.light-mode #auth-screen > div > p:last-child, body.light-mode #auth-reset { color: #475569; }
-    @media (max-width: 420px) {
-      #auth-screen > div { padding: 1.25rem; }
-      #auth-screen > div > div:first-child { gap: .5rem; }
-      #auth-screen > div > div:first-child > div:last-child { gap: .4rem; }
-    }
+    body.light-mode #auth-reset { color: #475569; }
     .tab-button[aria-selected="true"] { color: #a7f3d0; border-color: #34d399; background: rgba(16, 185, 129, .1); }
     .tab-panel[hidden] { display: none; }
     input, select, textarea { color-scheme: dark; }
@@ -152,7 +147,7 @@
       content: "";
     }
     #auth-screen > div > * { position: relative; }
-    #auth-screen > div > div:first-child > div:first-child > div {
+    #auth-screen .auth-badge {
       border-color: rgba(69, 224, 176, .24);
       background: rgba(16, 185, 129, .12);
       box-shadow: inset 0 0 18px rgba(16, 185, 129, .06);
@@ -160,7 +155,7 @@
     }
     #auth-screen h1 { letter-spacing: -.035em; }
     #auth-screen input {
-      min-height: 3.25rem;
+      min-height: 2.5rem;
       border-color: rgba(100, 116, 139, .42);
       background: rgba(3, 10, 21, .66);
       transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
@@ -172,7 +167,7 @@
       box-shadow: 0 0 0 4px rgba(16, 185, 129, .11), 0 0 24px rgba(16, 185, 129, .08);
     }
     #auth-submit {
-      min-height: 3.25rem;
+      min-height: 2.5rem;
       background: linear-gradient(105deg, #34d399, #5eead4);
       box-shadow: 0 10px 28px rgba(16, 185, 129, .2);
       transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
@@ -557,13 +552,29 @@
       #signed-in-user { max-width: 100%; }
     }
     @media (max-width: 480px) {
-      #auth-screen { padding: 1rem .75rem; }
-      #auth-screen > div { padding: 1.25rem; border-radius: 1.25rem; }
-      #auth-screen > div > div:first-child { flex-direction: column-reverse; }
-      #auth-screen > div > div:first-child > div:last-child { flex-direction: row; align-self: flex-end; }
-      #auth-screen > div > div:nth-of-type(2) { justify-content: flex-start; }
       #app-shell > header > div:last-child { gap: .45rem; }
       #app-shell > header > div:last-child > * { min-height: 2.25rem; padding: .45rem .6rem; }
+    }
+    #auth-screen > div > .auth-card-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      align-items: stretch;
+      gap: 1rem;
+    }
+    #auth-screen .auth-showcase-panel,
+    #auth-screen .auth-signin-panel { min-width: 0; }
+    #auth-screen .auth-showcase-panel { gap: .75rem; }
+    #auth-screen .auth-showcase-panel .feature-badges { gap: .5rem; margin-top: .75rem; }
+    #auth-screen .feature-badge { padding: .25rem .625rem; font-size: .6875rem; }
+    #auth-screen .auth-showcase-title { margin: .75rem 0 0; line-height: 1.2; }
+    #auth-screen .auth-showcase-subtitle { margin: .25rem 0 0; font-size: .75rem; line-height: 1.25rem; }
+    #auth-screen .auth-controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: .375rem; }
+    #auth-screen .auth-controls .theme-toggle,
+    #auth-screen .auth-controls .language-toggle { padding: .35rem .55rem; }
+    #auth-screen .auth-controls .theme-picker { min-width: 7rem; padding: .35rem .5rem; }
+    #auth-screen .auth-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem; padding-top: .125rem; font-size: .75rem; }
+    @media (min-width: 1024px) {
+      #auth-screen > div > .auth-card-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.5rem; }
     }
     @keyframes toast-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; scroll-behavior: auto !important; } }
@@ -575,45 +586,52 @@
     <div class="absolute right-0 top-1/3 h-96 w-96 rounded-full bg-cyan-500/10 blur-3xl"></div>
   </div>
   <section id="auth-screen" class="relative mx-auto flex min-h-screen max-w-6xl items-center justify-center px-4 py-8 sm:px-7" aria-labelledby="auth-heading">
-    <div class="glass w-full max-w-md rounded-3xl p-6 sm:p-8">
-      <div class="mb-6 flex items-start justify-between gap-4">
-        <div>
-          <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-200">Supabase Auth</div>
-          <h1 id="auth-heading" class="text-2xl font-black"><span data-bn="অ্যাকাউন্টে প্রবেশ" data-en="Sign in to your account">অ্যাকাউন্টে প্রবেশ</span></h1>
-          <p id="auth-description" class="mt-2 text-sm leading-6 text-slate-400"><span data-bn="আপনার অ্যাকাউন্ট দিয়ে SQA পরীক্ষণ হাবে প্রবেশ করুন।" data-en="Sign in to the SQA Testing Hub with your account.">আপনার অ্যাকাউন্ট দিয়ে SQA পরীক্ষণ হাবে প্রবেশ করুন।</span></p>
+    <div class="glass w-full max-w-3xl rounded-3xl p-5">
+      <div class="auth-card-grid grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 items-stretch">
+        <div class="order-1 min-w-0 rounded-2xl border border-emerald-400/20 bg-emerald-500/[0.04] p-4 sm:p-5 flex flex-col justify-between gap-3">
+          <div>
+            <div class="auth-badge inline-flex items-center rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-200" data-bn="Supabase প্রমাণীকরণ · লাইভ SQA স্যান্ডবক্স" data-en="Supabase Auth · Live SQA Sandbox">Supabase প্রমাণীকরণ · লাইভ SQA স্যান্ডবক্স</div>
+            <h2 class="auth-showcase-title mt-3 text-xl sm:text-2xl font-black tracking-tight" data-bn="SQA এ টু জেড লাইভ টেস্টিং হাব" data-en="SQA A to Z Live Testing Hub">SQA এ টু জেড লাইভ টেস্টিং হাব</h2>
+            <p class="auth-showcase-subtitle" data-bn="হাতে-কলমে SQA অনুশীলন" data-en="Interactive QA practice">হাতে-কলমে SQA অনুশীলন</p>
+            <div class="feature-badges" aria-label="SQA module highlights" data-bn-aria-label="SQA মডিউলের বৈশিষ্ট্য" data-en-aria-label="SQA module highlights">
+              <span class="feature-badge text-[11px] py-1 px-2.5" data-bn="৯টি ইন্টার‌্যাকটিভ SQA মডিউল" data-en="9 Interactive SQA Modules">৯টি ইন্টার‌্যাকটিভ SQA মডিউল</span>
+              <span class="feature-badge text-[11px] py-1 px-2.5" data-bn="লাইভ PostgreSQL ও REST API" data-en="Live PostgreSQL &amp; REST API">লাইভ PostgreSQL ও REST API</span>
+              <span class="feature-badge text-[11px] py-1 px-2.5" data-bn="অটো টেস্ট রানার ও RTM" data-en="Auto Test Runner &amp; RTM">অটো টেস্ট রানার ও RTM</span>
+            </div>
+          </div>
+          <div class="flex flex-col gap-3">
+            <div id="site-announcement-auth" class="text-xs p-2.5 rounded-xl" hidden role="status" aria-live="polite"></div>
+            <button id="guest-mode-button" type="button" class="w-full font-bold shadow-md rounded-xl"><span data-bn="লগইন ছাড়াই পরীক্ষা করুন (অতিথি মোড)" data-en="Test Without Login (Guest Mode)">লগইন ছাড়াই পরীক্ষা করুন (অতিথি মোড)</span></button>
+            <div id="guest-mode-note" class="text-xs leading-5 p-2.5 rounded-xl mt-0"><span data-bn="গেস্ট মোড: কোনো তথ্য ছাড়াই সব ফিচার টেস্ট করুন। ব্রাউজার ট্যাব খোলা থাকা পর্যন্ত আপনার ডেটা সংরক্ষিত থাকবে এবং CSV রিপোর্ট ডাউনলোড করতে পারবেন।" data-en="Guest Mode: Test all features without login. Your session data stays saved until you close this browser tab, with full CSV report export.">গেস্ট মোড: কোনো তথ্য ছাড়াই সব ফিচার টেস্ট করুন। ব্রাউজার ট্যাব খোলা থাকা পর্যন্ত আপনার ডেটা সংরক্ষিত থাকবে এবং CSV রিপোর্ট ডাউনলোড করতে পারবেন।</span></div>
+          </div>
         </div>
-        <div class="flex shrink-0 flex-col gap-2">
-          <button type="button" class="theme-toggle no-translate rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 text-xs text-slate-300 hover:bg-slate-800" aria-pressed="false">☀️ দিন মোড</button>
-          <button type="button" class="language-toggle no-translate rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 text-xs text-slate-300 hover:bg-slate-800" aria-label="Switch language">English</button>
-          <label class="sr-only" for="auth-theme-select" data-bn="রঙের থিম নির্বাচন করুন" data-en="Choose a color theme">রঙের থিম নির্বাচন করুন</label>
-          <select id="auth-theme-select" class="theme-picker rounded-lg border border-slate-700 bg-slate-900/70 px-2 py-2 text-xs text-slate-300" data-bn-aria-label="রঙের থিম নির্বাচন করুন" data-en-aria-label="Choose a color theme" aria-label="রঙের থিম নির্বাচন করুন">
-            <option value="aurora" data-bn="অরোরা ডার্ক" data-en="Aurora Dark">অরোরা ডার্ক</option>
-            <option value="midnight-violet" data-bn="মিডনাইট ভায়োলেট" data-en="Midnight Violet">মিডনাইট ভায়োলেট</option>
-            <option value="arctic-light" data-bn="ক্লিন লাইট" data-en="Clean Light">ক্লিন লাইট</option>
-          </select>
+        <div class="order-2 min-w-0 flex flex-col justify-between gap-3 lg:pl-1">
+          <div class="auth-controls flex flex-wrap items-center justify-end gap-1.5">
+            <button type="button" class="theme-toggle no-translate rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 text-xs text-slate-300 hover:bg-slate-800" aria-pressed="false">☀️ দিন মোড</button>
+            <button type="button" class="language-toggle no-translate rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 text-xs text-slate-300 hover:bg-slate-800" aria-label="Switch language">English</button>
+            <label class="sr-only" for="auth-theme-select" data-bn="রঙের থিম নির্বাচন করুন" data-en="Choose a color theme">রঙের থিম নির্বাচন করুন</label>
+            <select id="auth-theme-select" class="theme-picker rounded-lg border border-slate-700 bg-slate-900/70 px-2 py-2 text-xs text-slate-300" data-bn-aria-label="রঙের থিম নির্বাচন করুন" data-en-aria-label="Choose a color theme" aria-label="রঙের থিম নির্বাচন করুন">
+              <option value="aurora" data-bn="অরোরা ডার্ক" data-en="Aurora Dark">অরোরা ডার্ক</option>
+              <option value="midnight-violet" data-bn="মিডনাইট ভায়োলেট" data-en="Midnight Violet">মিডনাইট ভায়োলেট</option>
+              <option value="arctic-light" data-bn="ক্লিন লাইট" data-en="Clean Light">ক্লিন লাইট</option>
+            </select>
+          </div>
+          <h1 id="auth-heading" class="text-lg sm:text-xl font-extrabold"><span data-bn="অ্যাকাউন্টে প্রবেশ" data-en="Sign in to your account">অ্যাকাউন্টে প্রবেশ</span></h1>
+          <p id="auth-description" class="text-xs mt-0.5"><span data-bn="আপনার অ্যাকাউন্ট দিয়ে SQA পরীক্ষণ হাবে প্রবেশ করুন।" data-en="Sign in to the SQA Testing Hub with your account.">আপনার অ্যাকাউন্ট দিয়ে SQA পরীক্ষণ হাবে প্রবেশ করুন।</span></p>
+          <form id="auth-form" class="space-y-2.5">
+            <label id="auth-name-wrap" class="hidden block text-sm text-slate-300"><span data-bn="পূর্ণ নাম" data-en="Full Name">পূর্ণ নাম</span><input id="auth-name" maxlength="120" autocomplete="name" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="আপনার পূর্ণ নাম" data-bn-placeholder="আপনার পূর্ণ নাম" data-en-placeholder="Your full name"></label>
+            <label class="block text-sm text-slate-300"><span data-bn="ইমেইল" data-en="Email">ইমেইল</span><input id="auth-email" type="email" required maxlength="254" autocomplete="email" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="name@example.com"></label>
+            <label class="block text-sm text-slate-300"><span data-bn="পাসওয়ার্ড" data-en="Password">পাসওয়ার্ড</span><input id="auth-password" type="password" required minlength="6" autocomplete="current-password" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="কমপক্ষে ৬ অক্ষর" data-bn-placeholder="কমপক্ষে ৬ অক্ষর" data-en-placeholder="At least 6 characters"></label>
+            <button id="auth-submit" type="submit" class="w-full rounded-xl bg-emerald-400 px-5 py-3 font-bold text-slate-950 hover:bg-emerald-300"><span data-bn="লগইন করুন" data-en="Sign In">লগইন করুন</span></button>
+          </form>
+          <div class="auth-actions flex flex-wrap items-center justify-between gap-2 text-xs pt-0.5">
+            <button id="auth-mode-toggle" type="button" class="text-emerald-300 hover:underline"><span data-bn="নতুন অ্যাকাউন্ট তৈরি করুন" data-en="Create a new account">নতুন অ্যাকাউন্ট তৈরি করুন</span></button>
+            <button id="auth-reset" type="button" class="text-slate-400 hover:underline"><span data-bn="পাসওয়ার্ড ভুলে গেছেন?" data-en="Forgot password?">পাসওয়ার্ড ভুলে গেছেন?</span></button>
+            <button id="auth-resend-confirmation" type="button" class="text-emerald-300 hover:underline"><span data-bn="নিশ্চিতকরণ ইমেইল আবার পাঠান" data-en="Resend confirmation email">নিশ্চিতকরণ ইমেইল আবার পাঠান</span></button>
+          </div>
+          <div id="auth-message" class="min-h-0 p-2.5 text-xs rounded-xl mt-0" aria-live="polite"></div>
         </div>
       </div>
-      <form id="auth-form" class="space-y-4">
-        <label id="auth-name-wrap" class="hidden block text-sm text-slate-300"><span data-bn="পূর্ণ নাম (Full Name)" data-en="Full Name">পূর্ণ নাম (Full Name)</span><input id="auth-name" maxlength="120" autocomplete="name" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="আপনার পূর্ণ নাম" data-bn-placeholder="আপনার পূর্ণ নাম" data-en-placeholder="Your full name"></label>
-        <label class="block text-sm text-slate-300"><span data-bn="ইমেইল (Email)" data-en="Email">ইমেইল (Email)</span><input id="auth-email" type="email" required maxlength="254" autocomplete="email" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="name@example.com"></label>
-        <label class="block text-sm text-slate-300"><span data-bn="পাসওয়ার্ড (Password)" data-en="Password">পাসওয়ার্ড (Password)</span><input id="auth-password" type="password" required minlength="6" autocomplete="current-password" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="কমপক্ষে ৬ অক্ষর" data-bn-placeholder="কমপক্ষে ৬ অক্ষর" data-en-placeholder="At least 6 characters"></label>
-        <button id="auth-submit" type="submit" class="w-full rounded-xl bg-emerald-400 px-5 py-3 font-bold text-slate-950 hover:bg-emerald-300"><span data-bn="লগইন করুন" data-en="Sign In">লগইন করুন</span></button>
-      </form>
-      <button id="guest-mode-button" type="button"><span data-bn="লগইন ছাড়াই টেস্ট করুন (Guest Mode)" data-en="Test Without Login (Guest Mode)">লগইন ছাড়াই টেস্ট করুন (Guest Mode)</span></button>
-      <div id="guest-mode-note"><span data-bn="গেস্ট মোড: কোনো তথ্য ছাড়াই সব ফিচার টেস্ট করুন। ব্রাউজার ট্যাব খোলা থাকা পর্যন্ত আপনার ডেটা সংরক্ষিত থাকবে এবং CSV রিপোর্ট ডাউনলোড করতে পারবেন।" data-en="Guest Mode: Test all features without login. Your session data stays saved until you close this browser tab, with full CSV report export.">গেস্ট মোড: কোনো তথ্য ছাড়াই সব ফিচার টেস্ট করুন। ব্রাউজার ট্যাব খোলা থাকা পর্যন্ত আপনার ডেটা সংরক্ষিত থাকবে এবং CSV রিপোর্ট ডাউনলোড করতে পারবেন।</span></div>
-      <div class="feature-badges" aria-label="SQA module highlights" data-bn-aria-label="SQA মডিউলের বৈশিষ্ট্য" data-en-aria-label="SQA module highlights">
-        <span class="feature-badge" data-bn="৯টি ইন্টার‌্যাকটিভ SQA মডিউল" data-en="9 Interactive SQA Modules">৯টি ইন্টার‌্যাকটিভ SQA মডিউল</span>
-        <span class="feature-badge" data-bn="লাইভ PostgreSQL ও REST API" data-en="Live PostgreSQL &amp; REST API">লাইভ PostgreSQL ও REST API</span>
-        <span class="feature-badge" data-bn="অটো টেস্ট রানার ও RTM" data-en="Auto Test Runner &amp; RTM">অটো টেস্ট রানার ও RTM</span>
-      </div>
-      <div id="site-announcement-auth" hidden role="status" aria-live="polite"></div>
-      <div class="mt-4 flex flex-wrap justify-between gap-3 text-sm">
-        <button id="auth-mode-toggle" type="button" class="text-emerald-300 hover:underline"><span data-bn="নতুন অ্যাকাউন্ট তৈরি করুন" data-en="Create a new account">নতুন অ্যাকাউন্ট তৈরি করুন</span></button>
-        <button id="auth-reset" type="button" class="text-slate-400 hover:underline"><span data-bn="পাসওয়ার্ড ভুলে গেছেন?" data-en="Forgot password?">পাসওয়ার্ড ভুলে গেছেন?</span></button>
-        <button id="auth-resend-confirmation" type="button" class="text-emerald-300 hover:underline"><span data-bn="নিশ্চিতকরণ ইমেইল আবার পাঠান" data-en="Resend confirmation email">নিশ্চিতকরণ ইমেইল আবার পাঠান</span></button>
-      </div>
-      <div id="auth-message" class="mt-4 min-h-12 rounded-xl border border-slate-800 bg-slate-950/50 p-3 text-sm text-slate-300" aria-live="polite"><span data-bn="নিরাপদ প্রবেশের জন্য Supabase Auth ব্যবহৃত হয়।" data-en="Supabase Auth is used for secure sign-in.">নিরাপদ প্রবেশের জন্য Supabase Auth ব্যবহৃত হয়।</span></div>
-      <p class="mt-4 text-xs leading-5 text-slate-500"><span data-bn="নতুন অ্যাকাউন্টের জন্য প্রকল্পে ইমেইল নিশ্চিতকরণ চালু থাকলে, ইমেইল নিশ্চিত করার পর লগইন করুন।" data-en="If email confirmation is enabled for new accounts, confirm your email before signing in.">নতুন অ্যাকাউন্টের জন্য প্রকল্পে ইমেইল নিশ্চিতকরণ চালু থাকলে, ইমেইল নিশ্চিত করার পর লগইন করুন।</span><span data-bn=" ডেটা ব্যবহারে Supabase টেবিলগুলোর Row Level Security (RLS) নীতিও সঠিকভাবে সেট করুন।" data-en=" Configure Row Level Security (RLS) policies for the Supabase tables before accessing data."> ডেটা ব্যবহারে Supabase টেবিলগুলোর Row Level Security (RLS) নীতিও সঠিকভাবে সেট করুন।</span></p>
     </div>
   </section>
   <main id="app-shell" hidden class="relative mx-auto max-w-[1600px] px-4 py-6 sm:px-7 lg:px-10">
@@ -938,10 +956,7 @@
         'নিশ্চিতকরণ ইমেইল আবার পাঠান': 'Resend confirmation email',
         'নিশ্চিতকরণ ইমেইল পাঠানোর জন্য প্রথমে ইমেইল লিখুন।': 'Enter your email first to resend the confirmation link.',
         'নতুন নিশ্চিতকরণ লিংক পাঠানো হয়েছে। আপনার ইমেইল দেখুন।': 'A new confirmation link was sent. Check your email.',
-        'নিরাপদ প্রবেশের জন্য Supabase Auth ব্যবহৃত হয়।': 'Supabase Auth is used for secure sign-in.',
         'এই ফর্মের আসল পাসওয়ার্ড ডেটাবেসে রাখা হয় না; নির্ধারিত কলামে কেবল অ-গোপন পরীক্ষণ চিহ্ন রাখা হয়। নিরাপদ প্রমাণীকরণ ও হ্যাশিং Supabase Auth পরিচালনা করে। ভূমিকা নির্বাচকটি শুধু UI-তে থাকে, কারণ নির্ধারিত টেবিলে Role কলাম নেই।': 'The real password from this form is never stored in the database; the specified column receives only a non-secret test marker. Supabase Auth handles secure authentication and password hashing. The role selector is UI-only because the specified table has no Role column.',
-        'নতুন অ্যাকাউন্টের জন্য প্রকল্পে ইমেইল নিশ্চিতকরণ চালু থাকলে, ইমেইল নিশ্চিত করার পর লগইন করুন।': 'If email confirmation is enabled for new accounts, confirm your email before signing in.',
-        ' ডেটা ব্যবহারে Supabase টেবিলগুলোর Row Level Security (RLS) নীতিও সঠিকভাবে সেট করুন।': ' Configure Row Level Security (RLS) policies for the Supabase tables before accessing data.',
         'নতুন অ্যাকাউন্ট': 'Create account',
         'ফিরে লগইন করুন': 'Back to sign in',
         'অ্যাকাউন্ট তৈরি করুন': 'Create Account',
@@ -1267,6 +1282,9 @@
         ' · ভূমিকা/status: ': ' · Role/status: ',
         'বাগ প্রতিবেদন হালনাগাদ হয়েছে।': 'Bug report updated.',
         'বাগ প্রতিবেদন মুছে ফেলা হয়েছে।': 'Bug report deleted.',
+        'সাইট সেটিংস সংরক্ষিত হয়েছে।': 'Site settings saved successfully.',
+        'টেস্ট রিপোর্ট CSV ডাউনলোড হয়েছে।': 'Test report CSV downloaded.',
+        'মেট্রিক পরিমাপ সম্পন্ন হয়েছে।': 'Metrics measured.',
         'ডামি পরীক্ষণ ব্যবহারকারী মুছে ফেলা হয়েছে।': 'Dummy test users deleted.',
         'গেস্ট সেশন বন্ধ করা হয়েছে।': 'Guest session ended.',
         'অটোমেশন ও API নমুনা কপি হয়েছে।': 'Automation and API snippets copied.',
@@ -1304,11 +1322,15 @@
       const translateToBengali = (value) => String(value).replace(englishTranslationPattern, (match) => englishToBengali.get(match) || match);
       const toBengaliDigits = (value) => String(value).replace(/\d/g, (digit) => '০১২৩৪৫৬৭৮৯'[Number(digit)]);
       const toWesternDigits = (value) => String(value).replace(/[০-৯]/g, (digit) => String('০১২৩৪৫৬৭৮৯'.indexOf(digit)));
-      function setLocalizedText(element, bengaliText) {
-        const bengali = toBengaliDigits(translateToBengali(bengaliText));
+      function setLocalizedText(element, bengaliText, englishText = null) {
+        const bengali = englishText !== null
+          ? toBengaliDigits(bengaliText)
+          : toBengaliDigits(translateToBengali(bengaliText));
         element.dataset.bn = bengali;
-        element.dataset.en = toWesternDigits(translateDynamicText(bengali));
-        element.textContent = activeLanguage === 'bn' ? bengali : element.dataset.en;
+        element.dataset.en = englishText !== null
+          ? toWesternDigits(englishText)
+          : toWesternDigits(translateDynamicText(bengali));
+        element.textContent = activeLanguage === 'bn' ? element.dataset.bn : element.dataset.en;
       }
       function translatePage() {
         $$('option[data-bn][data-en]').forEach((option) => {
@@ -1576,10 +1598,10 @@
       $('#copy-share-link').addEventListener('click', copyShareLink);
       $('#native-share-link').addEventListener('click', shareLink);
       $('#download-share-card').addEventListener('click', downloadShareCard);
-      const showToast = (message, type = 'success') => {
+      const showToast = (message, type = 'success', englishMessage = null) => {
         const toast = document.createElement('div');
         toast.className = `toast max-w-sm rounded-xl border px-4 py-3 text-sm shadow-xl ${type === 'error' ? 'border-rose-400/30 bg-rose-950 text-rose-100' : 'border-emerald-400/30 bg-emerald-950 text-emerald-100'}`;
-        setLocalizedText(toast, message);
+        setLocalizedText(toast, message, englishMessage);
         $('#toast-container').appendChild(toast);
         window.setTimeout(() => toast.remove(), 4500);
       };
@@ -1745,8 +1767,12 @@
             if (error) throw error;
             savedUser = data;
           }
-          setLocalizedText($('#registration-result'), `ব্যবহারকারী সংরক্ষিত হয়েছে। আইডি: ${savedUser.id} · ভূমিকা/status: ${$('#reg-role').value}`);
-          showToast('ব্যবহারকারী সফলভাবে সংরক্ষিত হয়েছে।');
+          setLocalizedText(
+            $('#registration-result'),
+            `ব্যবহারকারী সংরক্ষিত হয়েছে। আইডি: ${savedUser.id} · ভূমিকা/status: ${$('#reg-role').value}`,
+            `User saved. ID: ${savedUser.id} · Role/status: ${$('#reg-role').value}`
+          );
+          showToast('ব্যবহারকারী সফলভাবে সংরক্ষিত হয়েছে।', 'success', 'User saved successfully.');
           await refreshDatabase();
         } catch (error) {
           const message = isGuestMode ? error.message : dbError(error);
@@ -1830,8 +1856,8 @@
             });
             if (error) throw error;
           }
-          setLocalizedText($('#order-result'), 'অর্ডারটি ডেটাবেসে সংরক্ষিত হয়েছে।');
-          showToast('অর্ডার সংরক্ষিত হয়েছে।');
+          setLocalizedText($('#order-result'), 'অর্ডারটি ডেটাবেসে সংরক্ষিত হয়েছে।', 'The order was saved to the database.');
+          showToast('অর্ডার সংরক্ষিত হয়েছে।', 'success', 'Order saved.');
           await refreshDatabase();
         } catch (error) {
           const message = isGuestMode ? error.message : dbError(error);
@@ -2381,7 +2407,7 @@
             if (error) throw error;
           }
           $('#user-edit-dialog').close();
-          showToast('ব্যবহারকারীর তথ্য হালনাগাদ হয়েছে।');
+          showToast('ব্যবহারকারীর তথ্য হালনাগাদ হয়েছে।', 'success', 'User updated.');
           await refreshDatabase();
         } catch (error) {
           if (isGuestMode && original && originalValues) Object.assign(original, originalValues);
@@ -2551,7 +2577,7 @@
             if (error) throw error;
           }
           $('#bug-edit-dialog').close();
-          showToast('বাগ প্রতিবেদন হালনাগাদ হয়েছে।');
+          showToast('বাগ প্রতিবেদন হালনাগাদ হয়েছে।', 'success', 'Bug report updated.');
           await refreshDatabase();
         } catch (error) {
           if (isGuestMode && original && originalValues) Object.assign(original, originalValues);
@@ -2632,11 +2658,11 @@
           anchor.download = `sqa-test-report-${new Date().toISOString().slice(0, 10)}.csv`;
           anchor.click();
           window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
-          showToast(activeLanguage === 'bn' ? 'টেস্ট রিপোর্ট CSV ডাউনলোড হয়েছে।' : 'Test report CSV downloaded.');
+          showToast('টেস্ট রিপোর্ট CSV ডাউনলোড হয়েছে।', 'success', 'Test report CSV downloaded.');
         } catch (error) {
-          showToast(activeLanguage === 'bn'
-            ? `CSV রিপোর্ট তৈরি করা যায়নি: ${error.message}`
-            : `Could not create CSV report: ${error.message}`, 'error');
+          const messageBn = `CSV রিপোর্ট তৈরি করা যায়নি: ${error.message}`;
+          const messageEn = `Could not create CSV report: ${error.message}`;
+          showToast(messageBn, 'error', messageEn);
         }
       });
 
@@ -2756,9 +2782,9 @@
             const { error } = await ensureDb().from('sqa_bug_reports').insert(databaseBug);
             if (error) throw error;
           }
-          setLocalizedText($('#bug-result'), 'বাগ প্রতিবেদন সংরক্ষিত হয়েছে।');
+          setLocalizedText($('#bug-result'), 'বাগ প্রতিবেদন সংরক্ষিত হয়েছে।', 'Bug report saved.');
           $('#bug-form').reset();
-          showToast('বাগ প্রতিবেদন জমা হয়েছে।');
+          showToast('বাগ প্রতিবেদন জমা হয়েছে।', 'success', 'Bug report submitted.');
           await refreshDatabase();
         } catch (error) {
           const message = isGuestMode ? error.message : dbError(error);
@@ -2898,21 +2924,25 @@
           if (data?.id !== 1) throw new Error('Site settings row id=1 was not updated.');
           siteSettings = { ...siteSettings, ...values };
           applySiteSettings(true);
-          setLocalizedText($('#site-settings-message'), 'সাইট সেটিংস সংরক্ষিত হয়েছে।');
-          showToast('সাইট সেটিংস সংরক্ষিত হয়েছে।');
+          setLocalizedText($('#site-settings-message'), 'সাইট সেটিংস সংরক্ষিত হয়েছে।', 'Site settings saved successfully.');
+          showToast('সাইট সেটিংস সংরক্ষিত হয়েছে।', 'success', 'Site settings saved successfully.');
         } catch (error) {
-          const message = activeLanguage === 'bn'
-            ? `সাইট সেটিংস সংরক্ষণ করা যায়নি: ${error.message}`
-            : `Could not save site settings: ${error.message}`;
-          setLocalizedText($('#site-settings-message'), message);
-          showToast(message, 'error');
+          const messageBn = `সাইট সেটিংস সংরক্ষণ করা যায়নি: ${error.message}`;
+          const messageEn = `Could not save site settings: ${error.message}`;
+          setLocalizedText($('#site-settings-message'), messageBn, messageEn);
+          showToast(messageBn, 'error', messageEn);
         }
       });
-      function setAuthMessage(message, isError = false) {
+      function setAuthMessage(message, isError = false, englishMessage = null) {
         const element = $('#auth-message');
-        setLocalizedText(element, message);
+        setLocalizedText(element, message, englishMessage);
         element.classList.toggle('text-rose-200', isError);
         element.classList.toggle('text-slate-300', !isError);
+      }
+      function setAuthErrorMessage(bengaliPrefix, englishPrefix, detail) {
+        const detailBn = toBengaliDigits(translateToBengali(detail || ''));
+        const detailEn = toWesternDigits(translateDynamicText(detailBn));
+        setAuthMessage(`${bengaliPrefix}${detailBn}`, true, `${englishPrefix}${detailEn}`);
       }
       function setAuthMode(mode) {
         authMode = mode;
@@ -2928,7 +2958,7 @@
         setLocalizedText($('#auth-mode-toggle'), signingUp ? 'ফিরে লগইন করুন' : 'নতুন অ্যাকাউন্ট তৈরি করুন');
         $('#auth-reset').hidden = signingUp;
         $('#auth-resend-confirmation').hidden = signingUp;
-        setAuthMessage(signingUp ? 'নিরাপদ প্রবেশের জন্য Supabase Auth ব্যবহৃত হয়।' : 'নিরাপদ প্রবেশের জন্য Supabase Auth ব্যবহৃত হয়।');
+        setAuthMessage('');
       }
       function updateAuthVisibility(session) {
         if (isGuestMode) {
@@ -2989,9 +3019,7 @@
             ? 'নতুন নিশ্চিতকরণ লিংক পাঠানো হয়েছে। আপনার ইমেইল দেখুন।'
             : 'A new confirmation link was sent. Check your email.');
         } catch (error) {
-          setAuthMessage(activeLanguage === 'bn'
-            ? `নিশ্চিতকরণ ইমেইল পাঠানো যায়নি: ${error.message}`
-            : `Could not resend confirmation email: ${error.message}`, true);
+          setAuthErrorMessage('নিশ্চিতকরণ ইমেইল পাঠানো যায়নি: ', 'Could not resend confirmation email: ', error.message);
         }
       });
       $('#auth-form').addEventListener('submit', async (event) => {
@@ -3028,12 +3056,22 @@
           }
         } catch (error) {
           const message = error.message || '';
-          const translatedError = activeLanguage === 'bn'
-            ? (/invalid login credentials/i.test(message) ? 'লগইন ব্যর্থ হয়েছে। ইমেইল ও পাসওয়ার্ড যাচাই করুন।'
-              : /already registered|user already exists/i.test(message) ? 'এই ইমেইল দিয়ে অ্যাকাউন্ট আছে। লগইন করুন অথবা পাসওয়ার্ড পুনরুদ্ধার করুন।'
-              : `প্রবেশ করা যায়নি: ${message}`)
-            : `Authentication failed: ${message}`;
-          setAuthMessage(translatedError, true);
+          let messageBn;
+          let messageEn;
+          if (/invalid login credentials/i.test(message)) {
+            messageBn = 'লগইন ব্যর্থ হয়েছে। ইমেইল ও পাসওয়ার্ড যাচাই করুন।';
+            messageEn = 'Sign-in failed. Check your email and password.';
+          } else if (/already registered|user already exists/i.test(message)) {
+            messageBn = 'এই ইমেইল দিয়ে অ্যাকাউন্ট আছে। লগইন করুন অথবা পাসওয়ার্ড পুনরুদ্ধার করুন।';
+            messageEn = 'An account already exists for this email. Sign in or reset your password.';
+          } else if (/email not confirmed/i.test(message)) {
+            messageBn = 'ইমেইল নিশ্চিত করা হয়নি। নিশ্চিতকরণ ইমেইল আবার পাঠান।';
+            messageEn = 'Email has not been confirmed. Resend the confirmation email.';
+          } else {
+            setAuthErrorMessage('প্রবেশ করা যায়নি: ', 'Authentication failed: ', message);
+            return;
+          }
+          setAuthMessage(messageBn, true, messageEn);
         } finally {
           submitButton.disabled = false;
         }
@@ -3047,7 +3085,7 @@
           if (error) throw error;
           setAuthMessage('পাসওয়ার্ড পুনরুদ্ধারের লিংক পাঠানো হয়েছে। আপনার ইমেইল দেখুন।');
         } catch (error) {
-          setAuthMessage(activeLanguage === 'bn' ? `পাসওয়ার্ড পুনরুদ্ধার করা যায়নি: ${error.message}` : `Password reset failed: ${error.message}`, true);
+          setAuthErrorMessage('পাসওয়ার্ড পুনরুদ্ধার করা যায়নি: ', 'Password reset failed: ', error.message);
         }
       });
       $('#logout-button').addEventListener('click', async () => {
@@ -3074,9 +3112,7 @@
         if (error) throw error;
         updateAuthVisibility(data.session);
       }).catch((error) => {
-        setAuthMessage(activeLanguage === 'bn'
-          ? `লগইন করার জন্য Supabase Auth-এ সংযোগ করা যাচ্ছে না। ${error.message}`
-          : `Could not connect to Supabase Auth. ${error.message}`, true);
+        setAuthErrorMessage('লগইন করার জন্য Supabase Auth-এ সংযোগ করা যাচ্ছে না। ', 'Could not connect to Supabase Auth. ', error.message);
       });
       fetchSiteSettings().catch((settingsError) => {
         const message = activeLanguage === 'bn'
