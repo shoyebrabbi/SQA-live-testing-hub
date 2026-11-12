@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#07111f">
   <meta name="description" content="Explore eight essential areas of Software Quality Assurance in a hands-on testing environment.">
+  <meta name="author" content="Md Shoyeb Rabbi">
+  <meta name="copyright" content="Copyright (c) 2026 Md Shoyeb Rabbi. All Rights Reserved.">
   <meta property="og:type" content="website">
   <meta property="og:title" content="SQA A to Z Live Testing Hub">
   <meta property="og:description" content="A hands-on SQA testing hub with interactive test scenarios and a personalized theme.">
@@ -15,6 +17,25 @@
   <style>
     :root { color-scheme: dark; }
     body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, "Noto Sans Bengali", sans-serif; background: #07111f; }
+    body::before {
+      content: "Md Shoyeb Rabbi";
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-size: clamp(2.5rem, 7vw, 6.5rem);
+      font-weight: 900;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(148, 163, 184, .045);
+      transform: rotate(-24deg);
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+      white-space: nowrap;
+    }
+    body.light-mode::before { color: rgba(15, 23, 42, .04); }
+    #auth-screen, #app-shell { position: relative; z-index: 1; }
     .glass { background: rgba(15, 27, 45, .82); border: 1px solid rgba(148, 163, 184, .14); backdrop-filter: blur(14px); }
     #auth-screen[hidden], #app-shell[hidden] { display: none !important; }
     #auth-screen { display: flex; min-height: 100vh; align-items: center; justify-content: center; padding: 1rem; box-sizing: border-box; }
@@ -369,6 +390,8 @@
     #share-preview-card { background: var(--theme-gradient); }
     #share-qr { image-rendering: pixelated; }
     body.light-mode #share-panel { background: rgba(255,255,255,.82); }
+    body.light-mode #close-share-panel { border-color: #cbd5e1 !important; background: #f1f5f9 !important; color: #334155 !important; }
+    body.light-mode #close-share-panel:hover { background: #fee2e2 !important; color: #be123c !important; }
     .theme-picker { min-width: 10.5rem; }
     @media (max-width: 768px) {
       #share-panel { grid-template-columns: 1fr; }
@@ -681,6 +704,7 @@
             <button id="guest-mode-button" type="button" class="w-full font-bold shadow-md rounded-xl"><span data-bn="লগইন ছাড়াই পরীক্ষা করুন (অতিথি মোড)" data-en="Test Without Login (Guest Mode)">লগইন ছাড়াই পরীক্ষা করুন (অতিথি মোড)</span></button>
             <div id="guest-mode-note" class="text-xs leading-5 p-2.5 rounded-xl mt-0"><span data-bn="গেস্ট মোড: কোনো তথ্য ছাড়াই সব ফিচার টেস্ট করুন। ব্রাউজার ট্যাব খোলা থাকা পর্যন্ত আপনার ডেটা সংরক্ষিত থাকবে এবং CSV রিপোর্ট ডাউনলোড করতে পারবেন।" data-en="Guest Mode: Test all features without login. Your session data stays saved until you close this browser tab, with full CSV report export.">গেস্ট মোড: কোনো তথ্য ছাড়াই সব ফিচার টেস্ট করুন। ব্রাউজার ট্যাব খোলা থাকা পর্যন্ত আপনার ডেটা সংরক্ষিত থাকবে এবং CSV রিপোর্ট ডাউনলোড করতে পারবেন।</span></div>
           </div>
+          <p class="text-[11px] text-slate-400/80" data-bn="নির্মাতা: Md Shoyeb Rabbi · © ২০২৬ সর্বস্বত্ব সংরক্ষিত" data-en="Architected &amp; Built by Md Shoyeb Rabbi · © 2026 All Rights Reserved">নির্মাতা: Md Shoyeb Rabbi · © ২০২৬ সর্বস্বত্ব সংরক্ষিত</p>
         </div>
         <div class="order-2 min-w-0 flex flex-col justify-between gap-3 lg:pl-1">
           <div class="auth-controls flex flex-wrap items-center justify-end gap-1.5">
@@ -737,10 +761,11 @@
         <span class="rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 text-slate-300"><span data-bn="ডেটা:" data-en="Data:">ডেটা:</span> <b class="text-slate-100">Supabase PostgreSQL</b></span>
       </div>
     </header>
-    <div id="guest-mode-banner" hidden role="status"><span data-bn="গেস্ট মোড সক্রিয়: আপনার পরিবর্তনগুলো এই ব্রাউজার ট্যাব বন্ধ না করা পর্যন্ত sessionStorage-এ থাকবে। এটি স্থানীয় ডেমো ডেটা; Supabase-এ কোনো পরিবর্তন করা হচ্ছে না।" data-en="Guest Mode is active: your changes are saved in sessionStorage until this browser tab closes. This is local demo data; no Supabase data is changed.">গেস্ট মোড সক্রিয়: আপনার পরিবর্তনগুলো এই ব্রাউজার ট্যাব বন্ধ না করা পর্যন্ত sessionStorage-এ থাকবে। এটি স্থানীয় ডেমো ডেটা; Supabase-এ কোনো পরিবর্তন করা হচ্ছে না।</span></div>
+    <div id="guest-mode-banner" hidden role="status"><span data-bn="গেস্ট মোড সক্রিয়: আপনার পরিবর্তনগুলো এই ব্রাউজার ট্যাব বন্ধ না করা পর্যন্ত sessionStorage-এ থাকবে। এটি স্থানীয় ডেমো ডেটা। Supabase-এ কোনো পরিবর্তন করা হচ্ছে না।" data-en="Guest Mode is active: your changes are saved in sessionStorage until this browser tab closes. This is local demo data. No Supabase data is changed.">গেস্ট মোড সক্রিয়: আপনার পরিবর্তনগুলো এই ব্রাউজার ট্যাব বন্ধ না করা পর্যন্ত sessionStorage-এ থাকবে। এটি স্থানীয় ডেমো ডেটা। Supabase-এ কোনো পরিবর্তন করা হচ্ছে না।</span></div>
     <div id="site-announcement-app" hidden class="mb-5 rounded-xl border border-amber-400 bg-amber-50 p-3 text-sm text-amber-950" role="status" aria-live="polite"></div>
 
-    <section id="share-panel" hidden class="glass mb-6 grid grid-cols-2 gap-5 rounded-2xl p-5" aria-labelledby="share-heading">
+    <section id="share-panel" hidden class="glass relative mb-6 grid grid-cols-2 gap-5 rounded-2xl p-5" aria-labelledby="share-heading">
+      <button id="close-share-panel" type="button" class="absolute right-4 top-4 inline-flex h-8 w-8 items-center justify-center rounded-lg border border-slate-600/60 bg-slate-900/60 text-sm font-bold text-slate-300 hover:bg-rose-500/20 hover:text-rose-200" aria-label="বন্ধ করুন" data-bn-aria-label="বন্ধ করুন" data-en-aria-label="Close" title="বন্ধ করুন" data-bn-title="বন্ধ করুন" data-en-title="Close">✕</button>
       <div>
         <h2 id="share-heading" class="text-lg font-bold"><span data-bn="আপনার থিমসহ হাব শেয়ার করুন" data-en="Share the hub with your theme">আপনার থিমসহ হাব শেয়ার করুন</span></h2>
         <p class="mt-1 text-sm text-slate-400"><span data-bn="লিংকটি খুললে নির্বাচিত থিম ও ভাষা দেখা যাবে। কোনো লগইন টোকেন শেয়ার হবে না।" data-en="The link opens with your selected theme and language. No sign-in tokens are shared.">লিংকটি খুললে নির্বাচিত থিম ও ভাষা দেখা যাবে। কোনো লগইন টোকেন শেয়ার হবে না।</span></p>
@@ -752,7 +777,7 @@
         </div>
         <button id="download-share-card" type="button" class="mt-4 rounded-lg border border-slate-600 px-3 py-2 text-sm text-slate-200 hover:bg-white/5"><span data-bn="প্রিভিউ কার্ড ডাউনলোড" data-en="Download preview card">প্রিভিউ কার্ড ডাউনলোড</span></button>
       </div>
-      <div class="flex flex-col gap-3">
+      <div class="flex flex-col gap-3 pr-10">
         <label for="share-url" class="text-sm font-semibold"><span data-bn="শেয়ার লিংক" data-en="Share link">শেয়ার লিংক</span></label>
         <div class="flex gap-2">
           <input id="share-url" readonly class="min-w-0 flex-1 rounded-lg border border-slate-700 bg-slate-950/60 px-3 py-2 text-xs text-slate-200" aria-label="Share link" data-bn-aria-label="শেয়ার লিংক" data-en-aria-label="Share link">
@@ -792,7 +817,7 @@
       <div class="mb-6"><p class="text-xs font-bold uppercase tracking-[.18em] text-emerald-300"><span data-bn="কার্যকরী · নেগেটিভ · সীমামান · ভূমিকা" data-en="Functional · Negative · Boundary · Roles">কার্যকরী · নেগেটিভ · সীমামান · ভূমিকা</span></p><h2 class="mt-2 text-2xl font-bold"><span data-bn="ব্যবহারকারী নিবন্ধন পরীক্ষা" data-en="User Registration Testing">ব্যবহারকারী নিবন্ধন পরীক্ষা</span></h2><p class="mt-2 text-sm text-slate-400"><span data-bn="ইনপুট যাচাই, সীমামান বিশ্লেষণ (Boundary Value Analysis) এবং ভূমিকা-ভিত্তিক প্রবেশাধিকার (RBAC) অনুশীলন করুন।" data-en="Practice input validation, Boundary Value Analysis, and role-based access control (RBAC).">ইনপুট যাচাই, সীমামান বিশ্লেষণ (Boundary Value Analysis) এবং ভূমিকা-ভিত্তিক প্রবেশাধিকার (RBAC) অনুশীলন করুন।</span></p></div>
       <div class="mb-4 flex flex-wrap gap-2"><button type="button" class="fill-buggy-sample rounded-lg border border-amber-400/40 px-3 py-2 text-sm text-amber-200" data-target="registration"><span data-bn="নমুনা বাগ ইনপুট দিন (বয়স ১৭)" data-en="Fill Buggy Input (Age 17)">নমুনা বাগ ইনপুট দিন (বয়স ১৭)</span></button><button type="button" class="log-bug-shortcut rounded-lg border border-rose-400/40 px-3 py-2 text-sm text-rose-200" data-module="REQ-01 · Registration" data-title="Age 17 bypasses registration boundary validation" data-severity="Major" data-steps="Enter valid name, email, password and age 17, then submit." data-expected="Age below 18 is rejected with a clear validation message." data-actual="Age 17 is accepted by client-side validation." data-bn-title="১৭ বছর বয়সের সীমা যাচাই এড়িয়ে যায়" data-bn-steps="সঠিক নাম, ইমেইল ও পাসওয়ার্ড দিয়ে বয়স ১৭ লিখে জমা দিন।" data-bn-expected="১৮ বছরের কম বয়স স্পষ্ট বার্তাসহ প্রত্যাখ্যাত হবে।" data-bn-actual="ক্লায়েন্ট যাচাই ১৭ বছর বয়স গ্রহণ করে।"><span data-bn="এই বাগটি রিপোর্ট করুন" data-en="Log This Bug">এই বাগটি রিপোর্ট করুন</span></button></div>
       <div class="grid gap-6 lg:grid-cols-[1fr_.8fr]">
-        <form id="registration-form" class="grid gap-4 sm:grid-cols-2">
+        <form id="registration-form" class="grid self-start gap-4 sm:grid-cols-2">
           <label class="text-sm text-slate-300"><span data-bn="পূর্ণ নাম (Full Name)" data-en="Full Name">পূর্ণ নাম (Full Name)</span><input id="reg-name" required maxlength="120" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="যেমন: নুসরাত জাহান" data-bn-placeholder="যেমন: নুসরাত জাহান" data-en-placeholder="For example: Nusrat Jahan"></label>
           <label class="text-sm text-slate-300"><span data-bn="ইমেইল (Email)" data-en="Email">ইমেইল (Email)</span><input id="reg-email" type="email" required maxlength="254" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="name@example.com"></label>
           <label class="text-sm text-slate-300"><span data-bn="পাসওয়ার্ড (Password · ৬–১২ অক্ষর)" data-en="Password · 6–12 characters">পাসওয়ার্ড (Password · ৬–১২ অক্ষর)</span><input id="reg-password" type="password" minlength="6" maxlength="12" required autocomplete="new-password" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="৬ থেকে ১২ অক্ষর" data-bn-placeholder="৬ থেকে ১২ অক্ষর" data-en-placeholder="6 to 12 characters"></label>
@@ -804,11 +829,11 @@
           </div>
         </form>
         <aside class="space-y-4">
-          <div class="rounded-xl border border-amber-400/30 bg-amber-400/5 p-4 text-sm leading-6 text-amber-100"><b><span data-bn="ইচ্ছাকৃত বাগ:" data-en="Intentional bug:">ইচ্ছাকৃত বাগ:</span></b><span data-bn=" ১৭ বছর বয়সের সীমার নিচের মানটি জাভাস্ক্রিপ্ট যাচাই এড়িয়ে সংরক্ষণের চেষ্টা করে; ডেটাবেসের নিজস্ব নিয়ম থাকলে সংরক্ষণ প্রত্যাখ্যাত হবে। রিসেট বোতামটি ইনপুট পরিষ্কার করে না।" data-en=" An age below the 18-year limit bypasses JavaScript validation and attempts to save; the database may reject it if it enforces its own rule. The reset button does not clear the inputs."> ১৭ বছর বয়সের সীমার নিচের মানটি জাভাস্ক্রিপ্ট যাচাই এড়িয়ে সংরক্ষণের চেষ্টা করে; ডেটাবেসের নিজস্ব নিয়ম থাকলে সংরক্ষণ প্রত্যাখ্যাত হবে। রিসেট বোতামটি ইনপুট পরিষ্কার করে না।</span></div>
-          <div class="rounded-xl border border-rose-400/20 bg-rose-400/5 p-4 text-sm leading-6 text-slate-300"><b class="text-rose-200"><span data-bn="নিরাপত্তা সতর্কতা:" data-en="Security notice:">নিরাপত্তা সতর্কতা:</span></b> <span data-bn="এই ফর্মের আসল পাসওয়ার্ড ডেটাবেসে রাখা হয় না; নির্ধারিত কলামে কেবল অ-গোপন পরীক্ষণ চিহ্ন রাখা হয়। নির্বাচিত ভূমিকা পরীক্ষণ ডেটাবেসের status কলামে লেখা হবে, কিন্তু এটি Supabase Auth-এর login role বা বাস্তব অনুমতি নিয়ন্ত্রণ করে না। নিরাপদ প্রমাণীকরণ ও হ্যাশিং Supabase Auth পরিচালনা করে।" data-en="The real password from this form is never stored in the database; the specified column receives only a non-secret test marker. The selected role is written to the test database status column, but it does not control Supabase Auth login roles or real permissions. Supabase Auth handles secure authentication and password hashing.">এই ফর্মের আসল পাসওয়ার্ড ডেটাবেসে রাখা হয় না; নির্ধারিত কলামে কেবল অ-গোপন পরীক্ষণ চিহ্ন রাখা হয়। নির্বাচিত ভূমিকা পরীক্ষণ ডেটাবেসের status কলামে লেখা হবে, কিন্তু এটি Supabase Auth-এর login role বা বাস্তব অনুমতি নিয়ন্ত্রণ করে না। নিরাপদ প্রমাণীকরণ ও হ্যাশিং Supabase Auth পরিচালনা করে।</span></div>
+          <div class="rounded-xl border border-amber-400/30 bg-amber-400/5 p-4 text-sm leading-6 text-amber-100"><b><span data-bn="ইচ্ছাকৃত বাগ:" data-en="Intentional bug:">ইচ্ছাকৃত বাগ:</span></b><span data-bn=" ১৭ বছর বয়সের সীমার নিচের মানটি জাভাস্ক্রিপ্ট যাচাই এড়িয়ে সংরক্ষণের চেষ্টা করে। ডেটাবেসের নিজস্ব নিয়ম থাকলে সংরক্ষণ প্রত্যাখ্যাত হবে। রিসেট বোতামটি ইনপুট পরিষ্কার করে না।" data-en=" An age below the 18-year limit bypasses JavaScript validation and attempts to save. The database may reject it if it enforces its own rule. The reset button does not clear the inputs."> ১৭ বছর বয়সের সীমার নিচের মানটি জাভাস্ক্রিপ্ট যাচাই এড়িয়ে সংরক্ষণের চেষ্টা করে। ডেটাবেসের নিজস্ব নিয়ম থাকলে সংরক্ষণ প্রত্যাখ্যাত হবে। রিসেট বোতামটি ইনপুট পরিষ্কার করে না।</span></div>
+          <div class="rounded-xl border border-rose-400/20 bg-rose-400/5 p-4 text-sm leading-6 text-slate-300"><b class="text-rose-200"><span data-bn="নিরাপত্তা নোট:" data-en="Security note:">নিরাপত্তা নোট:</span></b> <span data-bn="এই ফর্মের পাসওয়ার্ড ডেটাবেসে সংরক্ষিত হয় না। আসল প্রমাণীকরণ Supabase Auth পরিচালনা করে।" data-en="Passwords entered here are never stored in the database. Supabase Auth handles real authentication.">এই ফর্মের পাসওয়ার্ড ডেটাবেসে সংরক্ষিত হয় না। আসল প্রমাণীকরণ Supabase Auth পরিচালনা করে।</span></div>
           <div class="rounded-xl border border-cyan-400/20 bg-cyan-400/5 p-4">
             <h3 class="font-semibold"><span data-bn="RBAC ও Login Role Simulator" data-en="RBAC &amp; Login Role Simulator">RBAC ও Login Role Simulator</span></h3>
-            <p class="mt-1 text-xs leading-5 text-slate-400"><span data-bn="ভূমিকা বেছে অনুমতির নমুনা দেখুন। এটি শুধু UI অনুকরণ—Supabase login বা বাস্তব অনুমতি বদলায় না।" data-en="Choose a role to preview permissions. This is a UI simulation only; it does not change Supabase login or real permissions.">ভূমিকা বেছে অনুমতির নমুনা দেখুন। এটি শুধু UI অনুকরণ—Supabase login বা বাস্তব অনুমতি বদলায় না।</span></p>
+            <p class="mt-1 text-xs leading-5 text-slate-400"><span data-bn="ভূমিকা বেছে অনুমতির নমুনা দেখুন। এটি শুধু UI অনুকরণ—Supabase login বা বাস্তব অনুমতি বদলায় না।" data-en="Choose a role to preview permissions. This is a UI simulation only. It does not change Supabase login or real permissions.">ভূমিকা বেছে অনুমতির নমুনা দেখুন। এটি শুধু UI অনুকরণ—Supabase login বা বাস্তব অনুমতি বদলায় না।</span></p>
             <label for="rbac-role" class="sr-only" data-bn="Simulator-এর ভূমিকা" data-en="Simulator role">Simulator-এর ভূমিকা</label>
             <select id="rbac-role" class="mt-3 w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm" aria-label="Simulator role" data-bn-aria-label="Simulator-এর ভূমিকা" data-en-aria-label="Simulator role">
               <option value="User" data-bn="ব্যবহারকারী (User)" data-en="User">ব্যবহারকারী (User)</option>
@@ -825,7 +850,7 @@
     <section id="panel-orders" class="tab-panel glass rounded-2xl p-5 sm:p-7" role="tabpanel" aria-labelledby="tab-orders" hidden>
       <div class="mb-4 flex flex-wrap gap-2"><button type="button" id="negative-qty-sample" class="rounded-lg border border-amber-400/40 px-3 py-2 text-sm text-amber-200"><span data-bn="ঋণাত্মক পরিমাণ টেস্ট (-1)" data-en="Test Negative Qty (-1)">ঋণাত্মক পরিমাণ টেস্ট (-1)</span></button><button type="button" class="log-bug-shortcut rounded-lg border border-rose-400/40 px-3 py-2 text-sm text-rose-200" data-module="REQ-02 · Orders" data-title="Negative order quantity produces an invalid total" data-severity="Major" data-steps="Set quantity to -1 and submit the order." data-expected="Negative quantities are rejected and no order is saved." data-actual="Negative quantity is accepted and changes the total." data-bn-title="ঋণাত্মক অর্ডার পরিমাণে ভুল মোট তৈরি হয়" data-bn-steps="পরিমাণ -১ করে অর্ডার জমা দিন।" data-bn-expected="ঋণাত্মক পরিমাণ প্রত্যাখ্যাত হবে এবং অর্ডার সংরক্ষিত হবে না।" data-bn-actual="ঋণাত্মক পরিমাণ গ্রহণ করে মোট পরিবর্তন হয়।"><span data-bn="এই বাগটি রিপোর্ট করুন" data-en="Log This Bug">এই বাগটি রিপোর্ট করুন</span></button></div>
       <div class="mb-6"><p class="text-xs font-bold uppercase tracking-[.18em] text-cyan-300"><span data-bn="ই-কমার্স · হিসাব · ব্যবসায়িক নিয়ম" data-en="E-commerce · Calculations · Business Rules">ই-কমার্স · হিসাব · ব্যবসায়িক নিয়ম</span></p><h2 class="mt-2 text-2xl font-bold"><span data-bn="পণ্য অর্ডার পরীক্ষা" data-en="Product Order Testing">পণ্য অর্ডার পরীক্ষা</span></h2><p class="mt-2 text-sm text-slate-400"><span data-bn="ব্যবহারকারীর আইডি, পরিমাণ, কুপন এবং করসহ প্রকৃত অর্ডার সংরক্ষণ করুন।" data-en="Save real orders with a user ID, quantity, coupon, and tax.">ব্যবহারকারীর আইডি, পরিমাণ, কুপন এবং করসহ প্রকৃত অর্ডার সংরক্ষণ করুন।</span></p></div>
-      <form id="order-form" class="grid gap-5 lg:grid-cols-2">
+      <form id="order-form" class="grid items-start gap-5 lg:grid-cols-2">
         <div class="grid gap-4 sm:grid-cols-2">
           <label class="text-sm text-slate-300 sm:col-span-2"><span data-bn="ব্যবহারকারীর আইডি (User ID)" data-en="User ID">ব্যবহারকারীর আইডি (User ID)</span><input id="order-user-id" required class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="sqa_users থেকে আইডি দিন" data-bn-placeholder="sqa_users থেকে আইডি দিন" data-en-placeholder="Enter an ID from sqa_users"></label>
           <label class="text-sm text-slate-300"><span data-bn="পণ্য (Product)" data-en="Product">পণ্য (Product)</span><select id="order-product" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3"><option value="পরীক্ষণ কিবোর্ড" data-price="1200" data-bn="পরীক্ষণ কিবোর্ড · ৳১,২০০" data-en="Test Keyboard · ৳1,200">পরীক্ষণ কিবোর্ড · ৳১,২০০</option><option value="QA নোটবুক" data-price="350" data-bn="QA নোটবুক · ৳৩৫০" data-en="QA Notebook · ৳350">QA নোটবুক · ৳৩৫০</option><option value="অটোমেশন কিট" data-price="2800" data-bn="অটোমেশন কিট · ৳২,৮০০" data-en="Automation Kit · ৳2,800">অটোমেশন কিট · ৳২,৮০০</option></select></label>
@@ -837,7 +862,7 @@
           <button type="submit" class="mt-5 w-full rounded-xl bg-cyan-300 px-5 py-3 font-bold text-slate-950 hover:bg-cyan-200"><span data-bn="অর্ডার সংরক্ষণ করুন" data-en="Save Order">অর্ডার সংরক্ষণ করুন</span></button>
         </div>
       </form>
-      <p class="mt-4 rounded-xl border border-amber-400/30 bg-amber-400/5 p-4 text-sm leading-6 text-amber-100"><b><span data-bn="ইচ্ছাকৃত বাগ:" data-en="Intentional bug:">ইচ্ছাকৃত বাগ:</span></b> <span data-bn="পরিমাণ ঋণাত্মক হতে পারে; ফলে মোট মূল্য কমে বা ঋণাত্মক হয়।" data-en="Quantity can be negative, reducing the total or making it negative.">পরিমাণ ঋণাত্মক হতে পারে; ফলে মোট মূল্য কমে বা ঋণাত্মক হয়।</span></p>
+      <p class="mt-4 rounded-xl border border-amber-400/30 bg-amber-400/5 p-4 text-sm leading-6 text-amber-100"><b><span data-bn="ইচ্ছাকৃত বাগ:" data-en="Intentional bug:">ইচ্ছাকৃত বাগ:</span></b> <span data-bn="পরিমাণ ঋণাত্মক হতে পারে। ফলে মোট মূল্য কমে বা ঋণাত্মক হয়।" data-en="Quantity can be negative, reducing the total or making it negative.">পরিমাণ ঋণাত্মক হতে পারে। ফলে মোট মূল্য কমে বা ঋণাত্মক হয়।</span></p>
       <div id="order-result" class="mt-4 text-sm text-slate-300" aria-live="polite"></div>
     </section>
 
@@ -854,7 +879,7 @@
 
     <section id="panel-suite" class="tab-panel glass rounded-2xl p-5 sm:p-7" role="tabpanel" aria-labelledby="tab-suite" hidden>
       <div class="mb-6"><p class="text-xs font-bold uppercase tracking-[.18em] text-emerald-300"><span data-bn="স্মোক · স্যানিটি · রিগ্রেশন" data-en="Smoke · Sanity · Regression">স্মোক · স্যানিটি · রিগ্রেশন</span></p><h2 class="mt-2 text-2xl font-bold"><span data-bn="পরীক্ষণ সম্পাদন চেকলিস্ট" data-en="Test Execution Checklist">পরীক্ষণ সম্পাদন চেকলিস্ট</span></h2><p class="mt-2 text-sm text-slate-400"><span data-bn="প্রতিটি পরীক্ষার ফল নির্বাচন করলে পাশ/ব্যর্থতার হার ও সারাংশ তাৎক্ষণিকভাবে হালনাগাদ হবে।" data-en="Choose a result for each test to update the pass/fail rates and summary instantly.">প্রতিটি পরীক্ষার ফল নির্বাচন করলে পাশ/ব্যর্থতার হার ও সারাংশ তাৎক্ষণিকভাবে হালনাগাদ হবে।</span></p></div>
-      <div class="grid gap-5 lg:grid-cols-[1.2fr_.8fr]"><div id="checklist" class="space-y-3"></div><aside class="rounded-2xl border border-slate-800 bg-slate-950/50 p-5"><h3 class="font-semibold"><span data-bn="লাইভ পরীক্ষণ সারাংশ" data-en="Live Test Execution Summary">লাইভ পরীক্ষণ সারাংশ</span></h3><div class="mt-4 grid grid-cols-2 gap-3"><div class="rounded-xl bg-emerald-400/10 p-4"><p class="text-xs text-emerald-200"><span data-bn="পাশের হার" data-en="Pass Rate">পাশের হার</span></p><p id="pass-rate" class="mt-1 text-2xl font-bold">০%</p></div><div class="rounded-xl bg-rose-400/10 p-4"><p class="text-xs text-rose-200"><span data-bn="ব্যর্থতার হার" data-en="Fail Rate">ব্যর্থতার হার</span></p><p id="fail-rate" class="mt-1 text-2xl font-bold">০%</p></div></div><p id="suite-summary" class="mt-4 text-sm leading-6 text-slate-400" aria-live="polite"><span data-bn="এখনো কোনো পরীক্ষা সম্পন্ন হয়নি।" data-en="No tests have been completed yet.">এখনো কোনো পরীক্ষা সম্পন্ন হয়নি।</span></p><button id="reset-suite" class="mt-4 rounded-lg border border-slate-700 px-4 py-2 text-sm hover:bg-slate-800"><span data-bn="সব ফল মুছুন" data-en="Clear Results">সব ফল মুছুন</span></button></aside></div>
+      <div class="grid items-start gap-5 lg:grid-cols-[1.2fr_.8fr]"><div id="checklist" class="space-y-3"></div><aside class="rounded-2xl border border-slate-800 bg-slate-950/50 p-5"><h3 class="font-semibold"><span data-bn="লাইভ পরীক্ষণ সারাংশ" data-en="Live Test Execution Summary">লাইভ পরীক্ষণ সারাংশ</span></h3><div class="mt-4 grid grid-cols-2 gap-3"><div class="rounded-xl bg-emerald-400/10 p-4"><p class="text-xs text-emerald-200"><span data-bn="পাশের হার" data-en="Pass Rate">পাশের হার</span></p><p id="pass-rate" class="mt-1 text-2xl font-bold">০%</p></div><div class="rounded-xl bg-rose-400/10 p-4"><p class="text-xs text-rose-200"><span data-bn="ব্যর্থতার হার" data-en="Fail Rate">ব্যর্থতার হার</span></p><p id="fail-rate" class="mt-1 text-2xl font-bold">০%</p></div></div><p id="suite-summary" class="mt-4 text-sm leading-6 text-slate-400" aria-live="polite"><span data-bn="এখনো কোনো পরীক্ষা সম্পন্ন হয়নি।" data-en="No tests have been completed yet.">এখনো কোনো পরীক্ষা সম্পন্ন হয়নি।</span></p><button id="reset-suite" class="mt-4 rounded-lg border border-slate-700 px-4 py-2 text-sm hover:bg-slate-800"><span data-bn="সব ফল মুছুন" data-en="Clear Results">সব ফল মুছুন</span></button></aside></div>
       <div class="mt-6 overflow-hidden rounded-xl border border-slate-800">
         <h3 class="bg-slate-900 px-4 py-3 font-semibold"><span data-bn="প্রয়োজনীয়তা অনুসরণযোগ্যতা ম্যাট্রিক্স (RTM)" data-en="Requirement Traceability Matrix (RTM)">প্রয়োজনীয়তা অনুসরণযোগ্যতা ম্যাট্রিক্স (RTM)</span></h3>
         <div class="overflow-x-auto"><table class="w-full min-w-[640px] text-left text-sm"><thead class="bg-slate-950 text-xs text-slate-400"><tr><th class="p-3"><span data-bn="প্রয়োজনীয়তা" data-en="Requirement">প্রয়োজনীয়তা</span></th><th class="p-3"><span data-bn="সংযুক্ত টেস্ট কেস" data-en="Linked Test Cases">সংযুক্ত টেস্ট কেস</span></th><th class="p-3"><span data-bn="সংযুক্ত বাগ" data-en="Linked Bugs">সংযুক্ত বাগ</span></th></tr></thead><tbody id="rtm-table-suite" class="divide-y divide-slate-800"></tbody></table></div>
@@ -862,8 +887,8 @@
     </section>
 
     <section id="panel-api" class="tab-panel glass rounded-2xl p-5 sm:p-7" role="tabpanel" aria-labelledby="tab-api" hidden>
-      <div class="mb-6"><p class="text-xs font-bold uppercase tracking-[.18em] text-blue-300"><span data-bn="HTTP · REST · প্রতিক্রিয়া পর্যবেক্ষণ" data-en="HTTP · REST · Response Monitoring">HTTP · REST · প্রতিক্রিয়া পর্যবেক্ষণ</span></p><h2 class="mt-2 text-2xl font-bold"><span data-bn="লাইভ REST API পরীক্ষণ স্যান্ডবক্স" data-en="Live REST API Testing Sandbox">লাইভ REST API পরীক্ষণ স্যান্ডবক্স</span></h2><p class="mt-2 text-sm text-slate-400"><span data-bn="Supabase REST API-তে GET, POST ও DELETE অনুরোধ পাঠান; ত্রুটি-অবস্থাগুলো নিরাপদে অনুকরণ করা হয়।" data-en="Send GET, POST, and DELETE requests to the Supabase REST API; error scenarios are safely simulated.">Supabase REST API-তে GET, POST ও DELETE অনুরোধ পাঠান; ত্রুটি-অবস্থাগুলো নিরাপদে অনুকরণ করা হয়।</span></p></div>
-      <div class="grid gap-5 lg:grid-cols-[.8fr_1.2fr]">
+      <div class="mb-6"><p class="text-xs font-bold uppercase tracking-[.18em] text-blue-300"><span data-bn="HTTP · REST · প্রতিক্রিয়া পর্যবেক্ষণ" data-en="HTTP · REST · Response Monitoring">HTTP · REST · প্রতিক্রিয়া পর্যবেক্ষণ</span></p><h2 class="mt-2 text-2xl font-bold"><span data-bn="লাইভ REST API পরীক্ষণ স্যান্ডবক্স" data-en="Live REST API Testing Sandbox">লাইভ REST API পরীক্ষণ স্যান্ডবক্স</span></h2><p class="mt-2 text-sm text-slate-400"><span data-bn="Supabase REST API-তে GET, POST ও DELETE অনুরোধ পাঠান। ত্রুটি-অবস্থাগুলো নিরাপদে অনুকরণ করা হয়।" data-en="Send GET, POST, and DELETE requests to the Supabase REST API. Error scenarios are safely simulated.">Supabase REST API-তে GET, POST ও DELETE অনুরোধ পাঠান। ত্রুটি-অবস্থাগুলো নিরাপদে অনুকরণ করা হয়।</span></p></div>
+      <div class="grid items-start gap-5 lg:grid-cols-[.8fr_1.2fr]">
         <div class="space-y-4 rounded-2xl border border-slate-800 bg-slate-950/50 p-5">
           <label class="block text-sm text-slate-300"><span data-bn="HTTP পদ্ধতি" data-en="HTTP Method">HTTP পদ্ধতি</span><select id="api-method" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3"><option value="GET" data-bn="তথ্য পড়ুন (GET · ২০০)" data-en="Read data (GET · 200)">তথ্য পড়ুন (GET · ২০০)</option><option value="POST" data-bn="তথ্য তৈরি করুন (POST · ২০১)" data-en="Create data (POST · 201)">তথ্য তৈরি করুন (POST · ২০১)</option><option value="DELETE" data-bn="তথ্য মুছুন (DELETE · ২০৪)" data-en="Delete data (DELETE · 204)">তথ্য মুছুন (DELETE · ২০৪)</option><option value="BAD_REQUEST" data-bn="ভুল অনুরোধ অনুকরণ (৪০০)" data-en="Simulate Bad Request (400)">ভুল অনুরোধ অনুকরণ (৪০০)</option><option value="UNAUTHORIZED" data-bn="অননুমোদিত অনুরোধ অনুকরণ (৪০১)" data-en="Simulate Unauthorized (401)">অননুমোদিত অনুরোধ অনুকরণ (৪০১)</option></select></label>
           <label class="block text-sm text-slate-300"><span data-bn="সম্পদ (Resource)" data-en="Resource">সম্পদ (Resource)</span><select id="api-resource" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3"><option value="sqa_users" data-bn="ব্যবহারকারী (sqa_users)" data-en="Users (sqa_users)">ব্যবহারকারী (sqa_users)</option><option value="sqa_orders" data-bn="অর্ডার (sqa_orders)" data-en="Orders (sqa_orders)">অর্ডার (sqa_orders)</option></select></label>
@@ -885,13 +910,13 @@
         <div class="overflow-hidden rounded-xl border border-slate-800"><h3 class="bg-slate-900 px-4 py-3 font-semibold"><span data-bn="ব্যবহারকারী (sqa_users)" data-en="Users (sqa_users)">ব্যবহারকারী (sqa_users)</span></h3><div class="max-h-[28rem] overflow-auto"><table class="w-full text-left text-sm"><thead class="sticky top-0 bg-slate-950 text-xs text-slate-400"><tr><th class="p-3"><span data-bn="নাম / ইমেইল" data-en="Name / Email">নাম / ইমেইল</span></th><th class="p-3"><span data-bn="বয়স" data-en="Age">বয়স</span></th><th class="p-3"><span data-bn="আইডি" data-en="ID">আইডি</span></th><th class="p-3"><span data-bn="কাজ" data-en="Actions">কাজ</span></th></tr></thead><tbody id="users-table" class="divide-y divide-slate-800"></tbody></table></div></div>
         <div class="overflow-hidden rounded-xl border border-slate-800"><h3 class="bg-slate-900 px-4 py-3 font-semibold"><span data-bn="অর্ডার ও ব্যবহারকারী (sqa_orders)" data-en="Orders &amp; Users (sqa_orders)">অর্ডার ও ব্যবহারকারী (sqa_orders)</span></h3><div class="max-h-[28rem] overflow-auto"><table class="w-full text-left text-sm"><thead class="sticky top-0 bg-slate-950 text-xs text-slate-400"><tr><th class="p-3"><span data-bn="পণ্য" data-en="Product">পণ্য</span></th><th class="p-3"><span data-bn="পরিমাণ / মোট" data-en="Quantity / Total">পরিমাণ / মোট</span></th><th class="p-3"><span data-bn="ব্যবহারকারী" data-en="User">ব্যবহারকারী</span></th><th class="p-3"><span data-bn="অবস্থা" data-en="Status">অবস্থা</span></th><th class="p-3"><span data-bn="কাজ" data-en="Actions">কাজ</span></th></tr></thead><tbody id="orders-table" class="divide-y divide-slate-800"></tbody></table></div></div>
       </div>
-      <p class="mt-4 text-xs leading-5 text-slate-500"><span data-bn="ভলিউম পরীক্ষায় ৫০টি স্বতন্ত্র পরীক্ষণ ইমেইল পাঠানো হয়। মুছে ফেলা স্থায়ী; প্রতিটি রেকর্ডের আগে নিশ্চিতকরণ দেখানো হবে।" data-en="Volume testing inserts 50 unique test emails. Deletion is permanent; each record requires confirmation.">ভলিউম পরীক্ষায় ৫০টি স্বতন্ত্র পরীক্ষণ ইমেইল পাঠানো হয়। মুছে ফেলা স্থায়ী; প্রতিটি রেকর্ডের আগে নিশ্চিতকরণ দেখানো হবে।</span></p>
+      <p class="mt-4 text-xs leading-5 text-slate-500"><span data-bn="ভলিউম পরীক্ষায় ৫০টি স্বতন্ত্র পরীক্ষণ ইমেইল পাঠানো হয়। মুছে ফেলা স্থায়ী। প্রতিটি রেকর্ডের আগে নিশ্চিতকরণ দেখানো হবে।" data-en="Volume testing inserts 50 unique test emails. Deletion is permanent. Each record requires confirmation.">ভলিউম পরীক্ষায় ৫০টি স্বতন্ত্র পরীক্ষণ ইমেইল পাঠানো হয়। মুছে ফেলা স্থায়ী। প্রতিটি রেকর্ডের আগে নিশ্চিতকরণ দেখানো হবে।</span></p>
     </section>
 
     <section id="panel-security" class="tab-panel glass rounded-2xl p-5 sm:p-7" role="tabpanel" aria-labelledby="tab-security" hidden>
       <div class="mb-6"><p class="text-xs font-bold uppercase tracking-[.18em] text-rose-300"><span data-bn="ইনপুট নিরাপত্তা · সীমাবদ্ধতা · প্রতিক্রিয়া সময়" data-en="Input Security · Rate Limits · Response Time">ইনপুট নিরাপত্তা · সীমাবদ্ধতা · প্রতিক্রিয়া সময়</span></p><h2 class="mt-2 text-2xl font-bold"><span data-bn="নিরাপত্তা ও কর্মদক্ষতা পরীক্ষণ" data-en="Security &amp; Performance Testing">নিরাপত্তা ও কর্মদক্ষতা পরীক্ষণ</span></h2><p class="mt-2 text-sm text-slate-400"><span data-bn="নিরাপদ স্থানীয় সিমুলেশনে ইনপুট আচরণ এবং অনুরোধের কর্মদক্ষতা পরীক্ষা করুন।" data-en="Test input handling and request performance in safe local simulations.">নিরাপদ স্থানীয় সিমুলেশনে ইনপুট আচরণ এবং অনুরোধের কর্মদক্ষতা পরীক্ষা করুন।</span></p></div>
-      <div class="grid gap-5 lg:grid-cols-2">
-        <div class="space-y-4 rounded-2xl border border-slate-800 bg-slate-950/50 p-5"><label class="block text-sm text-slate-300"><span data-bn="পরীক্ষার ইনপুট (Test Input)" data-en="Test Input">পরীক্ষার ইনপুট (Test Input)</span><input id="security-input" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3" placeholder="নিরাপদে পরীক্ষার স্ট্রিং লিখুন" data-bn-placeholder="নিরাপদে পরীক্ষার স্ট্রিং লিখুন" data-en-placeholder="Enter a test string safely"></label><div class="flex flex-wrap gap-2"><button class="security-preset rounded-lg border border-slate-700 px-3 py-2 text-xs" data-value="' OR '1'='1"><span data-bn="SQL ইনজেকশন পরীক্ষা" data-en="Test SQL Injection">SQL ইনজেকশন পরীক্ষা</span></button><button class="security-preset rounded-lg border border-slate-700 px-3 py-2 text-xs" data-value="<script>alert('xss')</script>"><span data-bn="XSS পরীক্ষা" data-en="Test XSS">XSS পরীক্ষা</span></button><button id="brute-force" class="rounded-lg border border-rose-400/40 px-3 py-2 text-xs text-rose-200"><span data-bn="লগইন-লক অনুকরণ" data-en="Simulate Login Lockout">লগইন-লক অনুকরণ</span></button></div><button id="inspect-input" class="rounded-xl bg-rose-300 px-5 py-3 font-bold text-slate-950"><span data-bn="ইনপুট পরীক্ষা করুন" data-en="Inspect Input">ইনপুট পরীক্ষা করুন</span></button><div id="security-result" class="min-h-16 rounded-xl border border-slate-800 p-4 text-sm text-slate-300" aria-live="polite"><span data-bn="পরীক্ষার ফল এখানে দেখা যাবে।" data-en="Test results will appear here.">পরীক্ষার ফল এখানে দেখা যাবে।</span></div><p class="text-xs leading-5 text-slate-500"><span data-bn="ইনপুটটি শুধু স্থানীয়ভাবে বিশ্লেষিত হয়; ডেটাবেসে চালানো বা HTML হিসেবে রেন্ডার করা হয় না।" data-en="Input is analyzed locally only; it is not run against the database or rendered as HTML.">ইনপুটটি শুধু স্থানীয়ভাবে বিশ্লেষিত হয়; ডেটাবেসে চালানো বা HTML হিসেবে রেন্ডার করা হয় না।</span></p></div>
+      <div class="grid items-start gap-5 lg:grid-cols-2">
+        <div class="space-y-4 rounded-2xl border border-slate-800 bg-slate-950/50 p-5"><label class="block text-sm text-slate-300"><span data-bn="পরীক্ষার ইনপুট (Test Input)" data-en="Test Input">পরীক্ষার ইনপুট (Test Input)</span><input id="security-input" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3" placeholder="নিরাপদে পরীক্ষার স্ট্রিং লিখুন" data-bn-placeholder="নিরাপদে পরীক্ষার স্ট্রিং লিখুন" data-en-placeholder="Enter a test string safely"></label><div class="flex flex-wrap gap-2"><button class="security-preset rounded-lg border border-slate-700 px-3 py-2 text-xs" data-value="' OR '1'='1"><span data-bn="SQL ইনজেকশন পরীক্ষা" data-en="Test SQL Injection">SQL ইনজেকশন পরীক্ষা</span></button><button class="security-preset rounded-lg border border-slate-700 px-3 py-2 text-xs" data-value="<script>alert('xss')</script>"><span data-bn="XSS পরীক্ষা" data-en="Test XSS">XSS পরীক্ষা</span></button><button id="brute-force" class="rounded-lg border border-rose-400/40 px-3 py-2 text-xs text-rose-200"><span data-bn="লগইন-লক অনুকরণ" data-en="Simulate Login Lockout">লগইন-লক অনুকরণ</span></button></div><button id="inspect-input" class="rounded-xl bg-rose-300 px-5 py-3 font-bold text-slate-950"><span data-bn="ইনপুট পরীক্ষা করুন" data-en="Inspect Input">ইনপুট পরীক্ষা করুন</span></button><div id="security-result" class="min-h-16 rounded-xl border border-slate-800 p-4 text-sm text-slate-300" aria-live="polite"><span data-bn="পরীক্ষার ফল এখানে দেখা যাবে।" data-en="Test results will appear here.">পরীক্ষার ফল এখানে দেখা যাবে।</span></div><p class="text-xs leading-5 text-slate-500"><span data-bn="ইনপুটটি শুধু স্থানীয়ভাবে বিশ্লেষিত হয়। ডেটাবেসে চালানো বা HTML হিসেবে রেন্ডার করা হয় না।" data-en="Input is analyzed locally only. It is not run against the database or rendered as HTML.">ইনপুটটি শুধু স্থানীয়ভাবে বিশ্লেষিত হয়। ডেটাবেসে চালানো বা HTML হিসেবে রেন্ডার করা হয় না।</span></p></div>
         <div class="rounded-2xl border border-slate-800 bg-slate-950/50 p-5"><h3 class="font-semibold"><span data-bn="নিয়ন্ত্রিত লোড পর্যবেক্ষণ" data-en="Controlled Load Measurement">নিয়ন্ত্রিত লোড পর্যবেক্ষণ</span></h3><p class="mt-2 text-sm leading-6 text-slate-400"><span data-bn="প্রকৃত সার্ভারে একযোগে ১০০টি অনুরোধ পাঠানো হয় না। পরিবর্তে একই ধরনের ১০০টি স্থানীয় নমুনা কাজের সময় মাপা হয় এবং বাস্তব API-র একটি হালকা পাঠ-অনুরোধ দিয়ে সার্ভার প্রতিক্রিয়া যাচাই করা যায়।" data-en="100 concurrent requests are not sent to the live server. Instead, 100 local sample tasks are timed, and one lightweight read request can check the live API response.">প্রকৃত সার্ভারে একযোগে ১০০টি অনুরোধ পাঠানো হয় না। পরিবর্তে একই ধরনের ১০০টি স্থানীয় নমুনা কাজের সময় মাপা হয় এবং বাস্তব API-র একটি হালকা পাঠ-অনুরোধ দিয়ে সার্ভার প্রতিক্রিয়া যাচাই করা যায়।</span></p><button id="run-load-test" class="mt-4 rounded-xl bg-violet-300 px-5 py-3 font-bold text-slate-950"><span data-bn="১০০টি স্থানীয় লোড নমুনা চালান" data-en="Run 100 Local Load Samples">১০০টি স্থানীয় লোড নমুনা চালান</span></button><div id="load-result" class="mt-4 min-h-20 rounded-xl border border-slate-800 p-4 text-sm text-slate-300" aria-live="polite"><span data-bn="চালানোর পর পরিসংখ্যান এখানে দেখা যাবে।" data-en="Run the test to see the results.">চালানোর পর পরিসংখ্যান এখানে দেখা যাবে।</span></div></div>
       </div>
       <section id="performance-metrics" class="mt-5 rounded-2xl border border-slate-800 bg-slate-950/50 p-5" aria-labelledby="performance-heading">
@@ -902,8 +927,8 @@
 
     <section id="panel-bugs" class="tab-panel glass rounded-2xl p-5 sm:p-7" role="tabpanel" aria-labelledby="tab-bugs" hidden>
       <div class="mb-6"><p class="text-xs font-bold uppercase tracking-[.18em] text-fuchsia-300"><span data-bn="ত্রুটি ব্যবস্থাপনা · টেস্ট কেস" data-en="Defect Management · Test Cases">ত্রুটি ব্যবস্থাপনা · টেস্ট কেস</span></p><h2 class="mt-2 text-2xl font-bold"><span data-bn="বাগ ট্র্যাকার ও পরীক্ষণ কেস" data-en="Bug Tracker &amp; Test Cases">বাগ ট্র্যাকার ও পরীক্ষণ কেস</span></h2><p class="mt-2 text-sm text-slate-400"><span data-bn="বাগ প্রতিবেদন জমা দিন, অগ্রগতি হালনাগাদ করুন এবং সাধারণ পরীক্ষণ কেস পর্যালোচনা করুন।" data-en="Submit bug reports, update their status, and review standard test cases.">বাগ প্রতিবেদন জমা দিন, অগ্রগতি হালনাগাদ করুন এবং সাধারণ পরীক্ষণ কেস পর্যালোচনা করুন।</span></p></div>
-      <div class="grid gap-6 xl:grid-cols-[.8fr_1.2fr]">
-        <form id="bug-form" class="grid gap-4 sm:grid-cols-2 xl:grid-cols-1">
+      <div class="grid items-start gap-6 xl:grid-cols-[.8fr_1.2fr]">
+        <form id="bug-form" class="grid self-start gap-4 sm:grid-cols-2 xl:grid-cols-1">
           <label class="text-sm text-slate-300"><span data-bn="মডিউল (Module)" data-en="Module">মডিউল (Module)</span><input id="bug-module" required maxlength="100" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3" placeholder="যেমন: নিবন্ধন" data-bn-placeholder="যেমন: নিবন্ধন" data-en-placeholder="For example: Registration"></label>
           <label class="text-sm text-slate-300"><span data-bn="বাগের শিরোনাম (Bug Title)" data-en="Bug Title">বাগের শিরোনাম (Bug Title)</span><input id="bug-title" required maxlength="180" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3"></label>
           <label class="text-sm text-slate-300"><span data-bn="RTM প্রয়োজনীয়তা (ঐচ্ছিক)" data-en="RTM Requirement (optional)">RTM প্রয়োজনীয়তা (ঐচ্ছিক)</span><select id="bug-requirement" class="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-3"><option value="" data-bn="কোনোটি নয়" data-en="None">কোনোটি নয়</option><option value="REQ-01" data-bn="REQ-01 · নিবন্ধন" data-en="REQ-01 · Registration">REQ-01 · নিবন্ধন</option><option value="REQ-02" data-bn="REQ-02 · অর্ডার" data-en="REQ-02 · Orders">REQ-02 · অর্ডার</option><option value="REQ-03" data-bn="REQ-03 · ডেটাবেস" data-en="REQ-03 · Database">REQ-03 · ডেটাবেস</option><option value="REQ-04" data-bn="REQ-04 · প্রবেশগম্যতা" data-en="REQ-04 · Accessibility">REQ-04 · প্রবেশগম্যতা</option><option value="REQ-05" data-bn="REQ-05 · বাগ ব্যবস্থাপনা" data-en="REQ-05 · Bug workflow">REQ-05 · বাগ ব্যবস্থাপনা</option></select></label>
@@ -975,7 +1000,7 @@
         <button type="submit" class="justify-self-start rounded-xl bg-emerald-400 px-5 py-3 font-bold text-slate-950"><span data-bn="সাইট সেটিংস সংরক্ষণ করুন" data-en="Save Site Settings">সাইট সেটিংস সংরক্ষণ করুন</span></button>
       </form>
     </section>
-    <footer class="mt-8 border-t border-slate-800 py-5 text-center text-xs leading-5 text-slate-500"><span data-bn="শিক্ষামূলক পরীক্ষণ স্যান্ডবক্স · বাস্তব ডেটা পরিবর্তনের আগে পর্যালোচনা করুন · প্রোডাকশনে ব্যবহারের জন্য নয়" data-en="Educational testing sandbox · Review before changing live data · Not intended for production">শিক্ষামূলক পরীক্ষণ স্যান্ডবক্স · বাস্তব ডেটা পরিবর্তনের আগে পর্যালোচনা করুন · প্রোডাকশনে ব্যবহারের জন্য নয়</span></footer>
+    <footer class="mt-8 border-t border-slate-800 py-5 text-center text-xs leading-5 text-slate-500"><span data-bn="শিক্ষামূলক পরীক্ষণ স্যান্ডবক্স · বাস্তব ডেটা পরিবর্তনের আগে পর্যালোচনা করুন · প্রোডাকশনে ব্যবহারের জন্য নয়" data-en="Educational testing sandbox · Review before changing live data · Not intended for production">শিক্ষামূলক পরীক্ষণ স্যান্ডবক্স · বাস্তব ডেটা পরিবর্তনের আগে পর্যালোচনা করুন · প্রোডাকশনে ব্যবহারের জন্য নয়</span><span class="block mt-1" data-bn="© ২০২৬ Md Shoyeb Rabbi · সর্বস্বত্ব সংরক্ষিত · শিক্ষামূলক SQA পরীক্ষণ স্যান্ডবক্স" data-en="© 2026 Md Shoyeb Rabbi · All Rights Reserved · Educational SQA Testing Sandbox">© ২০২৬ Md Shoyeb Rabbi · সর্বস্বত্ব সংরক্ষিত · শিক্ষামূলক SQA পরীক্ষণ স্যান্ডবক্স</span></footer>
   </main>
   <dialog id="user-edit-dialog" class="edit-dialog" aria-label="Edit User" data-bn-aria-label="ব্যবহারকারী সম্পাদনা" data-en-aria-label="Edit User">
     <form id="user-edit-form" class="grid gap-4">
@@ -1033,7 +1058,8 @@
         'নিশ্চিতকরণ ইমেইল আবার পাঠান': 'Resend confirmation email',
         'নিশ্চিতকরণ ইমেইল পাঠানোর জন্য প্রথমে ইমেইল লিখুন।': 'Enter your email first to resend the confirmation link.',
         'নতুন নিশ্চিতকরণ লিংক পাঠানো হয়েছে। আপনার ইমেইল দেখুন।': 'A new confirmation link was sent. Check your email.',
-        'এই ফর্মের আসল পাসওয়ার্ড ডেটাবেসে রাখা হয় না; নির্ধারিত কলামে কেবল অ-গোপন পরীক্ষণ চিহ্ন রাখা হয়। নিরাপদ প্রমাণীকরণ ও হ্যাশিং Supabase Auth পরিচালনা করে। ভূমিকা নির্বাচকটি শুধু UI-তে থাকে, কারণ নির্ধারিত টেবিলে Role কলাম নেই।': 'The real password from this form is never stored in the database; the specified column receives only a non-secret test marker. Supabase Auth handles secure authentication and password hashing. The role selector is UI-only because the specified table has no Role column.',
+        'নিরাপত্তা নোট:': 'Security note:',
+        'এই ফর্মের পাসওয়ার্ড ডেটাবেসে সংরক্ষিত হয় না। আসল প্রমাণীকরণ Supabase Auth পরিচালনা করে।': 'Passwords entered here are never stored in the database. Supabase Auth handles real authentication.',
         'নতুন অ্যাকাউন্ট': 'Create account',
         'ফিরে লগইন করুন': 'Back to sign in',
         'অ্যাকাউন্ট তৈরি করুন': 'Create Account',
@@ -1096,9 +1122,7 @@
         'ব্যবহারকারী সংরক্ষণ করুন': 'Save User',
         'ফর্ম রিসেট করুন': 'Reset Form',
         'ইচ্ছাকৃত বাগ:': 'Intentional bug:',
-        ' ১৭ বছর বয়সের সীমার নিচের মানটি জাভাস্ক্রিপ্ট যাচাই এড়িয়ে সংরক্ষণের চেষ্টা করে; ডেটাবেসের নিজস্ব নিয়ম থাকলে সংরক্ষণ প্রত্যাখ্যাত হবে। রিসেট বোতামটি ইনপুট পরিষ্কার করে না।': ' An age below the 18-year limit bypasses JavaScript validation and attempts to save; the database may reject it if it enforces its own rule. The reset button does not clear the inputs.',
-        'নিরাপত্তা সতর্কতা:': 'Security notice:',
-        ' এই শিক্ষামূলক স্যান্ডবক্সে নির্দিষ্ট স্কিমা অনুযায়ী পাসওয়ার্ড কলামে মান পাঠানো হয়। বাস্তব ব্যবস্থায় কখনোই সরল পাঠ্যে পাসওয়ার্ড সংরক্ষণ করবেন না; নিরাপদ প্রমাণীকরণ ও হ্যাশিং ব্যবহার করুন। ভূমিকা নির্বাচকটি শুধু UI-তে থাকে, কারণ নির্ধারিত টেবিলে Role কলাম নেই।': ' This educational sandbox sends a value to the password column to match the specified schema. Never store plain-text passwords in a real system; use secure authentication and hashing. The role selector is UI-only because the specified table has no Role column.',
+        ' ১৭ বছর বয়সের সীমার নিচের মানটি জাভাস্ক্রিপ্ট যাচাই এড়িয়ে সংরক্ষণের চেষ্টা করে। ডেটাবেসের নিজস্ব নিয়ম থাকলে সংরক্ষণ প্রত্যাখ্যাত হবে। রিসেট বোতামটি ইনপুট পরিষ্কার করে না।': ' An age below the 18-year limit bypasses JavaScript validation and attempts to save. The database may reject it if it enforces its own rule. The reset button does not clear the inputs.',
         'সংরক্ষণের ফল এখানে দেখা যাবে।': 'The save result will appear here.',
         'ই-কমার্স · হিসাব · ব্যবসায়িক নিয়ম': 'E-commerce · Calculations · Business Rules',
         'পণ্য অর্ডার পরীক্ষা': 'Product Order Testing',
@@ -1159,7 +1183,7 @@
         'লাইভ পরীক্ষণ সারাংশ': 'Live Test Execution Summary',
         'লাইভ REST API পরীক্ষণ স্যান্ডবক্স': 'Live REST API Testing Sandbox',
         'HTTP · REST · প্রতিক্রিয়া পর্যবেক্ষণ': 'HTTP · REST · Response Monitoring',
-        'Supabase REST API-তে GET, POST ও DELETE অনুরোধ পাঠান; ত্রুটি-অবস্থাগুলো নিরাপদে অনুকরণ করা হয়।': 'Send GET, POST, and DELETE requests to the Supabase REST API; error scenarios are safely simulated.',
+        'Supabase REST API-তে GET, POST ও DELETE অনুরোধ পাঠান। ত্রুটি-অবস্থাগুলো নিরাপদে অনুকরণ করা হয়।': 'Send GET, POST, and DELETE requests to the Supabase REST API. Error scenarios are safely simulated.',
         'HTTP পদ্ধতি': 'HTTP Method',
         'তথ্য পড়ুন (GET · ২০০)': 'Read data (GET · 200)',
         'তথ্য তৈরি করুন (POST · ২০১)': 'Create data (POST · 201)',
@@ -1192,7 +1216,7 @@
         'পণ্য': 'Product',
         'পরিমাণ / মোট': 'Quantity / Total',
         'অবস্থা': 'Status',
-        'ভলিউম পরীক্ষায় ৫০টি স্বতন্ত্র পরীক্ষণ ইমেইল পাঠানো হয়। মুছে ফেলা স্থায়ী; প্রতিটি রেকর্ডের আগে নিশ্চিতকরণ দেখানো হবে।': 'Volume testing inserts 50 unique test emails. Deletion is permanent; each record requires confirmation.',
+        'ভলিউম পরীক্ষায় ৫০টি স্বতন্ত্র পরীক্ষণ ইমেইল পাঠানো হয়। মুছে ফেলা স্থায়ী। প্রতিটি রেকর্ডের আগে নিশ্চিতকরণ দেখানো হবে।': 'Volume testing inserts 50 unique test emails. Deletion is permanent. Each record requires confirmation.',
         'নিরাপত্তা ও কর্মদক্ষতা পরীক্ষণ': 'Security & Performance Testing',
         'ইনপুট নিরাপত্তা · সীমাবদ্ধতা · প্রতিক্রিয়া সময়': 'Input Security · Rate Limits · Response Time',
         'নিরাপদ স্থানীয় সিমুলেশনে ইনপুট আচরণ এবং অনুরোধের কর্মদক্ষতা পরীক্ষা করুন।': 'Test input handling and request performance in safe local simulations.',
@@ -1203,7 +1227,7 @@
         'লগইন-লক অনুকরণ': 'Simulate Login Lockout',
         'ইনপুট পরীক্ষা করুন': 'Inspect Input',
         'পরীক্ষার ফল এখানে দেখা যাবে।': 'Test results will appear here.',
-        'ইনপুটটি শুধু স্থানীয়ভাবে বিশ্লেষিত হয়; ডেটাবেসে চালানো বা HTML হিসেবে রেন্ডার করা হয় না।': 'Input is analyzed locally only; it is not run against the database or rendered as HTML.',
+        'ইনপুটটি শুধু স্থানীয়ভাবে বিশ্লেষিত হয়। ডেটাবেসে চালানো বা HTML হিসেবে রেন্ডার করা হয় না।': 'Input is analyzed locally only. It is not run against the database or rendered as HTML.',
         'নিয়ন্ত্রিত লোড পর্যবেক্ষণ': 'Controlled Load Measurement',
         'প্রকৃত সার্ভারে একযোগে ১০০টি অনুরোধ পাঠানো হয় না। পরিবর্তে একই ধরনের ১০০টি স্থানীয় নমুনা কাজের সময় মাপা হয় এবং বাস্তব API-র একটি হালকা পাঠ-অনুরোধ দিয়ে সার্ভার প্রতিক্রিয়া যাচাই করা যায়।': '100 concurrent requests are not sent to the live server. Instead, 100 local sample tasks are timed, and one lightweight read request can check the live API response.',
         '১০০টি স্থানীয় লোড নমুনা চালান': 'Run 100 Local Load Samples',
@@ -1289,7 +1313,7 @@
         'তীব্রতা': 'Severity',
         'পরীক্ষণ কেস': 'Test Case',
         'অগ্রাধিকার': 'Priority',
-        'পরিমাণ ঋণাত্মক হতে পারে; ফলে মোট মূল্য কমে বা ঋণাত্মক হয়।': 'Quantity can be negative, reducing the total or making it negative.',
+        'পরিমাণ ঋণাত্মক হতে পারে। ফলে মোট মূল্য কমে বা ঋণাত্মক হয়।': 'Quantity can be negative, reducing the total or making it negative.',
         'ব্যবহারকারী ': 'User ',
         ' স্থায়ীভাবে মুছবেন? সংশ্লিষ্ট অর্ডারের ওপর ডেটাবেস নীতির প্রভাব পড়তে পারে।': ' will be permanently deleted. Database rules may affect related orders.',
         'ব্যবহারকারী মুছে ফেলা হয়েছে।': 'User deleted.',
@@ -1301,8 +1325,8 @@
         'বাগ প্রতিবেদন জমা হয়েছে।': 'Bug report submitted.',
         'ইনপুট দৈর্ঘ্য: ': 'Input length: ',
         ' অক্ষর। ': ' characters. ',
-        'সম্ভাব্য SQL-সদৃশ চিহ্ন পাওয়া গেছে; প্যারামিটারযুক্ত কুয়েরি ব্যবহার করুন। ': 'Potential SQL-like pattern detected; use parameterized queries. ',
-        'HTML ট্যাগ সদৃশ অংশ পাওয়া গেছে; আউটপুটকে টেক্সট হিসেবে এস্কেপ করুন। ': 'HTML-like markup detected; escape output as text. ',
+        'সম্ভাব্য SQL-সদৃশ চিহ্ন পাওয়া গেছে। প্যারামিটারযুক্ত কুয়েরি ব্যবহার করুন। ': 'Potential SQL-like pattern detected. Use parameterized queries. ',
+        'HTML ট্যাগ সদৃশ অংশ পাওয়া গেছে। আউটপুটকে টেক্সট হিসেবে এস্কেপ করুন। ': 'HTML-like markup detected. Escape output as text. ',
         'সাধারণ স্ট্রিং হিসেবে চিহ্নিত। ': 'Identified as a plain string. ',
         'কোনো ইনপুট সার্ভারে পাঠানো হয়নি।': 'No input was sent to the server.',
         'লগইন সাময়িকভাবে বন্ধ। ': 'Login temporarily locked. ',
@@ -1672,6 +1696,22 @@
             : `Could not download the preview card: ${error.message}`, true);
         }
       }
+      function closeSharePanel() {
+        const panel = $('#share-panel');
+        if (panel.hidden) return;
+        panel.hidden = true;
+        $('#share-toggle').setAttribute('aria-expanded', 'false');
+      }
+      $('#close-share-panel').addEventListener('click', () => {
+        closeSharePanel();
+        $('#share-toggle').focus();
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !$('#share-panel').hidden) {
+          closeSharePanel();
+          $('#share-toggle').focus();
+        }
+      });
       $('#share-toggle').addEventListener('click', () => {
         const panel = $('#share-panel');
         panel.hidden = !panel.hidden;
@@ -2037,7 +2077,7 @@
         if (!records.length) {
           setLocalizedText(result, activeLanguage === 'bn'
             ? 'কোনো রেকর্ড ফেরেনি—স্কিমা যাচাই করার মতো ডেটা নেই।'
-            : 'No records returned; there is no data to validate against the schema.');
+            : 'No records returned. There is no data to validate against the schema.');
           result.classList.add('text-amber-300');
           return;
         }
@@ -2063,8 +2103,8 @@
         });
         if (failures.length) {
           setLocalizedText(result, activeLanguage === 'bn'
-            ? `স্কিমা যাচাই ব্যর্থ: ${failures.slice(0, 4).join('; ')}${failures.length > 4 ? `; আরও ${failures.length - 4}টি ত্রুটি` : ''}`
-            : `Schema validation failed: ${failures.slice(0, 4).join('; ')}${failures.length > 4 ? `; and ${failures.length - 4} more` : ''}`);
+            ? `স্কিমা যাচাই ব্যর্থ: ${failures.slice(0, 4).map((failure) => failure.charAt(0).toUpperCase() + failure.slice(1)).join('। ')}${failures.length > 4 ? `। আরও ${failures.length - 4}টি ত্রুটি` : ''}`
+            : `Schema validation failed: ${failures.slice(0, 4).map((failure) => failure.charAt(0).toUpperCase() + failure.slice(1)).join('. ')}${failures.length > 4 ? `. And ${failures.length - 4} more` : ''}`);
           result.classList.add('text-rose-300');
         } else {
           setLocalizedText(result, activeLanguage === 'bn'
@@ -2205,8 +2245,8 @@
             if (failures.length) {
               const accepted = failures.filter(([age]) => isRegistrationAgeValid(age)).map(([age]) => age);
               throw new Error(activeLanguage === 'bn'
-                ? `১৮–৬০ প্রত্যাশিত; ${accepted.join(', ')} বছর বয়সও গ্রহণ করছে।`
-                : `Expected age range 18–60; age ${accepted.join(', ')} is also accepted.`);
+                ? `১৮–৬০ প্রত্যাশিত। ${accepted.join(', ')} বছর বয়সও গ্রহণ করছে।`
+                : `Expected age range 18–60. Age ${accepted.join(', ')} is also accepted.`);
             }
             return activeLanguage === 'bn' ? 'সব boundary value ঠিক আছে' : 'All boundary values are correct';
           });
@@ -2798,7 +2838,7 @@
         const value = $('#security-input').value;
         const sqlLike = /('|--|;|\b(OR|SELECT|DROP|UNION)\b)/i.test(value);
         const hasMarkup = /<\/?[a-z][\s\S]*?>/i.test(value);
-        setLocalizedText($('#security-result'), `ইনপুট দৈর্ঘ্য: ${bnNumber(value.length)} অক্ষর। ${sqlLike ? 'সম্ভাব্য SQL-সদৃশ চিহ্ন পাওয়া গেছে; প্যারামিটারযুক্ত কুয়েরি ব্যবহার করুন। ' : ''}${hasMarkup ? 'HTML ট্যাগ সদৃশ অংশ পাওয়া গেছে; আউটপুটকে টেক্সট হিসেবে এস্কেপ করুন। ' : ''}${!sqlLike && !hasMarkup ? 'সাধারণ স্ট্রিং হিসেবে চিহ্নিত। ' : ''}কোনো ইনপুট সার্ভারে পাঠানো হয়নি।`);
+        setLocalizedText($('#security-result'), `ইনপুট দৈর্ঘ্য: ${bnNumber(value.length)} অক্ষর। ${sqlLike ? 'সম্ভাব্য SQL-সদৃশ চিহ্ন পাওয়া গেছে। প্যারামিটারযুক্ত কুয়েরি ব্যবহার করুন। ' : ''}${hasMarkup ? 'HTML ট্যাগ সদৃশ অংশ পাওয়া গেছে। আউটপুটকে টেক্সট হিসেবে এস্কেপ করুন। ' : ''}${!sqlLike && !hasMarkup ? 'সাধারণ স্ট্রিং হিসেবে চিহ্নিত। ' : ''}কোনো ইনপুট সার্ভারে পাঠানো হয়নি।`);
       });
       let failedLogins = 0;
       let lockedUntil = 0;
